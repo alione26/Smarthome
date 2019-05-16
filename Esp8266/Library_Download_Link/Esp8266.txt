@@ -3,3 +3,5 @@ FirebaseArduino : https://github.com/FirebaseExtended/firebase-arduino
 Firebase Arduino esp8266 problem :
 https://github.com/FirebaseExtended/firebase-arduino/issues/369#issuecomment-414152018
 https://github.com/FirebaseExtended/firebase-arduino/issues/285
+ArduinoJson Problem :
+https://arduinojson.org/v5/faq/how-to-create-complex-nested-objects/
