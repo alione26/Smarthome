@@ -1,0 +1,22 @@
+{
+  "name": "smart_home_dev",
+  "version": "1.0.0",
+  "description": "Smart Home Backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Smart",
+    "Home"
+  ],
+  "author": "Linh Le",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.0",
+    "firebase": "^6.0.2",
+    "firebase-admin": "^7.3.0",
+    "uuid": "^3.3.2"
+  }
+}
