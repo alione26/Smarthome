@@ -1,4 +1,20 @@
-var express = require('express');
+var express = require("express");
+var bodyParser = require('body-parser');
+
+var routes = require("./routes/routes.js");
+
+var app = express();
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+routes(app);
+
+var server = app.listen(3000, function () {
+    console.log("app running on port.", server.address().port);
+});
+
+/*var express = require('express');
 var firebase = require('firebase');
 var bodyParser = require('body-parser');
 var admin = require("firebase-admin");
@@ -101,3 +117,4 @@ var server = app.listen(3000, function () {
 
   console.log("server listening at http://%s:%s", host, port);
 });
+*/
