@@ -4,15 +4,15 @@
 var appRouter = function (app) {
     const userController = require('../src/http/controllers/UserController');
     //to handle HTTP get request
-    app.get('/', userController.getlist);
+    //app.get('/user/get_list', userController.user_list);
 
-    app.get('/:id', userController.getid);
+    //app.get('/user/get_by_id/:id', userController.user_by_id);
 
-    app.post('/', userController.post);
+    app.post('/user/add_new', userController.new_user);
 
-    app.post('/:id', userController.put);
+    //app.post('/user/update/:id', userController.update_user);
 
-    app.delete('/', userController.delete);
+    //app.delete('user/delete/:id', userController.delete_user);
 }
 
 module.exports = appRouter;

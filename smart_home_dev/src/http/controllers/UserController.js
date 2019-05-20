@@ -1,4 +1,23 @@
-var firebase = require('firebase');
+var userService = require("../services/UserService");
+const uuidv4 = require('uuid/v4');
+module.exports = {
+    /*user_list : function(req, res, next) {
+        console.log("HTTP Get Request");
+        userService.get_list;
+    },*/
+    new_user : async function (req, res) {
+        console.log("HTTP Put Request");
+        var user_id = uuidv4();
+        var userData = { user_id: user_id, name : req.body.name, email : req.body.email, phone : req.body.phone };
+        var create_user = await userService.add_user(userData, user_id);
+        console.log(create_user);
+        if (create_user.status) {
+            return res.status(200).json({ success: true, message: create_user.message });
+        }
+        return res.status(400).json({ success: false, message: 'Email invalid.' });
+    },
+}
+/*var firebase = require('firebase');
 var firebaseAdmin = require("firebase-admin");
 var serviceAccount = require("../../../smarthome-iot95-firebase.json");
 
@@ -10,7 +29,7 @@ firebase.initializeApp({
 });
 
 module.exports = {
-    getlist : async function (req, res, next) {
+    user_list : function (req, res, next) {
       console.log("HTTP Get Request");
         var userReference = firebase.database().ref("/users/");
 
@@ -18,16 +37,16 @@ module.exports = {
         userReference.on("value",
                   function(snapshot) {
                         console.log(snapshot.val());
-                        return res.json(snapshot.val());
+                        res.json(snapshot.val());
                         //return res.status(200).json({ success: true, data: null, message: "Succesfully" });
                         userReference.off("value");
                         },
                   function (errorObject) {
                         console.log("The read failed: " + errorObject.code);
-                        return res.send("The read failed: " + errorObject.code);
+                        res.send("The read failed: " + errorObject.code);
                  });
     },
-    getid : function (req, res) {
+    user_by_id : function (req, res) {
         var userId = req.params['id'];
         var userReference = firebase.database().ref("/users/"+ userId);
 
@@ -44,7 +63,7 @@ module.exports = {
                 res.send("The read failed: " + errorObject.code);
         });
     },
-    post : function (req, res) {
+    new_user : function (req, res) {
         console.log("HTTP Put Request");
         var user_id = uuidv4();
         var email = req.body.email;
@@ -63,7 +82,7 @@ module.exports = {
                         }
                 });
     },
-    put : function (req, res) {
+    update_user : function (req, res) {
         var userId = req.params['id'];
         var email = req.body.email;
         var name = req.body.name;
@@ -80,9 +99,20 @@ module.exports = {
                         }
                     });
     },
-    delete : function (req, res) {
+
+    delete_user : function (req, res) {
+      var userId = req.params['id'];
+      var userReference = firebase.database().ref("/users/"+ userId);
+      userReference.remove()
+      .then(function() {
+        console.log("Remove succeeded.");
+        res.send("Remove succeeded");
+        })
+      .catch(function(error) {
+        console.log("Remove failed: " + error.message);
+        res.send("Remove failed");
+        });
       console.log("HTTP DELETE Request");
-      res.send("HTTP DELETE Request");
     },
 
-}
+}*/
