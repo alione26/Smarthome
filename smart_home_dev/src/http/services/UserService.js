@@ -20,4 +20,8 @@ module.exports = {
     add_user : async function(userData, user_id) {
         return await user.add_user(userData, user_id);
     },
+    get_list : async function() {
+        return await user.get_list();
+        //return "hhhhhh";
+    }
 }

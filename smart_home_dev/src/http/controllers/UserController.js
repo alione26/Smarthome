@@ -1,10 +1,17 @@
 var userService = require("../services/UserService");
 const uuidv4 = require('uuid/v4');
 module.exports = {
-    /*user_list : function(req, res, next) {
+    user_list : async function(req, res, next) {
         console.log("HTTP Get Request");
-        userService.get_list;
-    },*/
+        //var get_list_user = await userService.get_list();
+        //console.log(get_list_user);
+        var get_list_user = await userService.get_list();
+        console.log(get_list_user);
+        if (get_list_user.status) {
+             return res.status(200).json({ success : true, message : get_list_user.message, data : get_list_user.data});
+         }
+        return res.success(400).json({ success : false, message : get_list_user.message});
+    },
     new_user : async function (req, res) {
         console.log("HTTP Put Request");
         var user_id = uuidv4();
@@ -14,7 +21,7 @@ module.exports = {
         if (create_user.status) {
             return res.status(200).json({ success: true, message: create_user.message });
         }
-        return res.status(400).json({ success: false, message: 'Email invalid.' });
+        return res.status(400).json({ success: false, message: create_user.message});
     },
 }
 /*var firebase = require('firebase');

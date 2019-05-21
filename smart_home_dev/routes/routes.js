@@ -4,7 +4,7 @@
 var appRouter = function (app) {
     const userController = require('../src/http/controllers/UserController');
     //to handle HTTP get request
-    //app.get('/user/get_list', userController.user_list);
+    app.get('/user/get_list', userController.user_list);
 
     //app.get('/user/get_by_id/:id', userController.user_by_id);
 
