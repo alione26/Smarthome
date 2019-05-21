@@ -11,12 +11,10 @@ module.exports = {
     get_list : async function() {
         var userReference = firebase.database().ref("/users/");
         try {
-
               return await userReference.once("value").then(
                          function(snapshot){
                             return { status : true, message :"The read succeeded", data : snapshot.val()};
                             userReference.off("value");
-
                          },
                          function(errorObject){
                             console.log("The read failed: " + errorObject.code);
@@ -26,20 +24,8 @@ module.exports = {
         }catch (e) {
             throw Error(e.message);
         }
-
-        //Attach an asynchronous callback to read the data
-        /*userReference.on("value",
-                  function(snapshot) {
-
-                        res.json(snapshot.val());
-                        //return res.status(200).json({ success: true, data: null, message: "Succesfully" });
-                        userReference.off("value");
-                        },
-                  function (errorObject) {
-
-                        res.send("The read failed: " + errorObject.code);
-                 });*/
     },
+
     add_user : async function(userData, user_id) {
         var referencePath = '/users/'+user_id+'/';
         var userReference = firebase.database().ref(referencePath);
@@ -51,7 +37,60 @@ module.exports = {
                             response =  { status: false, message: "Data could not be saved." + error };
                         }
                         else {
-                           response =  { status: true, message: "Data saved successfully." };
+                            response =  { status: true, message: "Data saved successfully." };
+                        }
+                        return response;
+                    });
+        } catch (e) {
+            throw Error(e.message);
+        }
+    },
+    user_by_id : async function(userId) {
+        var userReference = firebase.database().ref("/users/"+ userId);
+        try {
+              return await userReference.once("value").then(
+                         function(snapshot){
+                            return { status : true, message :"The read succeeded", data : snapshot.val()};
+                            userReference.off("value");
+                         },
+                         function(errorObject){
+                            console.log("The read failed: " + errorObject.code);
+                            return { status : false, message : "The read failed: " + errorObject.code };
+                         },
+              );
+        }catch (e) {
+            throw Error(e.message);
+        }
+    },
+    update_user : async function(userId, userData) {
+        var userReference = firebase.database().ref("/users/"+ userId);
+        try {
+            return await userReference.update(userData).then(
+                    function(error) {
+                        var response = null;
+                        if (error) {
+                            response =  { status: false, message: "Data could not be updated." + error };
+                        }
+                        else {
+                            response =  { status: true, message: "Data updated successfully." };
+                        }
+                        return response;
+                    });
+        } catch (e) {
+            throw Error(e.message);
+        }
+    },
+    delete_user : async function(userId) {
+        var userReference = firebase.database().ref("/users/"+ userId);
+        try {
+            return await userReference.remove().then(
+                    function(error) {
+                        var response = null;
+                        if (error) {
+                            response =  { status: false, message: "Data could not be removed." + error };
+                        }
+                        else {
+                            response =  { status: true, message: "Data removed successfully." };
                         }
                         return response;
                     });
