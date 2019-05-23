@@ -36,7 +36,6 @@ module.exports = {
 
         var registerUser = await userService.register(userData);
 
-        console.log(registerUser);
         if (registerUser.status) {
             return res.status(200).json({ success: true, message: registerUser.message, data: registerUser.data });
         }
