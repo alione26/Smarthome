@@ -5,13 +5,9 @@ var appRouter = function (app) {
     const userController = require('../src/http/controllers/UserController');
     //to handle HTTP get request
     app.get('/user/get_list', userController.user_list);
-
     app.get('/user/get_by_id/:id', userController.user_by_id);
-
     app.post('/user/add', userController.new_user);
-
     app.post('/user/update/:id', userController.update_user);
-
     app.delete('/user/delete/:id', userController.delete_user);
 
     const smarthomeController = require('../src/http/controllers/SmarthomeController');
@@ -37,14 +33,13 @@ var appRouter = function (app) {
 
     const userDeviceController = require('../src/http/controllers/UserDeviceController');
     app.get('/user_device/get_list', userDeviceController.userDevice_list);
-
     app.get('/user_device/get_by_id/:id', userDeviceController.userDevice_by_id);
-
     app.post('/user_device/add', userDeviceController.new_userDevice);
-
     app.post('/user_device/update/:id', userDeviceController.update_userDevice);
-
     app.delete('/user_device/delete/:id', userDeviceController.delete_userDevice);
+
+    const authController = require('../src/http/controllers/AuthController');
+    app.post('/auth/register', authController.register);
 }
 
 module.exports = appRouter;

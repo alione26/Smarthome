@@ -1,0 +1,12 @@
+{
+    "acl": [
+        {
+            "roles": ["admin", "user"],
+            "resources" : "/user/search"
+        },
+        {
+            "roles": ["admin", "user"],
+            "resources" : "/user/logout"
+        }
+    ]
+}
