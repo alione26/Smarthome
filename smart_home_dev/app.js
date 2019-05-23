@@ -1,6 +1,15 @@
 var express = require("express");
 var bodyParser = require('body-parser');
 
+var firebase = require('firebase');
+var firebaseAdmin = require("firebase-admin");
+var serviceAccount = require("./smarthome-iot95-firebase.json");
+
+firebase.initializeApp({
+  credential: firebaseAdmin.credential.cert(serviceAccount),
+  databaseURL: "https://smarthome-iot95.firebaseio.com"
+});
+
 var routes = require("./routes/routes.js");
 
 var app = express();

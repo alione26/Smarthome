@@ -2,12 +2,12 @@ var firebase = require('firebase');
 
 module.exports = {
     get_list : async function() {
-        var userReference = firebase.database().ref("/users/");
+        var smarthomeUserReference = firebase.database().ref("/smarthomeUsers/");
         try {
-              return await userReference.once("value").then(
+              return await smarthomeUserReference.once("value").then(
                          function(snapshot){
                             return { status : true, message :"The read succeeded", data : snapshot.val()};
-                            userReference.off("value");
+                            smarthomeUserReference.off("value");
                          },
                          function(errorObject){
                             console.log("The read failed: " + errorObject.code);
@@ -19,11 +19,11 @@ module.exports = {
         }
     },
 
-    add_user : async function(userData, user_id) {
-        var referencePath = '/users/'+user_id+'/';
-        var userReference = firebase.database().ref(referencePath);
+    add_smarthomeUser : async function(smarthomeUserData, smarthomeUser_id) {
+        var referencePath = '/smarthomeUsers/'+smarthomeUser_id+'/';
+        var smarthomeUserReference = firebase.database().ref(referencePath);
         try {
-            return await userReference.set(userData).then(
+            return await smarthomeUserReference.set(smarthomeUserData).then(
                     function(error) {
                         var response = null;
                         if (error) {
@@ -38,13 +38,13 @@ module.exports = {
             throw Error(e.message);
         }
     },
-    user_by_id : async function(userId) {
-        var userReference = firebase.database().ref("/users/"+ userId);
+    smarthomeUser_by_id : async function(smarthomeUserId) {
+        var smarthomeUserReference = firebase.database().ref("/smarthomeUsers/"+ smarthomeUserId);
         try {
-              return await userReference.once("value").then(
+              return await smarthomeUserReference.once("value").then(
                          function(snapshot){
                             return { status : true, message :"The read succeeded", data : snapshot.val()};
-                            userReference.off("value");
+                            smarthomeUserReference.off("value");
                          },
                          function(errorObject){
                             console.log("The read failed: " + errorObject.code);
@@ -55,10 +55,10 @@ module.exports = {
             throw Error(e.message);
         }
     },
-    update_user : async function(userId, userData) {
-        var userReference = firebase.database().ref("/users/"+ userId);
+    update_smarthomeUser : async function(smarthomeUserId, smarthomeUserData) {
+        var smarthomeUserReference = firebase.database().ref("/smarthomeUsers/"+ smarthomeUserId);
         try {
-            return await userReference.update(userData).then(
+            return await smarthomeUserReference.update(smarthomeUserData).then(
                     function(error) {
                         var response = null;
                         if (error) {
@@ -73,10 +73,10 @@ module.exports = {
             throw Error(e.message);
         }
     },
-    delete_user : async function(userId) {
-        var userReference = firebase.database().ref("/users/"+ userId);
+    delete_smarthomeUser : async function(smarthomeUserId) {
+        var smarthomeUserReference = firebase.database().ref("/smarthomeUsers/"+ smarthomeUserId);
         try {
-            return await userReference.remove().then(
+            return await smarthomeUserReference.remove().then(
                     function(error) {
                         var response = null;
                         if (error) {

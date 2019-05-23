@@ -13,7 +13,8 @@ module.exports = {
     new_user : async function (req, res) {
         console.log("HTTP POST Request");
         var user_id = uuidv4();
-        var userData = { user_id: user_id, name : req.body.name, email : req.body.email, phone : req.body.phone };
+        var userData = { user_id: user_id, name : req.body.name, password: req.body.password, email : req.body.email, phone : req.body.phone,
+            gender : req.body.gender, date_of_birth : req.body.date_of_birth, created_at : req.body.created_at };
         var create_user = await userService.add_user(userData, user_id);
         console.log(create_user);
         if (create_user.status) {
