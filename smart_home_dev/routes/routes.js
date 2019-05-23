@@ -27,6 +27,24 @@ var appRouter = function (app) {
     app.post('/smarthome_user/add', smarthomeUserController.new_smarthomeUser);
     app.post('/smarthome_user/update/:id', smarthomeUserController.update_smarthomeUser);
     app.delete('/smarthome_user/delete/:id', smarthomeUserController.delete_smarthomeUser);
+
+    const smarthomeDeviceController = require('../src/http/controllers/SmarthomeDeviceController');
+    app.get('/smarthome_device/get_list', smarthomeDeviceController.smarthomeDevice_list);
+    app.get('/smarthome_device/get_by_id/:id', smarthomeDeviceController.smarthomeDevice_by_id);
+    app.post('/smarthome_device/add', smarthomeDeviceController.new_smarthomeDevice);
+    app.post('/smarthome_device/update/:id', smarthomeDeviceController.update_smarthomeDevice);
+    app.delete('/smarthome_device/delete/:id', smarthomeDeviceController.delete_smarthomeDevice);
+
+    const userDeviceController = require('../src/http/controllers/UserDeviceController');
+    app.get('/user_device/get_list', userDeviceController.userDevice_list);
+
+    app.get('/user_device/get_by_id/:id', userDeviceController.userDevice_by_id);
+
+    app.post('/user_device/add', userDeviceController.new_userDevice);
+
+    app.post('/user_device/update/:id', userDeviceController.update_userDevice);
+
+    app.delete('/user_device/delete/:id', userDeviceController.delete_userDevice);
 }
 
 module.exports = appRouter;
