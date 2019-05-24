@@ -4,7 +4,8 @@
 var appRouter = function (app) {
     const userController = require('../src/http/controllers/UserController');
     //to handle HTTP get request
-    app.get('/user/get_list', userController.user_list);
+    const authControllerUser = require('../src/http/controllers/AuthController');
+    app.get('/user/get_list', authControllerUser.middleware , userController.user_list);
     app.get('/user/get_by_id/:id', userController.user_by_id);
     app.post('/user/add', userController.new_user);
     app.post('/user/update/:id', userController.update_user);
@@ -40,6 +41,7 @@ var appRouter = function (app) {
 
     const authController = require('../src/http/controllers/AuthController');
     app.post('/auth/register', authController.register);
+    app.post('/auth/login', authController.login);
 }
 
 module.exports = appRouter;

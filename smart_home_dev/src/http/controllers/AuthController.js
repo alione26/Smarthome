@@ -6,21 +6,24 @@ const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-
 module.exports = {
     middleware : async function (req, res, next) {
         var currentUUID =  req.headers.uuid;
+        console.log(currentUUID);
 
         try {
-            var checkUUID =  await UserService.checkUUID(currentUUID);
+            var checkUUID =  await userService.checkUUID(currentUUID);
             if (!checkUUID.status) {
                 return res.status(400).json({ success: false, message: checkUUID.message });
             }
 
-            var checkPermission =  await UserService.checkPermission(currentUUID, req.path);
-            if (!checkPermission.status) {
-                return res.status(400).json({ success: false, message: checkPermission.message });
-            }
+            // var checkPermission =  await userService.checkPermission(currentUUID, req.path);
+            // if (!checkPermission.status) {
+            //     return res.status(400).json({ success: false, message: checkPermission.message });
+            // }
 
             next();
         } catch (e) {
-            return res.status(400).json({ success: false, message: e.message });
+            //console.error(e.message);
+            return res.status(400).json({ success: "false", message: e.message });
+
         }
     },
 
@@ -42,7 +45,7 @@ module.exports = {
         return res.status(400).json({ success: false, message: registerUser.message, data: null});
     },
 
-    /*login : async function (req, res, next) {
+    login : async function (req, res, next) {
         var loginData = { email: req.body.email, password: req.body.password };
 
         if (!emailRegexp.test(loginData.email)) {
@@ -50,23 +53,24 @@ module.exports = {
         }
 
         try {
-            var login = await UserService.login(loginData);
+            var login = await userService.login(loginData);
             if (!login.status) {
                 return res.status(400).json({ success: false, message: login.message });
             }
 
             var user = login.user;
-            var uuid = await UserService.generateUUIDByEmail(user.email);
-            var userData = { id: user.id, email: user.email, name: user.name, created: user.created, latest: user.latest };
-            var responseData = UserService.transformDataForDevices(req.headers['x-device'], [userData]);
+            console.log(user);
+            var uuid = await userService.generateUUIDByUserId(user.user_id);
+            var userData = { user_id: user.user_id, email: user.email, name: user.name, phone: user.phone, gender: user.gender, date_of_birth : user.date_of_birth , created_at: user.created_at, updated_at: user.updated_at };
+            //var responseData = UserService.transformDataForDevices(req.headers['x-device'], [userData]);
 
-            return res.status(200).set('uuid', uuid).json({ success: true, data: responseData, message: "Succesfully" });
+            return res.status(200).set('uuid', uuid).json({ success: true, data: userData, message: login.message});
         } catch (e) {
             return res.status(400).json({ success: false, message: e.message });
         }
     },
 
-    logout: async function (req, res, next) {
+    /*logout: async function (req, res, next) {
         var currentUUID =  req.headers.uuid;
 
         try {

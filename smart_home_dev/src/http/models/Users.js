@@ -102,6 +102,7 @@ module.exports = {
             throw Error(e.message);
         }
     },
+
     register : async function(userData) {
         userData.password = hashPassword(userData.password);
         userData.created_at = Math.floor(Date.now()/1000);
@@ -125,11 +126,50 @@ module.exports = {
             throw Error(e.message);
         }
     },
+    login : async function(loginData, userData) {
+         var userContent = userData[Object.keys(userData)[0]]; //note
+         var userPassword = userContent.password;
+         var passwordsMatch = comparePassword(loginData.password, userPassword);
+         if(!passwordsMatch) {
+            return { status: false, message: 'Invalid email & password.' };
+         }
+         return {status : true, message : 'Login successfully', user : userContent};
+    },
+
     getUserByEmail : async function(email) {
         var userReference = firebase.database().ref("/users");
         try {
               return await userReference.orderByChild("email")
                 .equalTo(email)
+                .once('value').then(
+                    function(snapshot){
+                        return { status : true, message :"The read succeeded", data : snapshot.val()};
+                        userReference.off("value");
+                    },
+                    function(errorObject){
+                        console.log("The read failed: " + errorObject.code);
+                        return { status : false, message : "The read failed: " + errorObject.code, data: null };
+                    }
+              );
+        }catch (e) {
+            throw Error(e.message);
+        }
+    },
+
+    generateUUIDByUserId : async function (user_id) {
+        var newUuid = uuidv4();
+        var referencePath = '/users/'+user_id+'/';
+        var userReference = firebase.database().ref(referencePath);
+        await userReference.update({"uuid" : newUuid, "latest" : Math.floor(Date.now()/1000)});
+        return newUuid;
+    },
+
+    getUserByUUID : async function (uuid) {
+
+        var userReference = firebase.database().ref("/users");
+        try {
+              return await userReference.orderByChild("uuid")
+                .equalTo(uuid)
                 .once('value').then(
                     function(snapshot){
                         return { status : true, message :"The read succeeded", data : snapshot.val()};
