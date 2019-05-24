@@ -62,14 +62,13 @@ module.exports = {
     checkUUID : async function(uuid) {
         try {
             var getUser =  await Users.getUserByUUID(uuid);
-            var userData = getUser.data;
-            var userContent = userData[Object.keys(userData)[0]];
             console.log(getUser.status);
-            if (!getUser.status && getUser.data) {
+            if (!getUser.status && !getUser.data) {
                 return { status: false, message: 'Uuid not exist.' };
             }
 
-
+            var userData = getUser.data;
+            var userContent = userData[Object.keys(userData)[0]];
             var latestTime = Math.floor(Date.now()/1000) - parseInt(userContent.latest);
 
             if (latestTime > (2 * 60 * 60)) {
@@ -79,7 +78,6 @@ module.exports = {
             return { status: true, message: 'Successfully.' };
 
         } catch (e) {
-            //return { status: false, message: 'Uuid not exist.' };
             throw Error(e.message);
         }
     },

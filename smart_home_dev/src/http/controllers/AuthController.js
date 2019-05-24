@@ -21,7 +21,6 @@ module.exports = {
 
             next();
         } catch (e) {
-            //console.error(e.message);
             return res.status(400).json({ success: "false", message: e.message });
 
         }

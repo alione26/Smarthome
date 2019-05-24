@@ -168,11 +168,14 @@ module.exports = {
 
         var userReference = firebase.database().ref("/users");
         try {
-              return await userReference.orderByChild("uuid")
+             return await userReference.orderByChild("uuid")
                 .equalTo(uuid)
                 .once('value').then(
                     function(snapshot){
-                        return { status : true, message :"The read succeeded", data : snapshot.val()};
+                        if (snapshot.val()) {
+                            return { status : true, message :"The read UUID succeeded", data : snapshot.val()};
+                        }
+                        return { status : false, message : "The read UUID failed", data: null };
                         userReference.off("value");
                     },
                     function(errorObject){
