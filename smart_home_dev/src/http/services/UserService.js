@@ -52,6 +52,15 @@ module.exports = {
             throw Error(e.message);
         }
     },
+
+    logout: async function(uuid) {
+        try {
+            return await Users.logout(uuid);
+        } catch (e) {
+            throw Error(e.message);
+        }
+    },
+
     generateUUIDByUserId : async function (user_id) {
         try {
             return await Users.generateUUIDByUserId(user_id);

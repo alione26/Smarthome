@@ -69,17 +69,18 @@ module.exports = {
         }
     },
 
-    /*logout: async function (req, res, next) {
+    logout: async function (req, res, next) {
         var currentUUID =  req.headers.uuid;
 
         try {
-            UserService.logout(currentUUID);
+            var logoutData = await userService.logout(currentUUID);
+            console.log(logoutData);
 
-            return res.status(200).json({ success: true, data: null, message: "Succesfully" });
+            return res.status(200).json({ success: logoutData.status, data: null, message: logoutData.message });
         } catch (e) {
             return res.status(400).json({ success: false, message: e.message });
         }
-    }*/
+    },
 }
 
 

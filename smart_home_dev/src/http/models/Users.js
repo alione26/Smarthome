@@ -136,6 +136,28 @@ module.exports = {
          return {status : true, message : 'Login successfully', user : userContent};
     },
 
+    logout : async function (userUuid) {
+        try {
+             var getUser = await module.exports.getUserByUUID(userUuid); //note
+             console.log(getUser.status);
+             if (!getUser.status && !getUser.data) {
+                return { status: false, message: 'Uuid not exist.' };
+             }
+             var userData = getUser.data;
+             var userContent = userData[Object.keys(userData)[0]];
+             var userId = userContent.user_id;
+
+             var referencePath = '/users/'+userId+'/';
+             var userReference = firebase.database().ref(referencePath);
+             await userReference.update({"uuid" : '', "latest" : Math.floor(Date.now()/1000)});
+
+             return { status: true, message: 'Logout Successfully.'};
+        }catch (e) {
+            throw Error(e.message);
+            return { status : false, message: 'Logout failed'};
+        }
+    },
+
     getUserByEmail : async function(email) {
         var userReference = firebase.database().ref("/users");
         try {

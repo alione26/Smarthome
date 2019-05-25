@@ -42,6 +42,7 @@ var appRouter = function (app) {
     const authController = require('../src/http/controllers/AuthController');
     app.post('/auth/register', authController.register);
     app.post('/auth/login', authController.login);
+    app.post('/auth/logout', authController.logout);
 }
 
 module.exports = appRouter;
