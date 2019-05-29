@@ -1,6 +1,7 @@
 var express = require("express");
 var bodyParser = require('body-parser');
 
+var socketio = require('./src/socketio/socketio')
 var firebase = require('firebase');
 var firebaseAdmin = require("firebase-admin");
 var serviceAccount = require("./smarthome-iot95-firebase.json");
@@ -13,13 +14,16 @@ firebase.initializeApp({
 var routes = require("./routes/routes.js");
 
 var app = express();
+var http = require('http').Server(app);
+global.io = require('socket.io')(http); // io is global var
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 routes(app);
-
-var server = app.listen(3000, function () {
+socketio.connect();
+socketio.recievedSmartHomeId();
+var server = http.listen(3000, function () {
     console.log("app running on port.", server.address().port);
 });
 
