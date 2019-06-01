@@ -1,5 +1,5 @@
 var smarthomeService = require("../services/SmarthomeService");
-var socketio = require("../../socketio/socketio"); //try socketio
+//var socketio = require("../../socketio/socketio"); //try socketio
 const uuidv4 = require('uuid/v4');
 module.exports = {
     smarthome_list : async function(req, res, next) {
@@ -29,8 +29,8 @@ module.exports = {
         var smarthomeId = req.params['id'];
         var get_by_id = await smarthomeService.smarthome_by_id(smarthomeId);
         var socketId = get_by_id.data.socketId;
-        console.log(socketId); //try sockteio
-        await socketio.emitMessage(socketId, get_by_id.data); //trysocketio
+        //console.log(socketId); //try sockteio
+        //await socketio.emitMessage(socketId, get_by_id.data); //trysocketio
         console.log(get_by_id);
         if (get_by_id.status) {
              return res.status(200).json({ success : true, message : get_by_id.message, data : get_by_id.data});

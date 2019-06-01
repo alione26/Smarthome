@@ -53,41 +53,4 @@ module.exports = {
         }
     },
 
-    logout: async function(uuid) {
-        try {
-            return await Users.logout(uuid);
-        } catch (e) {
-            throw Error(e.message);
-        }
-    },
-
-    generateUUIDByUserId : async function (user_id) {
-        try {
-            return await Users.generateUUIDByUserId(user_id);
-        } catch (e) {
-            throw Error(e.message);
-        }
-    },
-    checkUUID : async function(uuid) {
-        try {
-            var getUser =  await Users.getUserByUUID(uuid);
-            console.log(getUser.status);
-            if (!getUser.status && !getUser.data) {
-                return { status: false, message: 'Uuid not exist.' };
-            }
-
-            var userData = getUser.data;
-            var userContent = userData[Object.keys(userData)[0]];
-            var latestTime = Math.floor(Date.now()/1000) - parseInt(userContent.latest);
-
-            if (latestTime > (2 * 60 * 60)) {
-                return { status: false, message: 'Uuid has expired. Please login again!' };
-            }
-
-            return { status: true, message: 'Successfully.' };
-
-        } catch (e) {
-            throw Error(e.message);
-        }
-    },
 }

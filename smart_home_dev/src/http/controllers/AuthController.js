@@ -1,5 +1,7 @@
 const uuidv4 = require('uuid/v4');
-
+const userDeviceController = require('./UserDeviceController');
+const userDevice = require('../models/UserDevices');
+const userDeviceService = require('../services/UserDeviceService');
 const userService = require("../services/UserService");
 const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
@@ -9,7 +11,7 @@ module.exports = {
         console.log(currentUUID);
 
         try {
-            var checkUUID =  await userService.checkUUID(currentUUID);
+            var checkUUID =  await userDeviceService.checkUUID(currentUUID);
             if (!checkUUID.status) {
                 return res.status(400).json({ success: false, message: checkUUID.message });
             }
@@ -58,8 +60,21 @@ module.exports = {
             }
 
             var user = login.user;
-            console.log(user);
-            var uuid = await userService.generateUUIDByUserId(user.user_id);
+            //console.log(user);
+            var getUserDevice = await userDevice.getUserDeviceByUserId(user.user_id);
+            //console.log(getUserDevice.status);
+            //console.log(getUserDevice.data);
+            if (getUserDevice.status) {
+                var userDeviceData = getUserDevice.data;
+                var userDeviceContent = userDeviceData[Object.keys(userDeviceData)[0]];
+                var userDeviceId = userDeviceContent.userDevice_id;
+                var uuid = await userDeviceService.generateUUIDByUserDeviceId(userDeviceId);
+            }
+            else {
+                var uuid = uuidv4();
+                await userDeviceController.new_userDevice(user.user_id, uuid);
+
+            }
             var userData = { user_id: user.user_id, email: user.email, name: user.name, phone: user.phone, gender: user.gender, date_of_birth : user.date_of_birth , created_at: user.created_at, updated_at: user.updated_at };
             //var responseData = UserService.transformDataForDevices(req.headers['x-device'], [userData]);
 
@@ -73,7 +88,7 @@ module.exports = {
         var currentUUID =  req.headers.uuid;
 
         try {
-            var logoutData = await userService.logout(currentUUID);
+            var logoutData = await userDeviceService.logout(currentUUID);
             console.log(logoutData);
 
             return res.status(200).json({ success: logoutData.status, data: null, message: logoutData.message });

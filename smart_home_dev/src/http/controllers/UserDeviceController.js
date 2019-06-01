@@ -10,12 +10,14 @@ module.exports = {
          }
         return res.success(400).json({ success : false, message : get_list_userDevice.message});
     },
-    new_userDevice : async function (req, res) {
+    new_userDevice : async function (userId, token, res) {
         console.log("HTTP POST Request");
         var userDevice_id = uuidv4();
-        var userDeviceData = { userDevice_id: userDevice_id, user_id : req.body.user_id, type : req.body.type,
-            device_id : req.body.device_id, device_infor : req.body.device_infor, status : req.body.status,
-            token : req.body.token, push_token : req.body.push_token, last_request : req.body.last_request};
+        var userDeviceData = { userDevice_id : userDevice_id, user_id : userId, token : token, created_at : Math.floor(Date.now()/1000),
+            latest : Math.floor(Date.now()/1000)};
+        // var userDeviceData = { userDevice_id: userDevice_id, user_id : req.body.user_id, type : req.body.type,
+        //     device_id : req.body.device_id, device_infor : req.body.device_infor, status : req.body.status,
+        //     token : req.body.token, push_token : req.body.push_token, last_request : req.body.last_request};
         var create_userDevice = await userDeviceService.add_userDevice(userDeviceData, userDevice_id);
         console.log(create_userDevice);
         if (create_userDevice.status) {

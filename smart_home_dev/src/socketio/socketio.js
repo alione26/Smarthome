@@ -3,29 +3,27 @@ var firebase = require('firebase');
 module.exports = {
     connect : function() {
         io.on('connection', function(socket){
-            console.log('a user connected');
-            console.log('client sid :', socket.id);
+            console.log('a user connected with sid :' + socket.id);
 
             socket.on('disconnect', function(){
-                console.log('user disconnected');
+                console.log('user disconnected, sid :' + socket.id);
             });
         });
     },
     recievedSmartHomeId : function() {
          io.on('connection', function(socket){
             socket.on('smarthomeId', async function(msg){
-                console.log('message: ' + msg);
-                console.log(socket.id);
+                console.log('smarthomeId: ' + msg + '...sent from client :' + socket.id);
                 var smarthomeReference = firebase.database().ref("/smarthomes/"+ msg);
                 try {
                     return await smarthomeReference.update({"socketId" : socket.id}).then(
                         function(error) {
                             var response = null;
                             if (error) {
-                                response =  { status: false, message: "Data could not be updated." + error };
+                                response =  { status: false, message: "SocketId could not be updated." + error };
                             }
                             else {
-                                response =  { status: true, message: "Data updated successfully." };
+                                response =  { status: true, message: "SocketId updated successfully." };
                             }
                             return response;
                         });
