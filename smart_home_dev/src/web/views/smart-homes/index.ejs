@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <% include ../partials/head %>
+</head>
+
+<body>
+  <% include ../partials/menu %>
+  <div class="container bg-3 text-center">
+    <h3>
+      <%= page %>
+    </h3><br>
+    <div class="row">
+      <% for (item in smartHomeList) { %>
+      <div class="smart-home-item">
+        <p>created_at:
+          <%= smartHomeList[item].created_at %>
+        </p>
+        <p>machine_type:
+          <%= smartHomeList[item].machine_type %>
+        </p>
+        <p>series_number:
+          <%= smartHomeList[item].series_number %>
+        </p>
+        <p>smarthome_id:
+          <%= smartHomeList[item].smarthome_id %>
+        </p>
+        <p>smarthome_user_id:
+          <%= smartHomeList[item].smarthome_user_id %>
+        </p>
+        <p>socketId:
+          <%= smartHomeList[item].socketId %>
+        </p>
+        <p>status:
+          <%= smartHomeList[item].status %>
+        </p>
+        <p>updated_at:
+          <%= smartHomeList[item].updated_at %>
+        </p>
+        <div>
+          <a href="/smart-homes/<%= smartHomeList[item].smarthome_id %>" class="btn btn-info">Show Devices</a>
+        </div>
+      </div>
+      <% } %>
+    </div>
+  </div>
+</body>
+<% include ../partials/script %>
+
+</html>

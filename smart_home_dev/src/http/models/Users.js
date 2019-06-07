@@ -102,6 +102,7 @@ module.exports = {
             throw Error(e.message);
         }
     },
+
     register : async function(userData) {
         userData.password = hashPassword(userData.password);
         userData.created_at = Math.floor(Date.now()/1000);
@@ -125,6 +126,16 @@ module.exports = {
             throw Error(e.message);
         }
     },
+    login : async function(loginData, userData) {
+         var userContent = userData[Object.keys(userData)[0]]; //note
+         var userPassword = userContent.password;
+         var passwordsMatch = comparePassword(loginData.password, userPassword);
+         if(!passwordsMatch) {
+            return { status: false, message: 'Invalid email & password.' };
+         }
+         return {status : true, message : 'Login successfully', user : userContent};
+    },
+
     getUserByEmail : async function(email) {
         var userReference = firebase.database().ref("/users");
         try {
@@ -144,4 +155,5 @@ module.exports = {
             throw Error(e.message);
         }
     },
+
 }

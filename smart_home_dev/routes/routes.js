@@ -4,7 +4,8 @@
 var appRouter = function (app) {
     const userController = require('../src/http/controllers/UserController');
     //to handle HTTP get request
-    app.get('/user/get_list', userController.user_list);
+    const authControllerUser = require('../src/http/controllers/AuthController');
+    app.get('/user/get_list', authControllerUser.middleware , userController.user_list);
     app.get('/user/get_by_id/:id', userController.user_by_id);
     app.post('/user/add', userController.new_user);
     app.post('/user/update/:id', userController.update_user);
@@ -30,6 +31,7 @@ var appRouter = function (app) {
     app.post('/smarthome_device/add', smarthomeDeviceController.new_smarthomeDevice);
     app.post('/smarthome_device/update/:id', smarthomeDeviceController.update_smarthomeDevice);
     app.delete('/smarthome_device/delete/:id', smarthomeDeviceController.delete_smarthomeDevice);
+    app.get('/smarthome_device/:id', smarthomeDeviceController.getSmartHomeDeviceBySmartHomeId);
 
     const userDeviceController = require('../src/http/controllers/UserDeviceController');
     app.get('/user_device/get_list', userDeviceController.userDevice_list);
@@ -40,6 +42,23 @@ var appRouter = function (app) {
 
     const authController = require('../src/http/controllers/AuthController');
     app.post('/auth/register', authController.register);
+    app.post('/auth/login', authController.login);
+    app.post('/auth/logout', authController.logout);
+
+    const actionController = require('../src/http/controllers/ActionController');
+    app.post('/action/', actionController.action);
+
+    // Web routes
+    const indexController = require('../src/web/controllers/IndexController');
+
+    /*app.get('/', function (req, res, next) {
+        res.render('../src/web/views/index.ejs', {page:'Home', menuId:'home'});
+    });*/
+
+    app.get('/', indexController.index);
+    app.get('/error', indexController.error);
+    app.get('/smart-homes', indexController.smartHomes);
+    app.get('/smart-homes/:id', indexController.detail);
 }
 
 module.exports = appRouter;

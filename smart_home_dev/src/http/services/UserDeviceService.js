@@ -17,4 +17,43 @@ module.exports = {
     delete_userDevice : async function(userDeviceId) {
         return await userDevice.delete_userDevice(userDeviceId);
     },
+
+    generateUUIDByUserDeviceId : async function (userDeviceId) {
+        try {
+            return await userDevice.generateUUIDByUserDeviceId(userDeviceId);
+        } catch (e) {
+            throw Error(e.message);
+        }
+    },
+
+    checkUUID : async function(uuid) {
+        try {
+            var getUserDevice =  await userDevice.getUserDeviceByUUID(uuid);
+            console.log(getUserDevice.status);
+            if (!getUserDevice.status && !getUserDevice.data) {
+                return { status: false, message: 'Uuid not exist.' };
+            }
+
+            var userDeviceData = getUserDevice.data;
+            var userDeviceContent = userDeviceData[Object.keys(userDeviceData)[0]];
+            var latestTime = Math.floor(Date.now()/1000) - parseInt(userDeviceContent.latest);
+
+            if (latestTime > (2 * 60 * 60)) {
+                return { status: false, message: 'Uuid has expired. Please login again!' };
+            }
+
+            return { status: true, message: 'Successfully.' };
+
+        } catch (e) {
+            throw Error(e.message);
+        }
+    },
+
+    logout: async function(uuid) {
+        try {
+            return await userDevice.logout(uuid);
+        } catch (e) {
+            throw Error(e.message);
+        }
+    },
 }

@@ -91,4 +91,26 @@ module.exports = {
             throw Error(e.message);
         }
     },
+    getSmartHomeBySmartHomeId : async function (smarthomeId) {
+        var smartHomeReference = firebase.database().ref("/smarthomes");
+        try {
+              return await smartHomeReference.orderByChild("smarthome_id")
+                .equalTo(smarthomeId)
+                .once('value').then(
+                    function(snapshot){
+                        if (snapshot.val()) {
+                            return { status : true, message :"The read smarthomes succeeded", data : snapshot.val()};
+                        }
+                        return { status : false, message : "The read smarthomes failed", data: null };
+                        smartHomeReference.off("value");
+                    },
+                    function(errorObject){
+                        console.log("The read failed: " + errorObject.code);
+                        return { status : false, message : "The read failed: " + errorObject.code, data: null };
+                    }
+              );
+        }catch (e) {
+            throw Error(e.message);
+        }
+    },
 }

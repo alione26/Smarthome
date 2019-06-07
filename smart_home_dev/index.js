@@ -1,25 +1,34 @@
 var express = require("express");
 var bodyParser = require('body-parser');
 
+var socketio = require('./src/socketio/socketio')
 var firebase = require('firebase');
 var firebaseAdmin = require("firebase-admin");
 var serviceAccount = require("./smarthome-iot95-firebase.json");
 
 firebase.initializeApp({
-  credential: firebaseAdmin.credential.cert(serviceAccount),
-  databaseURL: "https://smarthome-iot95.firebaseio.com"
+    credential: firebaseAdmin.credential.cert(serviceAccount),
+    databaseURL: "https://smarthome-iot95.firebaseio.com"
 });
 
 var routes = require("./routes/routes.js");
 
 var app = express();
+var http = require('http').Server(app);
+global.io = require('socket.io')(http); // io is global var
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-routes(app);
+app.engine('ejs', require('ejs').renderFile);
+app.set('view engine', 'ejs');
+app.use(express.static(__dirname + '/src/web/stylesheets'));
+app.use(express.static(__dirname + '/src/web/javascripts'));
 
-var server = app.listen(3000, function () {
+routes(app);
+socketio.connect();
+socketio.recievedSmartHomeId();
+var server = http.listen(3000, function () {
     console.log("app running on port.", server.address().port);
 });
 

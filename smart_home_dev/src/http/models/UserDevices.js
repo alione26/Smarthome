@@ -1,4 +1,5 @@
 var firebase = require('firebase');
+const uuidv4 = require('uuid/v4');
 
 module.exports = {
     get_list : async function() {
@@ -89,6 +90,82 @@ module.exports = {
                     });
         } catch (e) {
             throw Error(e.message);
+        }
+    },
+    getUserDeviceByUserId : async function(userId) {
+        var userDeviceReference = firebase.database().ref("/userDevices");
+        try {
+              return await userDeviceReference.orderByChild("user_id")
+                .equalTo(userId)
+                .once('value').then(
+                    function(snapshot){
+                        if (snapshot.val()) {
+                            return { status : true, message :"The read userDevices succeeded", data : snapshot.val()};
+                        }
+                        return { status : false, message : "The read userDevices failed", data: null };
+                        userDeviceReference.off("value");
+                    },
+                    function(errorObject){
+                        console.log("The read failed: " + errorObject.code);
+                        return { status : false, message : "The read failed: " + errorObject.code, data: null };
+                    }
+              );
+        }catch (e) {
+            throw Error(e.message);
+        }
+    },
+
+    generateUUIDByUserDeviceId : async function (userDeviceId) {
+        var newUuid = uuidv4();
+        var referencePath = '/userDevices/'+userDeviceId+'/';
+        var userDeviceReference = firebase.database().ref(referencePath);
+        await userDeviceReference.update({"token" : newUuid, "latest" : Math.floor(Date.now()/1000)});
+        return newUuid;
+    },
+
+    getUserDeviceByUUID : async function (uuid) {
+
+        var userDeviceReference = firebase.database().ref("/userDevices");
+        try {
+             return await userDeviceReference.orderByChild("token")
+                .equalTo(uuid)
+                .once('value').then(
+                    function(snapshot){
+                        if (snapshot.val()) {
+                            return { status : true, message :"The read UUID succeeded", data : snapshot.val()};
+                        }
+                        return { status : false, message : "The read UUID failed", data: null };
+                        userDeviceReference.off("value");
+                    },
+                    function(errorObject){
+                        console.log("The read failed: " + errorObject.code);
+                        return { status : false, message : "The read failed: " + errorObject.code, data: null };
+                    }
+              );
+        }catch (e) {
+            throw Error(e.message);
+        }
+    },
+
+    logout : async function (userDeviceUuid) {
+        try {
+             var getUserDevice = await module.exports.getUserDeviceByUUID(userDeviceUuid); //note
+             console.log(getUserDevice.status);
+             if (!getUserDevice.status && !getUserDevice.data) {
+                return { status: false, message: 'Uuid not exist.' };
+             }
+             var userDeviceData = getUserDevice.data;
+             var userDeviceContent = userDeviceData[Object.keys(userDeviceData)[0]];
+             var userDeviceId = userDeviceContent.userDevice_id;
+
+             var referencePath = '/userDevices/'+userDeviceId+'/';
+             var userDeviceReference = firebase.database().ref(referencePath);
+             await userDeviceReference.update({"token" : '', "latest" : Math.floor(Date.now()/1000)});
+
+             return { status: true, message: 'Logout Successfully.'};
+        }catch (e) {
+            throw Error(e.message);
+            return { status : false, message: 'Logout failed'};
         }
     },
 }

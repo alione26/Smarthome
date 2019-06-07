@@ -27,7 +27,7 @@ module.exports = {
 
             var isSuccess = await Users.register(userData);
             if (!isSuccess.status) {
-                return { status: false, message: 'Can not regiser user.', data: isSuccess.message };
+                return { status: false, message: 'Can not register user.', data: isSuccess.message };
             }
 
             return { status: true, message: 'Successfully.', data: isSuccess.data };
@@ -35,4 +35,22 @@ module.exports = {
             throw Error(e.message);
         }
     },
+
+    login : async function(loginData) {
+        try {
+            var getUser = await Users.getUserByEmail(loginData.email);
+            if (getUser.status && getUser.data) {
+                var UserData = getUser.data;
+                var user = await Users.login(loginData, UserData);
+                if (user.status) {
+                return {status : true, message : user.message, user : user.user};
+                }
+                return {status : false, message : user.message};
+            }
+            return {status : false, message : 'Email not exist'};
+        }catch(e) {
+            throw Error(e.message);
+        }
+    },
+
 }
