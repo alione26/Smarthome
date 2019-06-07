@@ -57,6 +57,7 @@ var appRouter = function (app) {
     app.get('/', indexController.index);
     app.get('/error', indexController.error);
     app.get('/smart-homes', indexController.smartHomes);
+    app.get('/smart-homes/:id', indexController.detail);
 }
 
 module.exports = appRouter;
