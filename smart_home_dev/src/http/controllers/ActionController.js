@@ -2,6 +2,7 @@ var socketio = require('../../socketio/socketio');
 var userDevice = require('../models/UserDevices');
 var smartHomeUser = require('../models/SmarthomeUsers');
 var smartHome = require('../models/Smarthomes');
+var smartHomeDevice = require('../models/SmarthomeDevices')
 
 module.exports = {
     action : async function(req, res) {
@@ -36,6 +37,9 @@ module.exports = {
         var smartHomeContent = smartHomeData[Object.keys(smartHomeData)[0]];
         var socketId = smartHomeContent.socketId;
         console.log('socketId:', socketId);
+
+        // var getSmartHomeDevice = await smartHomeDevice.getSmartHomeDeviceBySmartHomeId(smarthomeId);
+        // console.log(getSmartHomeDevice.data);
 
 
         var emitData = { deviceId : smarthome_device_id, action : action};
