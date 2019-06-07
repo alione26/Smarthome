@@ -17,6 +17,12 @@ module.exports = {
             if (!response.data.success) {
                 res.redirect(constants.API_URI + '/error');
             }
+            var smartHomeList = response.data.data;
+
+            for (item in smartHomeList) {
+                console.log(smartHomeList[item].smarthome_user_id);
+              }
+
             res.render(viewPath + '/smart-homes/index.ejs', { page: 'SMART HOMES', menuId: 'smart_homes', smartHomeList: response.data.data });
         } catch (error) {
             console.error(error);

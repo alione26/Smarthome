@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 
 app.engine('ejs', require('ejs').renderFile);
 app.set('view engine', 'ejs');
-
+app.use(express.static(__dirname + '/src/web/stylesheets'));
 
 routes(app);
 socketio.connect();

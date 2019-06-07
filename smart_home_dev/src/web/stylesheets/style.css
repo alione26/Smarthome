@@ -2,7 +2,7 @@
     background-color: #ffffff;
     color: #555555;
 }
-.container-fluid {
+.container {
     padding-top: 70px;
     padding-bottom: 70px;
 }
@@ -20,4 +20,10 @@
 }
 .active>a {
   color: #1abc9c !important;;
+}
+
+.smart-home-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+    max-width: 360px;
 }
