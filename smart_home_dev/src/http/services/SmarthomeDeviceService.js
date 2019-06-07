@@ -17,4 +17,7 @@ module.exports = {
     delete_smarthomeDevice : async function(smarthomeDeviceId) {
         return await smarthomeDevice.delete_smarthomeDevice(smarthomeDeviceId);
     },
+    getSmartHomeDeviceBySmartHomeId : async function(smartHomeId) {
+        return await smarthomeDevice.getSmartHomeDeviceBySmartHomeId(smartHomeId);
+    },
 }

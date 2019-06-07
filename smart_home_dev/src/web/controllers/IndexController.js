@@ -25,13 +25,19 @@ module.exports = {
     },
     detail: async function (req, res, next) {
         try {
-            var response = await axios.get(constants.API_URI + '/smarthome/get_list');
+            var smartHomeId = req.params['id'];
 
-            if (!response.data.success) {
+            var smartHome = await axios.get(constants.API_URI + '/smarthome/get_by_id/' + smartHomeId);
+            if (!smartHome.data.success) {
                 res.redirect(constants.API_URI + '/error');
             }
 
-            res.render(viewPath + '/smart-homes/detail.ejs', { page: 'SMART HOME DETAIL', menuId: 'smart_homes', smartHomeList: response.data.data });
+            var smartHomeDevices = await axios.get(constants.API_URI + '/smarthome_device/' + smartHomeId);
+            if (!smartHomeDevices.data.success) {
+                res.redirect(constants.API_URI + '/error');
+            }
+
+            res.render(viewPath + '/smart-homes/detail.ejs', { page: 'SMART HOME DETAIL', menuId: 'smart_homes', smartHome: smartHome.data.data, smartHomeDevices: smartHomeDevices.data.data });
         } catch (error) {
             console.error(error);
         }
