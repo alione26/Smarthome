@@ -7,8 +7,8 @@ var firebaseAdmin = require("firebase-admin");
 var serviceAccount = require("./smarthome-iot95-firebase.json");
 
 firebase.initializeApp({
-  credential: firebaseAdmin.credential.cert(serviceAccount),
-  databaseURL: "https://smarthome-iot95.firebaseio.com"
+    credential: firebaseAdmin.credential.cert(serviceAccount),
+    databaseURL: "https://smarthome-iot95.firebaseio.com"
 });
 
 var routes = require("./routes/routes.js");
@@ -23,6 +23,7 @@ app.use(bodyParser.json());
 app.engine('ejs', require('ejs').renderFile);
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/src/web/stylesheets'));
+app.use(express.static(__dirname + '/src/web/javascripts'));
 
 routes(app);
 socketio.connect();
