@@ -46,6 +46,17 @@ var appRouter = function (app) {
 
     const actionController = require('../src/http/controllers/ActionController');
     app.post('/action/', actionController.action);
+
+    // Web routes
+    const indexController = require('../src/web/controllers/IndexController');
+
+    /*app.get('/', function (req, res, next) {
+        res.render('../src/web/views/index.ejs', {page:'Home', menuId:'home'});
+    });*/
+
+    app.get('/', indexController.index);
+    app.get('/error', indexController.error);
+    app.get('/smart-homes', indexController.smartHomes);
 }
 
 module.exports = appRouter;

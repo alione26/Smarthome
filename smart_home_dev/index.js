@@ -20,6 +20,10 @@ global.io = require('socket.io')(http); // io is global var
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+app.engine('ejs', require('ejs').renderFile);
+app.set('view engine', 'ejs');
+
+
 routes(app);
 socketio.connect();
 socketio.recievedSmartHomeId();
