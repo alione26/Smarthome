@@ -67,10 +67,49 @@ module.exports = {
             var smarthome_id = req.body.smarthome_id;
             var action = req.body.action;
 
+            var response = await axios.get(constants.API_URI + '/smarthome/get_by_id/' + smarthome_id);
+            if (!response.data.success) {
+                res.redirect(constants.API_URI + '/error');
+            }
+            var smartHome = response.data.data;
+
+            var response = await axios.get(constants.API_URI + '/smarthome_device/get_by_id/' + smarthomeDevice_id);
+            if (!response.data.success) {
+                res.redirect(constants.API_URI + '/error');
+            }
+            var smartHomeDevice = response.data.data;
+
+            var updateSmartHomeDevice = axios({
+                method: 'post',
+                url: constants.API_URI + '/smarthome_device/update/' + smarthomeDevice_id,
+                data: {
+                    smarthome_id: smartHomeDevice.smarthome_id,
+                    series_number: smartHomeDevice.series_number,
+                    machine_type: smartHomeDevice.machine_type,
+                    status: action,
+                    updated_at: smartHomeDevice.updated_at,
+                    created_at: smartHomeDevice.created_at,
+                    name: smartHomeDevice.name,
+                    data: smartHomeDevice.data
+                }
+            });
+
+            var actionData = {
+                smarthome_device_id: smarthomeDevice_id,
+                action: action == 'active' ? 'on' : 'off'
+            };
+
+            var doAction = axios({
+                headers: {'uuid': constants.DEMO_USER_TOKEN},
+                method: 'post',
+                url: constants.API_URI + '/action',
+                data: actionData
+            });
+            
             return res.status(200).json({ success: true, message: 'Successfully' });
-        
+
         } catch (error) {
-            return res.status(400).json({ success: false, message: error});
+            return res.status(400).json({ success: false, message: error });
         }
     }
 }

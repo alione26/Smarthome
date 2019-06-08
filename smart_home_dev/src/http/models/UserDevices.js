@@ -124,7 +124,6 @@ module.exports = {
     },
 
     getUserDeviceByUUID : async function (uuid) {
-
         var userDeviceReference = firebase.database().ref("/userDevices");
         try {
              return await userDeviceReference.orderByChild("token")

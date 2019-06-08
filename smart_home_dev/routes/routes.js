@@ -47,7 +47,7 @@ var appRouter = function (app) {
     app.post('/auth/logout', authController.logout);
 
     const actionController = require('../src/http/controllers/ActionController');
-    app.post('/action/', actionController.action);
+    app.post('/action', actionController.action);
 
     // Web routes
     const indexController = require('../src/web/controllers/IndexController');
