@@ -15,7 +15,8 @@ module.exports = {
         var smarthomeDevice_id = uuidv4();
         var smarthomeDeviceData = { smarthomeDevice_id: smarthomeDevice_id, smarthome_id: req.body.smarthome_id,
             series_number : req.body.series_number, machine_type : req.body.machine_type,
-            status : req.body.status, updated_at : req.body.updated_at, created_at : req.body.created_at };
+            status : req.body.status, updated_at : req.body.updated_at, created_at : req.body.created_at,
+            name : req.body.name, data : req.body.data };
         var create_smarthomeDevice = await smarthomeDeviceService.add_smarthomeDevice(smarthomeDeviceData, smarthomeDevice_id);
         console.log(create_smarthomeDevice);
         if (create_smarthomeDevice.status) {
@@ -36,7 +37,10 @@ module.exports = {
     update_smarthomeDevice : async function(req, res) {
         console.log("HTTP PUT Request");
         var smarthomeDeviceId = req.params['id'];
-        var smarthomeDeviceData = { name : req.body.name, email : req.body.email, phone : req.body.phone };
+        var smarthomeDeviceData = { smarthomeDevice_id: smarthomeDevice_id, smarthome_id: req.body.smarthome_id,
+            series_number : req.body.series_number, machine_type : req.body.machine_type,
+            status : req.body.status, updated_at : req.body.updated_at, created_at : req.body.created_at,
+            name : req.body.name, data : req.body.data };
         var update_smarthomeDevice = await smarthomeDeviceService.update_smarthomeDevice(smarthomeDeviceId, smarthomeDeviceData);
         console.log(update_smarthomeDevice);
         if (update_smarthomeDevice.status) {

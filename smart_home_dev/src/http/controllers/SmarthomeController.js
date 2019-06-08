@@ -16,7 +16,8 @@ module.exports = {
         var smarthome_id = uuidv4();
         var smarthomeData = { smarthome_id: smarthome_id, smarthome_user_id: req.body.smarthome_user_id,
             series_number : req.body.series_number, machine_type : req.body.machine_type,
-            status : req.body.status, updated_at : req.body.updated_at, created_at : req.body.created_at };
+            status : req.body.status, updated_at : req.body.updated_at, created_at : req.body.created_at,
+            name : req.body.name };
         var create_smarthome = await smarthomeService.add_smarthome(smarthomeData, smarthome_id);
         console.log(create_smarthome);
         if (create_smarthome.status) {
@@ -40,7 +41,10 @@ module.exports = {
     update_smarthome : async function(req, res) {
         console.log("HTTP PUT Request");
         var smarthomeId = req.params['id'];
-        var smarthomeData = { name : req.body.name, email : req.body.email, phone : req.body.phone };
+        smarthomeData = { smarthome_id: smarthome_id, smarthome_user_id: req.body.smarthome_user_id,
+            series_number : req.body.series_number, machine_type : req.body.machine_type,
+            status : req.body.status, updated_at : req.body.updated_at, created_at : req.body.created_at,
+            name : req.body.name };
         var update_smarthome = await smarthomeService.update_smarthome(smarthomeId, smarthomeData);
         console.log(update_smarthome);
         if (update_smarthome.status) {

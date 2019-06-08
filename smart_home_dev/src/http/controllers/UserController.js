@@ -35,7 +35,8 @@ module.exports = {
     update_user : async function(req, res) {
         console.log("HTTP PUT Request");
         var userId = req.params['id'];
-        var userData = { name : req.body.name, email : req.body.email, phone : req.body.phone };
+        var userData = { user_id: user_id, name : req.body.name, password: req.body.password, email : req.body.email, phone : req.body.phone,
+            gender : req.body.gender, date_of_birth : req.body.date_of_birth, created_at : req.body.created_at };
         var update_user = await userService.update_user(userId, userData);
         console.log(update_user);
         if (update_user.status) {

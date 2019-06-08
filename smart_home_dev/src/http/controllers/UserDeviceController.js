@@ -38,7 +38,8 @@ module.exports = {
     update_userDevice : async function(req, res) {
         console.log("HTTP PUT Request");
         var userDeviceId = req.params['id'];
-        var userDeviceData = { name : req.body.name, email : req.body.email, phone : req.body.phone };
+        var userDeviceData = userDeviceData = { userDevice_id : userDevice_id, user_id : userId, token : token, created_at : Math.floor(Date.now()/1000),
+            latest : Math.floor(Date.now()/1000)};
         var update_userDevice = await userDeviceService.update_userDevice(userDeviceId, userDeviceData);
         console.log(update_userDevice);
         if (update_userDevice.status) {
