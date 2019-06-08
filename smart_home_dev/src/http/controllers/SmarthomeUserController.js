@@ -14,7 +14,7 @@ module.exports = {
         console.log("HTTP POST Request");
         var smarthomeUser_id = uuidv4();
         var smarthomeUserData = { smarthomeUser_id: smarthomeUser_id, user_id : req.body.user_id, smarthome_id: req.body.smarthome_id,
-            finger_id : req.body.finger_id, updated_at : req.body.updated_at, created_at : req.body.created_at };
+            finger_id : req.body.finger_id, rfid_id : req.body.rfid_id, updated_at : req.body.updated_at, created_at : req.body.created_at };
         var create_smarthomeUser = await smarthomeUserService.add_smarthomeUser(smarthomeUserData, smarthomeUser_id);
         console.log(create_smarthomeUser);
         if (create_smarthomeUser.status) {
@@ -35,7 +35,8 @@ module.exports = {
     update_smarthomeUser : async function(req, res) {
         console.log("HTTP PUT Request");
         var smarthomeUserId = req.params['id'];
-        var smarthomeUserData = { name : req.body.name, email : req.body.email, phone : req.body.phone };
+        var smarthomeUserData = { smarthomeUser_id: smarthomeUser_id, user_id : req.body.user_id, smarthome_id: req.body.smarthome_id,
+            finger_id : req.body.finger_id, rfid_id : req.body.rfid_id, updated_at : req.body.updated_at, created_at : req.body.created_at };
         var update_smarthomeUser = await smarthomeUserService.update_smarthomeUser(smarthomeUserId, smarthomeUserData);
         console.log(update_smarthomeUser);
         if (update_smarthomeUser.status) {
@@ -53,4 +54,12 @@ module.exports = {
         }
         return res.status(400).json({ success: false, message: delete_smarthomeUser.message});
     },
+    getSmartHomeUserBySmartHomeId : async function(req, res) {
+        var smarthomeId = req.params[smarthome_id];
+        var getSmartHomeUser = await smarthomeUserService.getSmartHomeUserBySmartHomeId(smarthomeId);
+        if (getSmartHomeUser.status) {
+            return res.status(200).json({ success : true, message : getSmartHomeUser.message, data : getSmartHomeUser.data});
+        }
+        return res.status(400).json({success : false, message : getSmartHomeUser.message});
+    }
 }
