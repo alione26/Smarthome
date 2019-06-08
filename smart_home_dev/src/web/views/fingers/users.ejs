@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../partials/head %>
+</head>
+
+<body>
+    <% include ../partials/menu %>
+    <div class="container bg-3 text-center">
+        <h3>
+            <%= page %>
+        </h3><br>
+        <div class="row">
+            <% for (item in smartHomeDevices) { %>
+            <div class="col-md-6">
+                <div class="smart-home-item">
+                    <div class="device-title">
+                        <span>
+                            <%= smartHomeDevices[item].name %></span>
+                    </div>
+                    <div class="device-info">
+                        <p>created_at:
+                            <%= smartHomeDevices[item].created_at %>
+                        </p>
+                        <p>machine_type:
+                            <%= smartHomeDevices[item].machine_type %>
+                        </p>
+                        <p>series_number:
+                            <%= smartHomeDevices[item].series_number %>
+                        </p>
+                        <p>smarthomeDevice_id:
+                            <%= smartHomeDevices[item].smarthomeDevice_id %>
+                        </p>
+                        <p>smarthome_id:
+                            <%= smartHomeDevices[item].smarthome_id %>
+                        </p>
+                        <p>status:
+                            <%= smartHomeDevices[item].status %>
+                        </p>
+                        <p>updated_at:
+                            <%= smartHomeDevices[item].updated_at %>
+                        </p>
+                    </div>
+                    <div class="text-center action-item">
+                            <% if (smartHomeDevices[item].machine_type == 'Fingerprint_Sensor') { %>
+                                <a href="/smart-homes/<%= smartHome.smarthome_id %>/users" class="btn btn-info show-list-finger-user">Show Finger Users</a>
+                              <% }  else { %>
+                        <a><input type="checkbox" name="control-action" <%- smartHomeDevices[item].status=='active' ?
+                                'checked' : '' %> data-toggle="toggle" data-onstyle="success" data-width="130"
+                            data-height="50"></a>
+                            <% } %>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+        </div>
+    </div>
+</body>
+<% include ../partials/script %>
+
+</html>

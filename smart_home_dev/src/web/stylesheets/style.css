@@ -3,8 +3,8 @@
     color: #555555;
 }
 .container {
-    padding-top: 70px;
-    padding-bottom: 70px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 .navbar {
     padding-top: 15px;
@@ -25,7 +25,30 @@
 .smart-home-item {
     border: 1px solid #ccc;
     padding: 10px;
-    max-width: 360px;
     margin: 10px;
     text-align: left;
+    width: 100%;
+    min-height: 368px;
+}
+
+.smart-home-item .device-title {
+    text-transform: uppercase;
+    border-bottom: 1px solid #ccc;
+    padding: 20px;
+    font-size: 18px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.smart-home-item .device-info {
+    padding: 10px;
+    font-size: 14px;
+}
+
+.action-item .btn {
+    text-transform: uppercase;
+}
+
+.action-item .show-list-finger-user {
+    padding: 14px;
 }

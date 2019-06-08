@@ -14,6 +14,9 @@
     <div class="row">
       <% for (item in smartHomeList) { %>
       <div class="smart-home-item">
+        <p>name:
+          <%= smartHomeList[item].name %>
+        </p>
         <p>created_at:
           <%= smartHomeList[item].created_at %>
         </p>
