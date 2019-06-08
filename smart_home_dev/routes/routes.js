@@ -24,6 +24,7 @@ var appRouter = function (app) {
     app.post('/smarthome_user/add', smarthomeUserController.new_smarthomeUser);
     app.post('/smarthome_user/update/:id', smarthomeUserController.update_smarthomeUser);
     app.delete('/smarthome_user/delete/:id', smarthomeUserController.delete_smarthomeUser);
+    app.get('/smarthome_user/getBySmarthomeId/:id', smarthomeUserController.getSmartHomeUserBySmartHomeId);
 
     const smarthomeDeviceController = require('../src/http/controllers/SmarthomeDeviceController');
     app.get('/smarthome_device/get_list', smarthomeDeviceController.smarthomeDevice_list);

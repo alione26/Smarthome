@@ -55,7 +55,7 @@ module.exports = {
         return res.status(400).json({ success: false, message: delete_smarthomeUser.message});
     },
     getSmartHomeUserBySmartHomeId : async function(req, res) {
-        var smarthomeId = req.params[smarthome_id];
+        var smarthomeId = req.params['id'];
         var getSmartHomeUser = await smarthomeUserService.getSmartHomeUserBySmartHomeId(smarthomeId);
         if (getSmartHomeUser.status) {
             return res.status(200).json({ success : true, message : getSmartHomeUser.message, data : getSmartHomeUser.data});

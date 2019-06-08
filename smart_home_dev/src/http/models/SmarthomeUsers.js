@@ -118,7 +118,7 @@ module.exports = {
         var smartHomeUserReference = firebase.database().ref("/smarthomeUsers");
         try {
               return await smartHomeUserReference.orderByChild("smarthome_id")
-                .equalTo(userId)
+                .equalTo(smarthomeId)
                 .once('value').then(
                     function(snapshot){
                         if (snapshot.val()) {
