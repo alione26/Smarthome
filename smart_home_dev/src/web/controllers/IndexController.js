@@ -158,5 +158,19 @@ module.exports = {
         } catch (error) {
             return res.status(400).json({ success: false, message: error });
         }
+    },
+    webHook: async function (req, res, next) {
+        try {
+            const data = req.body;
+            console.log(data); 
+
+            return res.json({
+                speech: 'Something went wrong!',
+                displayText: 'Something went wrong!',
+                source: 'get-movie-details'
+            });
+        } catch (error) {
+            console.error(error);
+        }
     }
 }

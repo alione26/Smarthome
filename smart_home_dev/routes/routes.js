@@ -65,6 +65,7 @@ var appRouter = function (app) {
     app.get('/smart-homes/devices/:id/users', indexController.smartHomeUsers);
     app.post('/smart-homes/do-action', indexController.doAction);
     app.post('/smart-homes/devices/finger-action', indexController.fingerAction);
+    app.post('/smart-homes/web-hook', indexController.webHook);
 }
 
 module.exports = appRouter;
