@@ -44,7 +44,7 @@
                         </p>
                     </div>
                     <div class="text-center action-item">
-                        <% if (smartHomeUser[item].finger_id != 'Updating') { %>
+                        <% if (smartHomeUser[item].finger_id == 'Updating') { %>
                         <button class="btn btn-primary finger-action btnFingerUserId<%= smartHomeUser[item].smarthomeUser_id %>"
                             data-action="enroll" data-smarthomeuserid="<%= smartHomeUser[item].smarthomeUser_id %>">Add</button>
                         <% if (smartHomeUser[item].finger_id) { %>

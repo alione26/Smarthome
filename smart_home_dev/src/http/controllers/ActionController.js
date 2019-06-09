@@ -5,7 +5,7 @@ var smartHome = require('../models/Smarthomes');
 var smartHomeDevice = require('../models/SmarthomeDevices')
 
 module.exports = {
-    action : async function(req, res) {
+    action: async function (req, res) {
         var token = req.headers.uuid;
         var smarthome_device_id = req.body.smarthome_device_id;
         var action = req.body.action;
@@ -37,12 +37,9 @@ module.exports = {
         var socketId = smartHomeContent.socketId;
         console.log('socketId:', socketId);
 
-        // var getSmartHomeDevice = await smartHomeDevice.getSmartHomeDeviceBySmartHomeId(smarthomeId);
-        // console.log(getSmartHomeDevice.data);
+        var emitData = { deviceId: smarthome_device_id, action: action, data: req.body };
 
-
-        var emitData = { deviceId : smarthome_device_id, action : action};
-        socketio.emitMessage(socketId, emitData );
+        socketio.emitMessage(socketId, emitData);
         return res.status(200).json({ success: true, message: "The action sent to..." + socketId });
     },
 }

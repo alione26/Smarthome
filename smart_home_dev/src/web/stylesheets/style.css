@@ -43,6 +43,7 @@
 .smart-home-item .device-info {
     padding: 10px;
     font-size: 14px;
+    min-height: 298px;
 }
 
 .finger-user-item .finger-info {
