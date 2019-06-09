@@ -51,7 +51,8 @@ module.exports = {
     updateSmartHomeDeviceData : async function(req, res) {
         console.log("HTTP PUT Request");
         var smarthomeDeviceId = req.params['id'];
-        var smarthomeDeviceData = { data : req.body.data };
+        var jsondata = JSON.parse(req.body.data );
+        var smarthomeDeviceData = { data : jsondata};
         var update_smarthomeDevice = await smarthomeDeviceService.update_smarthomeDevice(smarthomeDeviceId, smarthomeDeviceData);
         console.log(update_smarthomeDevice);
         if (update_smarthomeDevice.status) {
