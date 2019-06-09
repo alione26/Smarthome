@@ -9,7 +9,6 @@ module.exports = {
         var token = req.headers.uuid;
         var smarthome_device_id = req.body.smarthome_device_id;
         var action = req.body.action;
-        console.log(token);
 
         var getUserDevice = await userDevice.getUserDeviceByUUID(token);
         if (!getUserDevice.status && getUserDevice.data) {

@@ -12,44 +12,49 @@
             <%= page %>
         </h3><br>
         <div class="row">
-            <% for (item in smartHomeDevices) { %>
+            <input type="hidden" id="smarthomeDevice_id" value="<%= smartHomeDevice.smarthomeDevice_id %>">
+            <% for (item in smartHomeUser) { %>
             <div class="col-md-6">
-                <div class="smart-home-item">
+                <div class="smart-home-item finger-user-item">
                     <div class="device-title">
                         <span>
-                            <%= smartHomeDevices[item].name %></span>
+                            <%= smartHomeUser[item].id %></span>
                     </div>
-                    <div class="device-info">
-                        <p>created_at:
-                            <%= smartHomeDevices[item].created_at %>
-                        </p>
-                        <p>machine_type:
-                            <%= smartHomeDevices[item].machine_type %>
-                        </p>
-                        <p>series_number:
-                            <%= smartHomeDevices[item].series_number %>
-                        </p>
-                        <p>smarthomeDevice_id:
-                            <%= smartHomeDevices[item].smarthomeDevice_id %>
+                    <div class="device-info finger-info">
+                        <p>smarthomeUser_id:
+                            <%= smartHomeUser[item].smarthomeUser_id %>
                         </p>
                         <p>smarthome_id:
-                            <%= smartHomeDevices[item].smarthome_id %>
+                            <%= smartHomeUser[item].smarthome_id %>
                         </p>
-                        <p>status:
-                            <%= smartHomeDevices[item].status %>
+                        <p id="fingerUserId<%= smartHomeUser[item].smarthomeUser_id %>">finger_id:
+                            <%= smartHomeUser[item].finger_id %>
+                        </p>
+                        <p>created_at:
+                            <%= smartHomeUser[item].created_at %>
                         </p>
                         <p>updated_at:
-                            <%= smartHomeDevices[item].updated_at %>
+                            <%= smartHomeUser[item].updated_at %>
+                        </p>
+                        <p>user_id:
+                            <%= smartHomeUser[item].user_id %>
+                        </p>
+                        <p>rfid_id:
+                            <%= smartHomeUser[item].rfid_id %>
                         </p>
                     </div>
                     <div class="text-center action-item">
-                            <% if (smartHomeDevices[item].machine_type == 'Fingerprint_Sensor') { %>
-                                <a href="/smart-homes/<%= smartHome.smarthome_id %>/users" class="btn btn-info show-list-finger-user">Show Finger Users</a>
-                              <% }  else { %>
-                        <a><input type="checkbox" name="control-action" <%- smartHomeDevices[item].status=='active' ?
-                                'checked' : '' %> data-toggle="toggle" data-onstyle="success" data-width="130"
-                            data-height="50"></a>
-                            <% } %>
+                        <% if (smartHomeUser[item].finger_id != 'Updating') { %>
+                        <button class="btn btn-primary finger-action btnFingerUserId<%= smartHomeUser[item].smarthomeUser_id %>"
+                            data-action="enroll" data-smarthomeuserid="<%= smartHomeUser[item].smarthomeUser_id %>">Add</button>
+                        <% if (smartHomeUser[item].finger_id) { %>
+                        <button class="btn btn-danger finger-action btnFingerUserId<%= smartHomeUser[item].smarthomeUser_id %>"
+                            data-action="delete" data-smarthomeuserid="<%= smartHomeUser[item].smarthomeUser_id %>">Delete</button>
+                        <% } %>
+                        <% }  else { %>
+                        <button class="btn btn-primary" disabled>Updating</button>
+                        <button class="btn btn-danger" disabled>Updating</button>
+                        <% } %>
                     </div>
                 </div>
             </div>
@@ -58,5 +63,45 @@
     </div>
 </body>
 <% include ../partials/script %>
+<script>
+    $(document).ready(function () {
+        setTimeout(function () {
+            $.LoadingOverlay("show", {
+                image: "",
+                fontawesome: "fa fa-cog fa-spin"
+            });
+            window.location.reload();
+        }, 95000);
+
+        $('.finger-action').click(function () {
+            var smarthomeDevice_id = $.trim($('#smarthomeDevice_id').val());
+            var smarthomeUser_id = $.trim($(this).data('smarthomeuserid'));
+            var action = $.trim($(this).data('action'));
+
+            $.LoadingOverlay("show", {
+                image: "",
+                fontawesome: "fa fa-cog fa-spin"
+            });
+
+            $.ajax({
+                url: "/smart-homes/devices/finger-action",
+                type: "post",
+                data: { smarthomeDevice_id: smarthomeDevice_id, smarthomeUser_id: smarthomeUser_id, action: action },
+                success: function (response) {
+                    console.log('.btnFingerUserId' + smarthomeUser_id);
+                    $('.btnFingerUserId' + smarthomeUser_id).html('Updating');
+                    $('#fingerUserId' + smarthomeUser_id).html('figner_id: Updating');
+                    $.LoadingOverlay("hide");
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus, errorThrown);
+
+                    $.LoadingOverlay("hide");
+                }
+            });
+            return false;
+        })
+    });
+</script>
 
 </html>

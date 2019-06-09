@@ -35,7 +35,7 @@ module.exports = {
     update_smarthomeUser : async function(req, res) {
         console.log("HTTP PUT Request");
         var smarthomeUserId = req.params['id'];
-        var smarthomeUserData = { smarthomeUser_id: smarthomeUser_id, user_id : req.body.user_id, smarthome_id: req.body.smarthome_id,
+        var smarthomeUserData = { smarthomeUser_id: smarthomeUserId, user_id : req.body.user_id, smarthome_id: req.body.smarthome_id,
             finger_id : req.body.finger_id, rfid_id : req.body.rfid_id, updated_at : req.body.updated_at, created_at : req.body.created_at };
         var update_smarthomeUser = await smarthomeUserService.update_smarthomeUser(smarthomeUserId, smarthomeUserData);
         console.log(update_smarthomeUser);
@@ -70,6 +70,7 @@ module.exports = {
     getSmartHomeUserBySmartHomeId : async function(req, res) {
         var smarthomeId = req.params['id'];
         var getSmartHomeUser = await smarthomeUserService.getSmartHomeUserBySmartHomeId(smarthomeId);
+        console.log(getSmartHomeUser);
         if (getSmartHomeUser.status) {
             return res.status(200).json({ success : true, message : getSmartHomeUser.message, data : getSmartHomeUser.data});
         }

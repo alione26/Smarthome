@@ -41,10 +41,22 @@
                         <p>updated_at:
                             <%= smartHomeDevices[item].updated_at %>
                         </p>
+                        <% if (smartHomeDevices[item].machine_type == 'DHT22') { %>
+                        <div>
+                            <div class="temperature">
+                                <span>Temperature: </span> <span class="specific">
+                                    <%= smartHomeDevices[item].data.Temperature %> ℃</span>
+                            </div>
+                            <div class="humidity">
+                                <span>Humidity: </span> <span class="specific">
+                                        <%= smartHomeDevices[item].data.Humidity %> %</span>
+                            </div>
+                        </div>
+                        <% } %>
                     </div>
                     <div class="text-center action-item">
                         <% if (smartHomeDevices[item].machine_type == 'Fingerprint_Sensor') { %>
-                        <a href="/smart-homes/<%= smartHome.smarthome_id %>/users" class="btn btn-info show-list-finger-user">Show
+                        <a href="/smart-homes/devices/<%= item %>/users" class="btn btn-info show-list-finger-user">Show
                             Finger Users</a>
                         <% }  else { %>
                         <a><input type="checkbox" class="control-action" name="control-action" <%-
@@ -100,7 +112,7 @@
                     $.LoadingOverlay("hide");
                 }
             });
-        })
+        });
     });
 </script>
 
