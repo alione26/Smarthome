@@ -60,8 +60,9 @@ var appRouter = function (app) {
     app.get('/error', indexController.error);
     app.get('/smart-homes', indexController.smartHomes);
     app.get('/smart-homes/:id', indexController.detail);
-    app.get('/smart-homes/:id/users', indexController.smartHomeUsers);
+    app.get('/smart-homes/devices/:id/users', indexController.smartHomeUsers);
     app.post('/smart-homes/do-action', indexController.doAction);
+    app.post('/smart-homes/devices/finger-action', indexController.fingerAction);
 }
 
 module.exports = appRouter;

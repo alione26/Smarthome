@@ -13,36 +13,41 @@
     </h3><br>
     <div class="row">
       <% for (item in smartHomeList) { %>
-      <div class="smart-home-item">
-        <p>name:
-          <%= smartHomeList[item].name %>
-        </p>
-        <p>created_at:
-          <%= smartHomeList[item].created_at %>
-        </p>
-        <p>machine_type:
-          <%= smartHomeList[item].machine_type %>
-        </p>
-        <p>series_number:
-          <%= smartHomeList[item].series_number %>
-        </p>
-        <p>smarthome_id:
-          <%= smartHomeList[item].smarthome_id %>
-        </p>
-        <p>smarthome_user_id:
-          <%= smartHomeList[item].smarthome_user_id %>
-        </p>
-        <p>socketId:
-          <%= smartHomeList[item].socketId %>
-        </p>
-        <p>status:
-          <%= smartHomeList[item].status %>
-        </p>
-        <p>updated_at:
-          <%= smartHomeList[item].updated_at %>
-        </p>
-        <div>
-          <a href="/smart-homes/<%= smartHomeList[item].smarthome_id %>" class="btn btn-info">Show Devices</a>
+      <div class="col-md-6 col-xs-12">
+        <div class="smart-home-item">
+          <div class="device-title">
+            <span>
+              <%= smartHomeList[item].name %></span>
+          </div>
+          <div class="device-info">
+            <p>created_at:
+              <%= smartHomeList[item].created_at %>
+            </p>
+            <p>machine_type:
+              <%= smartHomeList[item].machine_type %>
+            </p>
+            <p>series_number:
+              <%= smartHomeList[item].series_number %>
+            </p>
+            <p>smarthome_id:
+              <%= smartHomeList[item].smarthome_id %>
+            </p>
+            <p>smarthome_user_id:
+              <%= smartHomeList[item].smarthome_user_id %>
+            </p>
+            <p>socketId:
+              <%= smartHomeList[item].socketId %>
+            </p>
+            <p>status:
+              <%= smartHomeList[item].status %>
+            </p>
+            <p>updated_at:
+              <%= smartHomeList[item].updated_at %>
+            </p>
+          </div>
+          <div class="text-center action-item">
+            <a href="/smart-homes/<%= smartHomeList[item].smarthome_id %>" class="btn btn-info">Show Devices</a>
+          </div>
         </div>
       </div>
       <% } %>
