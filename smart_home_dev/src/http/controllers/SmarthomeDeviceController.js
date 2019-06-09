@@ -48,6 +48,18 @@ module.exports = {
         }
         return res.status(400).json({ success: false, message: update_smarthomeDevice.message});
     },
+    updateSmartHomeDeviceData : async function(req, res) {
+        console.log("HTTP PUT Request");
+        var smarthomeDeviceId = req.params['id'];
+        var jsondata = JSON.parse(req.body.data );
+        var smarthomeDeviceData = { data : jsondata};
+        var update_smarthomeDevice = await smarthomeDeviceService.update_smarthomeDevice(smarthomeDeviceId, smarthomeDeviceData);
+        console.log(update_smarthomeDevice);
+        if (update_smarthomeDevice.status) {
+            return res.status(200).json({ success: true, message: update_smarthomeDevice.message });
+        }
+        return res.status(400).json({ success: false, message: update_smarthomeDevice.message});
+    },
     delete_smarthomeDevice : async function(req, res) {
         console.log("HTTP DELETE Request");
         var smarthomeDeviceId = req.params['id'];

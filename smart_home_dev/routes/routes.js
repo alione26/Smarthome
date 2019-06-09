@@ -23,6 +23,7 @@ var appRouter = function (app) {
     app.get('/smarthome_user/get_by_id/:id', smarthomeUserController.smarthomeUser_by_id);
     app.post('/smarthome_user/add', smarthomeUserController.new_smarthomeUser);
     app.post('/smarthome_user/update/:id', smarthomeUserController.update_smarthomeUser);
+    app.post('/smarthome_user/update-fingerId/:id', smarthomeUserController.updateFingerId);
     app.delete('/smarthome_user/delete/:id', smarthomeUserController.delete_smarthomeUser);
     app.get('/smarthome_user/getBySmarthomeId/:id', smarthomeUserController.getSmartHomeUserBySmartHomeId);
 
@@ -31,6 +32,7 @@ var appRouter = function (app) {
     app.get('/smarthome_device/get_by_id/:id', smarthomeDeviceController.smarthomeDevice_by_id);
     app.post('/smarthome_device/add', smarthomeDeviceController.new_smarthomeDevice);
     app.post('/smarthome_device/update/:id', smarthomeDeviceController.update_smarthomeDevice);
+    app.post('/smarthome_device/update-data/:id', smarthomeDeviceController.updateSmartHomeDeviceData);
     app.delete('/smarthome_device/delete/:id', smarthomeDeviceController.delete_smarthomeDevice);
     app.get('/smarthome_device/:id', smarthomeDeviceController.getSmartHomeDeviceBySmartHomeId);
 
