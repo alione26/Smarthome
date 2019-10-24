@@ -88,7 +88,7 @@ module.exports = {
         var currentUUID =  req.headers.uuid;
 
         try {
-            var logoutData = await userDeviceService.logout(currentUUID);
+            var logoutData = await userService.logout(currentUUID);
             console.log(logoutData);
 
             return res.status(200).json({ success: logoutData.status, data: null, message: logoutData.message });
@@ -97,6 +97,3 @@ module.exports = {
         }
     },
 }
-
-
-

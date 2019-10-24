@@ -1,6 +1,7 @@
 const uuidv4 = require('uuid/v4');
 const bcrypt = require('bcryptjs');
 var firebase = require('firebase');
+var userDevice = require('./UserDevices');
 
 function hashPassword(plaintextPassword) {
     var salt = bcrypt.genSaltSync(10);
@@ -153,6 +154,28 @@ module.exports = {
               );
         }catch (e) {
             throw Error(e.message);
+        }
+    },
+    //add logout : 17-10-2019
+    logout : async function (userDeviceUuid) {
+        try {
+             var getUserDevice = await userDevice.getUserDeviceByUUID(userDeviceUuid);
+             console.log(getUserDevice.status);
+             if (!getUserDevice.status && !getUserDevice.data) {
+                return { status: false, message: 'Uuid not exist.' };
+             }
+             var userDeviceData = getUserDevice.data;
+             var userDeviceContent = userDeviceData[Object.keys(userDeviceData)[0]];
+             var userDeviceId = userDeviceContent.userDevice_id;
+
+             var referencePath = '/userDevices/'+userDeviceId+'/';
+             var userDeviceReference = firebase.database().ref(referencePath);
+             await userDeviceReference.update({"token" : '', "latest" : Math.floor(Date.now()/1000)});
+
+             return { status: true, message: 'Logout Successfully.'};
+        }catch (e) {
+            throw Error(e.message);
+            return { status : false, message: 'Logout failed'};
         }
     },
 

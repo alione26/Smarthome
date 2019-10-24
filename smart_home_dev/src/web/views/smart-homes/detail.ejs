@@ -58,7 +58,7 @@
                         <% if (smartHomeDevices[item].machine_type == 'Fingerprint_Sensor') { %>
                         <a href="/smart-homes/devices/<%= item %>/users" class="btn btn-info show-list-finger-user">Show
                             Finger Users</a>
-                        <% }  else { %>
+                        <% }  else if (smartHomeDevices[item].machine_type != 'DHT22') { %>
                         <a><input type="checkbox" class="control-action" name="control-action" <%-
                                 smartHomeDevices[item].status=='active' ? 'checked' : '' %> data-toggle="toggle"
                             data-onstyle="success" data-width="130"

@@ -52,5 +52,13 @@ module.exports = {
             throw Error(e.message);
         }
     },
+    // add logout 17-10-2019
+    logout: async function(uuid) {
+        try {
+            return await Users.logout(uuid);
+        } catch (e) {
+            throw Error(e.message);
+        }
+    },
 
 }

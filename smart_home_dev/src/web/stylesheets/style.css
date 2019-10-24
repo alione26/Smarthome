@@ -1,4 +1,4 @@
-.bg-3 { 
+.bg-3 {
     background-color: #ffffff;
     color: #555555;
 }
@@ -43,7 +43,8 @@
 .smart-home-item .device-info {
     padding: 10px;
     font-size: 14px;
-    min-height: 298px;
+    min-height: 248px; //added by Dan
+
 }
 
 .finger-user-item .finger-info {
@@ -66,6 +67,7 @@
 .finger-user-item .action-item .btn {
     padding: 14px;
     min-width: 120px;
+
 }
 
 .home-btn {

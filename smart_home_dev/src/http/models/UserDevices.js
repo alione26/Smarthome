@@ -146,25 +146,25 @@ module.exports = {
         }
     },
 
-    logout : async function (userDeviceUuid) {
-        try {
-             var getUserDevice = await module.exports.getUserDeviceByUUID(userDeviceUuid); //note
-             console.log(getUserDevice.status);
-             if (!getUserDevice.status && !getUserDevice.data) {
-                return { status: false, message: 'Uuid not exist.' };
-             }
-             var userDeviceData = getUserDevice.data;
-             var userDeviceContent = userDeviceData[Object.keys(userDeviceData)[0]];
-             var userDeviceId = userDeviceContent.userDevice_id;
-
-             var referencePath = '/userDevices/'+userDeviceId+'/';
-             var userDeviceReference = firebase.database().ref(referencePath);
-             await userDeviceReference.update({"token" : '', "latest" : Math.floor(Date.now()/1000)});
-
-             return { status: true, message: 'Logout Successfully.'};
-        }catch (e) {
-            throw Error(e.message);
-            return { status : false, message: 'Logout failed'};
-        }
-    },
+    // logout : async function (userDeviceUuid) {
+    //     try {
+    //          var getUserDevice = await module.exports.getUserDeviceByUUID(userDeviceUuid); //note
+    //          console.log(getUserDevice.status);
+    //          if (!getUserDevice.status && !getUserDevice.data) {
+    //             return { status: false, message: 'Uuid not exist.' };
+    //          }
+    //          var userDeviceData = getUserDevice.data;
+    //          var userDeviceContent = userDeviceData[Object.keys(userDeviceData)[0]];
+    //          var userDeviceId = userDeviceContent.userDevice_id;
+    //
+    //          var referencePath = '/userDevices/'+userDeviceId+'/';
+    //          var userDeviceReference = firebase.database().ref(referencePath);
+    //          await userDeviceReference.update({"token" : '', "latest" : Math.floor(Date.now()/1000)});
+    //
+    //          return { status: true, message: 'Logout Successfully.'};
+    //     }catch (e) {
+    //         throw Error(e.message);
+    //         return { status : false, message: 'Logout failed'};
+    //     }
+    // },
 }

@@ -66,6 +66,10 @@ var appRouter = function (app) {
     app.post('/smart-homes/do-action', indexController.doAction);
     app.post('/smart-homes/devices/finger-action', indexController.fingerAction);
     app.post('/smart-homes/web-hook', indexController.webHook);
+
+    //Google Assistant
+    const dialogFlowApp = require('../src/gga/DialogFlowApp');
+    app.post('/gga', dialogFlowApp);
 }
 
 module.exports = appRouter;

@@ -1,7 +1,8 @@
 var express = require("express");
 var bodyParser = require('body-parser');
 
-var socketio = require('./src/socketio/socketio')
+var socketio = require('./src/socketio/socketio');
+var mqtt =require('./src/gga/mqtt-vi');
 var firebase = require('firebase');
 var firebaseAdmin = require("firebase-admin");
 var serviceAccount = require("./smarthome-iot95-firebase.json");
@@ -28,6 +29,9 @@ app.use(express.static(__dirname + '/src/web/javascripts'));
 routes(app);
 socketio.connect();
 socketio.recievedSmartHomeId();
+//mqtt-vi : google assistant - Vietnammese
+mqtt.doAction();
+
 var server = http.listen(3000, function () {
     console.log("app running on port.", server.address().port);
 });

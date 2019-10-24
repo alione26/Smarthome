@@ -49,11 +49,11 @@ module.exports = {
         }
     },
 
-    logout: async function(uuid) {
-        try {
-            return await userDevice.logout(uuid);
-        } catch (e) {
-            throw Error(e.message);
-        }
-    },
+    // logout: async function(uuid) {
+    //     try {
+    //         return await userDevice.logout(uuid);
+    //     } catch (e) {
+    //         throw Error(e.message);
+    //     }
+    // },
 }
