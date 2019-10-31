@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../partials/head %>
+</head>
+
+<body>
+    <% include ../partials/menu %>
+    
+    <div class="container bg-3 text-center">
+        <h3>
+            <%= page %>
+        </h3><br>
+        <div class="row">
+            <% for (item in smartHomeDevices) { %>
+            <div class="col-md-6">
+                <div class="smart-home-item">
+                    <div class="device-title">
+                        <span>
+                            <%= smartHomeDevices[item].name %></span>
+                    </div>
+                    <div class="device-info">
+                        <% if (smartHomeDevices[item].machine_type == 'Restroom_Light') { %>
+                            <img src="./smart/light_on.png" width="250px" height="220px" style="display:block;margin:auto;">
+                        <% } %>
+                        <% if (smartHomeDevices[item].machine_type == 'Fan') { %>
+                            <img src="./smart/fan.png" width="250px" height="220px" style="display:block;margin:auto;">
+                        <% } %>
+                        <% if (smartHomeDevices[item].machine_type == 'Bedroom_Light') { %>
+                            <img src="./smart/light_on.png" width="250px" height="220px" style="display:block;margin:auto;">
+                            
+                        <% } %>
+                        <% if (smartHomeDevices[item].machine_type == 'DHT22') { %>
+                            <img src="./smart/Temperature.png" width="250px" height="220px" style="display:block;margin:auto;">
+                        <% } %>
+                        <% if (smartHomeDevices[item].machine_type == 'Fingerprint_Sensor') { %>
+                            <img src="./smart/fingerprint.png"  height="220px" style="display:block;margin:auto;max-width:100%;">
+                        <% } %>
+                        <% if (smartHomeDevices[item].machine_type == 'Livingroom_Light') { %>
+                            <img src="./smart/light_on.png" width="250px" height="220px" style="display:block;margin:auto;">
+                           
+                        <% } %>
+                        <% if (smartHomeDevices[item].machine_type == 'DHT22') { %>
+                        <div>
+                            <div class="temperature" style="text-align: center;">
+                                <span>Temperature: </span> <span class="specific">
+                                    <%= smartHomeDevices[item].data.Temperature %> ℃</span>
+                            </div>
+                            <div class="humidity" style="text-align: center;">
+                                <span>Humidity: </span> <span class="specific">
+                                        <%= smartHomeDevices[item].data.Humidity %> %</span>
+                            </div>
+                        </div>
+                        <% } %>
+                    </div>
+                    <div class="text-center action-item">
+                        <% if (smartHomeDevices[item].machine_type == 'Fingerprint_Sensor') { %>
+                        <a href="/smart-homes/devices/<%= item %>/users" class="btn btn-info show-list-finger-user">Show
+                            Finger Users</a>
+                        <% }  else if(smartHomeDevices[item].machine_type != 'DHT22') { %>
+                        <a><input type="checkbox" class="control-action" name="control-action" <%-
+                                smartHomeDevices[item].status=='active' ? 'checked' : '' %> data-toggle="toggle"
+                            data-onstyle="success" data-width="130"
+                            data-height="50" data-id="
+                            <%= smartHomeDevices[item].smarthomeDevice_id %>" data-smarthomeid="
+                            <%= smartHomeDevices[item].smarthome_id %>"></a>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+        </div>
+    </div>
+</body>
+<% include ../partials/script %>
+<script>
+    $(document).ready(function () {
+        setTimeout(function () {
+            $.LoadingOverlay("show", {
+                image: "",
+                fontawesome: "fa fa-cog fa-spin"
+            });
+            window.location.reload();
+        }, 95000);
+
+        $('.control-action').change(function () {
+            var smarthomeDevice_id = $.trim($(this).data('id'));
+            var smarthome_id = $.trim($(this).data('smarthomeid'));
+            var action = 'inactive';
+
+            if ($(this).is(':checked')) {
+                action = 'active';
+            }
+
+            $.LoadingOverlay("show", {
+                image: "",
+                fontawesome: "fa fa-cog fa-spin"
+            });
+
+            $.ajax({
+                url: "/smart-homes/do-action",
+                type: "post",
+                data: { smarthomeDevice_id: smarthomeDevice_id, smarthome_id: smarthome_id, action: action },
+                success: function (response) {
+                    console.log(response);
+                    $.LoadingOverlay("hide");
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus, errorThrown);
+
+                    $.LoadingOverlay("hide");
+                }
+            });
+        });
+    });
+</script>
+
+</html>
