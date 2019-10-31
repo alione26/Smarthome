@@ -47,6 +47,10 @@ void ReceivedMessage(char* topic, byte* payload, unsigned int length) {
     command[i] = (char)(payload[i]);
   }
   command[length]='\0';
+<<<<<<< HEAD
+  //const char* function = command;
+=======
+>>>>>>> 470bf3d831be4ac3d7ddefc24718b60edd681cbf
   DynamicJsonBuffer jsonBuffer;
   JsonObject& root = jsonBuffer.parseObject(command);
   if(!root.success()) {
@@ -102,7 +106,11 @@ void setup() {
  // digitalWrite(LED_BUILTIN, LOW);
   pinMode(14, INPUT);
   
+<<<<<<< HEAD
+  attachInterrupt(14, identification, FALLING);
+=======
   attachInterrupt(14, identification, RISING);
+>>>>>>> 470bf3d831be4ac3d7ddefc24718b60edd681cbf
   // Begin Serial on 115200
   // Remember to choose the correct Baudrate on the Serial monitor!
   // This is just for debugging purposes
@@ -364,10 +372,21 @@ int16_t enroll_finger(int16_t fid) {
         DynamicJsonBuffer jsonBuffer;
         JsonObject& root = jsonBuffer.createObject();
 
+<<<<<<< HEAD
+        JsonObject& feedback = root.createNestedObject("finger");
+        feedback["enroll"] = "enrolled";
+        feedback["id"] = fid;
+        feedback["delete"] = "null";
+        feedback["empty"] = "null";
+        feedback["find"] = "null";
+        
+        char char_reply[100];
+=======
         JsonObject& feedback = root.createNestedObject("feedback");
         feedback["enroll"] = "enrolled";
         feedback["id"] = fid;
         char char_reply[50];
+>>>>>>> 470bf3d831be4ac3d7ddefc24718b60edd681cbf
         root.printTo(char_reply);
         Serial.println(char_reply);
         if (client.publish(mqtt_reply_topic, char_reply))
@@ -409,9 +428,18 @@ void empty_database(void) {
         DynamicJsonBuffer jsonBuffer;
         JsonObject& root = jsonBuffer.createObject();
 
+<<<<<<< HEAD
+        JsonObject& feedback = root.createNestedObject("finger");
+        feedback["empty"] = "emptied";
+        feedback["enroll"] = "null";
+        feedback["delete"] = "null";
+        feedback["find"] = "null";
+        char char_reply[100];
+=======
         JsonObject& feedback = root.createNestedObject("feedback");
         feedback["empty"] = "emptied";
         char char_reply[50];
+>>>>>>> 470bf3d831be4ac3d7ddefc24718b60edd681cbf
         root.printTo(char_reply);
         Serial.println(char_reply);
         if (client.publish(mqtt_reply_topic, char_reply))
@@ -452,10 +480,20 @@ int deleteFingerprint(int fid) {
         DynamicJsonBuffer jsonBuffer;
         JsonObject& root = jsonBuffer.createObject();
 
+<<<<<<< HEAD
+        JsonObject& feedback = root.createNestedObject("finger");
+        feedback["delete"] = "deleted";
+        feedback["id"] = fid;
+        feedback["enroll"] = "null";
+        feedback["empty"] = "null";
+        feedback["find"] = "null";
+        char char_reply[100];
+=======
         JsonObject& feedback = root.createNestedObject("feedback");
         feedback["delete"] = "deleted";
         feedback["id"] = fid;
         char char_reply[50];
+>>>>>>> 470bf3d831be4ac3d7ddefc24718b60edd681cbf
         root.printTo(char_reply);
         Serial.println(char_reply);
         if (client.publish(mqtt_reply_topic, char_reply))
@@ -490,9 +528,17 @@ int deleteFingerprint(int fid) {
 int search_database(void) {
     int16_t p = -1;
     const char* lcd_char;
+<<<<<<< HEAD
+    int16_t count = 20;
+    /* first get the finger image */
+    Serial.println("Waiting for valid finger");
+    while (p != FPM_OK && count != 0) {
+        --count;
+=======
     /* first get the finger image */
     Serial.println("Waiting for valid finger");
     while (p != FPM_OK) {
+>>>>>>> 470bf3d831be4ac3d7ddefc24718b60edd681cbf
         p = finger.getImage();
         switch (p) {
             case FPM_OK:
@@ -522,6 +568,92 @@ int search_database(void) {
     }
 
     /* convert it */
+<<<<<<< HEAD
+    if (count != 0) {
+      p = finger.image2Tz();
+      switch (p) {
+          case FPM_OK:
+              Serial.println("Image converted");
+              break;
+          case FPM_IMAGEMESS:
+              Serial.println("Image too messy");
+              return p;
+          case FPM_PACKETRECIEVEERR:
+              Serial.println("Communication error");
+              return p;
+          case FPM_FEATUREFAIL:
+              Serial.println("Could not find fingerprint features");
+              return p;
+          case FPM_INVALIDIMAGE:
+              Serial.println("Could not find fingerprint features");
+              return p;
+          case FPM_TIMEOUT:
+              Serial.println("Timeout!");
+              return p;
+          case FPM_READ_ERROR:
+              Serial.println("Got wrong PID or length!");
+              return p;
+          default:
+              Serial.println("Unknown error");
+              return p;
+      }
+
+      Serial.println("Remove finger");
+      p = 0;
+      while (p != FPM_NOFINGER) {
+          p = finger.getImage();
+          yield();
+      }
+      Serial.println();
+
+    /* search the database for the converted print */
+      uint16_t fid, score;
+      p = finger.fingerFastSearch(&fid, &score);
+      if (p == FPM_OK) {
+          Serial.println("Found a print match!");
+          DynamicJsonBuffer jsonBuffer;
+          JsonObject& root = jsonBuffer.createObject();
+
+          JsonObject& feedback = root.createNestedObject("finger");
+          feedback["find"] = "found";
+          feedback["id"] = fid;
+          feedback["enroll"] = "null";
+          feedback["delete"] = "null";
+          feedback["empty"] = "null";
+          char char_reply[100];
+          root.printTo(char_reply);
+          Serial.println(char_reply);
+          if (client.publish(mqtt_reply_topic, char_reply))
+              Serial.println("Replied to MQTT server");
+          else {
+              Serial.println("Failed to reply.Reconnecting to MQTT server");
+              Connect();
+              client.publish(mqtt_reply_topic, char_reply);
+          }
+      } else if (p == FPM_PACKETRECIEVEERR) {
+          Serial.println("Communication error");
+          return p;
+      } else if (p == FPM_NOTFOUND) {
+          Serial.println("Did not find a match");
+          return p;
+      } else if (p == FPM_TIMEOUT) {
+          Serial.println("Timeout!");
+          return p;
+      } else if (p == FPM_READ_ERROR) {
+          Serial.println("Got wrong PID or length!");
+          return p;
+      } else {
+          Serial.println("Unknown error");
+          return p;
+      }
+
+      // found a match!
+      const char* lcd_char;
+      fp_lcd(lcd_char = "Welcome home!");
+      Serial.print("Found ID #"); Serial.print(fid);
+      Serial.print(" with confidence of "); Serial.println(score);
+  }
+=======
     p = finger.image2Tz();
     switch (p) {
         case FPM_OK:
@@ -599,6 +731,7 @@ int search_database(void) {
     // found a match!
     Serial.print("Found ID #"); Serial.print(fid);
     Serial.print(" with confidence of "); Serial.println(score);
+>>>>>>> 470bf3d831be4ac3d7ddefc24718b60edd681cbf
 }
 //function_lcd
 void fp_lcd(const char * lcd_char) {
