@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head %>
+    <link rel="stylesheet" type="text/css" href="/app.css">
+</head>
+<body style="background: url(../smart-homes/smart/background_1.jpg) no-repeat 10% 10%;">
+    <% include ../partials/menu %>
+    <div class="login">
+        <form method="GET">
+            <div class="data">
+                <div class="input-data">
+                    <label>UserName:</label><input type="text" name="user" value="" id="userName" oninput="inp()">
+                </div>
+                <div class="input-data">
+                    <label>PassWord:</label><input type="password" name="pass" value="" id="passWord" oninput="inp()">
+                </div>
+                <br>
+                <input type="button" value="Log In" id="sub" onclick="go()">
+                <a href="/loginPage/signUp">
+                    Sign Up
+                </a>
+                <h6 id="loi"></h6>
+            </div>
+            
+        </form>
+        
+    </div>
+</body>
+
+<% include ../partials/script %>
+</html>
