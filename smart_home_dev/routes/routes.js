@@ -12,8 +12,8 @@ var appRouter = function (app) {
     app.delete('/user/delete/:id', userController.delete_user);
 
     const smarthomeController = require('../src/http/controllers/SmarthomeController');
-    app.get('/smarthome/get_list', smarthomeController.smarthome_list);
-    app.get('/smarthome/get_by_id/:id', smarthomeController.smarthome_by_id);
+    app.get('/smarthome/get_list', authControllerUser.middleware, smarthomeController.smarthome_list);
+    app.get('/smarthome/get_by_id/:id', authControllerUser.middleware, smarthomeController.smarthome_by_id);
     app.post('/smarthome/add', smarthomeController.new_smarthome);
     app.post('/smarthome/update/:id', smarthomeController.update_smarthome);
     app.delete('/smarthome/delete/:id', smarthomeController.delete_smarthome);
@@ -34,7 +34,7 @@ var appRouter = function (app) {
     app.post('/smarthome_device/update/:id', smarthomeDeviceController.update_smarthomeDevice);
     app.post('/smarthome_device/update-data/:id', smarthomeDeviceController.updateSmartHomeDeviceData);
     app.delete('/smarthome_device/delete/:id', smarthomeDeviceController.delete_smarthomeDevice);
-    app.get('/smarthome_device/:id', smarthomeDeviceController.getSmartHomeDeviceBySmartHomeId);
+    app.get('/smarthome_device/:id', authControllerUser.middleware, smarthomeDeviceController.getSmartHomeDeviceBySmartHomeId);
 
     const userDeviceController = require('../src/http/controllers/UserDeviceController');
     app.get('/user_device/get_list', userDeviceController.userDevice_list);
@@ -66,6 +66,15 @@ var appRouter = function (app) {
     app.post('/smart-homes/do-action', indexController.doAction);
     app.post('/smart-homes/devices/finger-action', indexController.fingerAction);
     app.post('/smart-homes/web-hook', indexController.webHook);
+    
+    // Login page added
+    app.get('/loginPage', indexController.loginPage);
+    app.get('/loginPage/signUp', indexController.signUp);
+    app.post('/identify/login', indexController.authencation);
+
+    app.get('/showAuthButton', indexController.showAuthButton);
+    // app.get('/checkSignedIn', authController.middleware);
+    app.get('/userLogout', indexController.logOut);
 
     //Google Assistant
     const dialogFlowApp = require('../src/gga/DialogFlowApp');
