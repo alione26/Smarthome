@@ -18,13 +18,18 @@ module.exports = {
     
     },
     logOut: async function (req, res, next) {
-        var response = await axios.get(constants.API_URI +'/auth/logout', { 'headers': {'uuid': req.session.uuid}});
-        if (!response.data.success) {
-            return res.status(400).json({success: response.data.success});
+        //console.log('hihihi');
+        try {
+            var response = await axios.get(constants.API_URI + '/auth/logout', { 'headers': { 'uuid': req.session.uuid } });
+            if (!response.data.success) {
+                return res.status(400).json({ success: response.data.success });
+            }
+            req.session.signed = !response.data.success;
+            return res.status(200).json({ success: response.data.success });
+            console.log('check-logout' + response.data.success);
+        } catch (error) {
+            console.log(error);
         }
-        req.session.signed = !response.data.success;
-        return res.status(200).json({success:response.data.success});
-        console.log('check-logout'+ response.data.success);
     },
     authencation: async function (req, res, next) {
         var email = req.body.user;

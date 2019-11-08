@@ -86,6 +86,7 @@ module.exports = {
 
     logout: async function (req, res, next) {
         var currentUUID =  req.headers.uuid;
+        console.log('uuid'+currentUUID);
 
         try {
             var logoutData = await userService.logout(currentUUID);
