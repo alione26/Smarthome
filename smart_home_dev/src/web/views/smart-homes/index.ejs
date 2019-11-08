@@ -14,36 +14,13 @@
     <div class="row">
       <% for (item in smartHomeList) { %>
       <div class="col-md-6 col-xs-12">
-        <div class="smart-home-item">
+        <div class="smart-home-item" >
           <div class="device-title">
             <span>
               <%= smartHomeList[item].name %></span>
           </div>
           <div class="device-info">
-            <p>created_at:
-              <%= smartHomeList[item].created_at %>
-            </p>
-            <p>machine_type:
-              <%= smartHomeList[item].machine_type %>
-            </p>
-            <p>series_number:
-              <%= smartHomeList[item].series_number %>
-            </p>
-            <p>smarthome_id:
-              <%= smartHomeList[item].smarthome_id %>
-            </p>
-            <p>smarthome_user_id:
-              <%= smartHomeList[item].smarthome_user_id %>
-            </p>
-            <p>socketId:
-              <%= smartHomeList[item].socketId %>
-            </p>
-            <p>status:
-              <%= smartHomeList[item].status %>
-            </p>
-            <p>updated_at:
-              <%= smartHomeList[item].updated_at %>
-            </p>
+            <img src="../smart-homes/smart/smart_home.png" style="display:block;max-width:50%;margin: auto;">
           </div>
           <div class="text-center action-item">
             <a href="/smart-homes/<%= smartHomeList[item].smarthome_id %>" class="btn btn-info">Show Devices</a>
