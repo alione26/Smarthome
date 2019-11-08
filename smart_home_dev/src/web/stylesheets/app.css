@@ -1,0 +1,125 @@
+
+.login {
+    padding:0;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: 5%;
+    transform: translate(-50%, -50%);
+    padding: 30px;
+    min-width: 40%;    
+    background: transparent; 
+}
+form {
+    max-width: 80%;
+    margin: auto;
+    background: transparent;
+    padding: 20px;
+    border-radius: 30px;
+    color: #fff;
+}
+div.data {
+    position: relative;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+div.data .input-data input {
+    font-size: 15px;
+    padding: 5px;
+    margin: 5px 0px;
+    width: 100%;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    color: #000;
+}
+div.data .input-data label {
+    display: block;
+    font-size: 20px;
+    font-weight: bold;
+}
+/************************************************
+\************************************************\
+    Set cho submit Sign Up vaf submit Log In trong index.html
+\************************************************\
+*************************************************/
+.data>input[value="Log In"] {
+    padding: 8px 15px;
+    width: 40%;
+    font-weight: bold;
+    font-size: 20px;
+    background: rgb(75, 163, 235);
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    outline: none;   
+}
+.data>input[value="Log In"]:hover {
+    color: #000;
+}
+.data>a {
+    color: #fff;
+    text-decoration: none;
+    position: absolute;
+    right: 0;
+    padding: 8px 15px;
+    min-width: 30%;
+    font-weight: bold;
+    font-size: 20px;
+    background: transparent;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    outline: none;  
+}
+.data>a:hover {
+    background: rgb(75, 163, 235);
+    color: #000;
+}
+
+
+/************************************************
+\************************************************\
+    Set cho submit Sign Up trong Sign_up.html
+\************************************************\
+*************************************************/
+form>input[value="Submit"] {
+    display: block;
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 8px 15px;
+    min-width: 30%;
+    font-weight: bold;
+    font-size: 20px;
+    background: rgb(75, 163, 235);
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    
+}
+form>input[value="Submit"]:hover {
+    color: #fff;
+}
+@media screen and (max-width:500px) {
+    .login {
+        min-width: 100%;
+        margin-top: 50%;
+    }
+    form {
+        min-width: 80vw;
+    }
+}
+@media screen and  (max-width: 800px) {
+    .login {
+        min-width: 100%;
+    }
+    form {
+        min-width: 80vw;
+    }
+    
+  
+}
