@@ -10,36 +10,108 @@ module.exports = {
     error: async function (req, res, next) {
         res.render(viewPath + '/error.ejs', { page: 'Error', menuId: '', message: 'Empty response.' });
     },
+    loginPage: async function (req, res, next) {
+        res.render(viewPath + '/login/index.ejs', { page: 'Login', menuId: 'login' });
+    },
+    signUp: async function (req, res, next) {
+        res.render(viewPath + '/login/SignUp.ejs', { page: 'SignUp', menuId: 'signUp' });
+    
+    },
+    logOut: async function (req, res, next) {
+        var response = await axios.get(constants.API_URI +'/auth/logout', { 'headers': {'uuid': req.session.uuid}});
+        if (!response.data.success) {
+            return res.status(400).json({success: response.data.success});
+        }
+        req.session.signed = !response.data.success;
+        return res.status(200).json({success:response.data.success});
+        console.log('check-logout'+ response.data.success);
+    },
+    authencation: async function (req, res, next) {
+        var email = req.body.user;
+        var password = req.body.password;
+        var response = await axios.post(constants.API_URI + '/auth/login', {
+            email: email,
+            password: password
+        })
+            .then(function (response) {
+                if (!response.data.success) {
+                    res.status(400).json({ success: false, message: response.data.message });
+                }
+                req.session.uuid = response.headers.uuid;
+                req.session.signed = true;
+                //req.session.save();
+                console.log(req.session.signed + 'signed');
+                res.status(200).set('uuid', response.headers.uuid).json({ success: true, message: response.data.message });
+            })
+            .catch(function (error) {
+                //console.log(error);
+                res.status(400).json({ success: false, message: error.message });
+            });
+    },
     smartHomes: async function (req, res, next) {
         try {
-            var response = await axios.get(constants.API_URI + '/smarthome/get_list');
+            console.log(req.session.uuid + 'recv');
+            var ss = req.session;
+            console.log(Object.keys(ss).length);
 
+            if (ss == undefined || !(Object.keys(ss).length - 1)) {
+                return res.redirect(constants.API_URI + '/loginPage');
+            }
+
+            var response = await axios.get(constants.API_URI + '/smarthome/get_list', { headers: { 'uuid': ss.uuid } });
             if (!response.data.success) {
                 res.redirect(constants.API_URI + '/error');
             }
 
             res.render(viewPath + '/smart-homes/index.ejs', { page: 'SMART HOMES', menuId: 'smart_homes', smartHomeList: response.data.data });
         } catch (error) {
-            console.error(error);
+            //console.error(error);
+            res.redirect(constants.API_URI + '/loginPage');
+        }
+    },
+    showAuthButton: async function (req, res, next) {
+        try {
+            var ss = req.session;
+            console.log(Object.keys(ss).length);
+
+            if (ss == undefined || !(Object.keys(ss).length - 1)) {
+                // return res.redirect(constants.API_URI + '/error');
+                console.log('uuid undefinded');
+            }
+
+            // var response = await axios.get(constants.API_URI + '/checkSignedIn', { headers: { 'uuid': ss.uuid } });
+            // console.log(response.data.success + 'middleware');
+            return res.status(200).json({ signed : ss.signed});
+        } catch (error) {
+            console.log(error);
         }
     },
     detail: async function (req, res, next) {
         try {
+            console.log(req.session.uuid + 'recv');
+            var ss = req.session;
+            console.log(Object.keys(ss).length);
+
+            if (ss == undefined || !(Object.keys(ss).length - 1)) {
+                return res.redirect(constants.API_URI + '/loginPage');
+            }
+
             var smartHomeId = req.params['id'];
 
-            var smartHome = await axios.get(constants.API_URI + '/smarthome/get_by_id/' + smartHomeId);
+            var smartHome = await axios.get(constants.API_URI + '/smarthome/get_by_id/' + smartHomeId, { headers: { 'uuid': ss.uuid } });
             if (!smartHome.data.success) {
-                res.redirect(constants.API_URI + '/error');
+                res.redirect(constants.API_URI + '/loginPage');
             }
 
-            var smartHomeDevices = await axios.get(constants.API_URI + '/smarthome_device/' + smartHomeId);
+            var smartHomeDevices = await axios.get(constants.API_URI + '/smarthome_device/' + smartHomeId, { headers: { 'uuid': ss.uuid } });
             if (!smartHomeDevices.data.success) {
-                res.redirect(constants.API_URI + '/error');
+                res.redirect(constants.API_URI + '/loginPage');
             }
 
-            res.render(viewPath + '/smart-homes/detail.ejs', { page: 'SMART HOME DETAIL', menuId: 'smart_homes', smartHome: smartHome.data.data, smartHomeDevices: smartHomeDevices.data.data });
+            res.render(viewPath + '/smart-homes/detail.ejs', { page: 'SMART HOME DEVICES', menuId: 'smart_homes', smartHome: smartHome.data.data, smartHomeDevices: smartHomeDevices.data.data });
         } catch (error) {
-            console.error(error);
+            //console.error(error);
+            res.redirect(constants.API_URI + '/loginPage');
         }
     },
     smartHomeUsers: async function (req, res, next) {
