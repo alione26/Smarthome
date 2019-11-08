@@ -21,10 +21,22 @@ global.io = require('socket.io')(http); // io is global var
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+var session = require('express-session');
+
+app.use(session({
+  key: 'uuid',
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }, //note secure : true for https, false for http so that we can change Session value
+
+}));
+
 app.engine('ejs', require('ejs').renderFile);
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/src/web/stylesheets'));
 app.use(express.static(__dirname + '/src/web/javascripts'));
+app.use(express.static(__dirname + '/src/web/views')); 
 
 routes(app);
 socketio.connect();
