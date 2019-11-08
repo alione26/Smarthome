@@ -1,4 +1,4 @@
-.bg-3 {
+.bg-3 { 
     background-color: #ffffff;
     color: #555555;
 }
@@ -15,11 +15,26 @@
     font-size: 12px;
     letter-spacing: 5px;
 }
+.navbar-nav li:hover {
+    display:block;
+    min-width: 40px;
+    min-height: 20px;
+    border-radius: 20px;
+    background: rgb(76, 159, 228);
+}
 .navbar-nav  li a:hover {
-    color: #1abc9c !important;
+    color: #8decd9 !important;
+    font-size: 17px;
+    
+}
+
+.navbar-nav li a {
+    font-size: 15px;
+    font-weight: bold;
 }
 .active>a {
   color: #1abc9c !important;;
+ 
 }
 
 .smart-home-item {
@@ -28,7 +43,8 @@
     margin: 20px 0;
     text-align: left;
     width: 100%;
-    min-height: 368px;
+    min-height: 400px;
+    background: #f7f7f7;
 }
 
 .smart-home-item .device-title {
@@ -38,13 +54,12 @@
     font-size: 18px;
     text-align: center;
     font-weight: bold;
+    background: lightblue;
 }
 
 .smart-home-item .device-info {
     padding: 10px;
     font-size: 14px;
-    min-height: 248px; //added by Dan
-
 }
 
 .finger-user-item .finger-info {
@@ -67,9 +82,39 @@
 .finger-user-item .action-item .btn {
     padding: 14px;
     min-width: 120px;
-
 }
 
 .home-btn {
     padding: 14px;
+}
+/************************************************
+\************************************************\
+    Button Login, logout in MENU 24/10/2019
+\************************************************\
+*************************************************/
+.container .butLog {
+    outline: 0;
+    border: 0;
+    background: blue;
+    margin-top: 0;
+    color: green;
+}
+.container .butLog button {
+    float: right;
+    display: block;
+    min-width: 30px;
+    min-height: 20px;
+    padding: .8vw .8vw;
+    font-size: 18px;
+    font-weight: bold;
+    background: transparent;
+    border: 0;
+    outline: 0;
+    border-radius: 2vw;
+    font-family: octicons;
+    
+}
+.container .butLog button:hover {
+    
+    color: blue;
 }
