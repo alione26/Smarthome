@@ -15,7 +15,7 @@ module.exports = {
     },
     signUp: async function (req, res, next) {
         res.render(viewPath + '/login/SignUp.ejs', { page: 'SignUp', menuId: 'signUp' });
-    
+
     },
     logOut: async function (req, res, next) {
         //console.log('hihihi');
@@ -45,7 +45,7 @@ module.exports = {
                 req.session.uuid = response.headers.uuid;
                 req.session.signed = true;
                 //req.session.save();
-                console.log(req.session.signed + 'signed');
+                console.log('signed :' + req.session.signed);
                 res.status(200).set('uuid', response.headers.uuid).json({ success: true, message: response.data.message });
             })
             .catch(function (error) {
@@ -55,9 +55,9 @@ module.exports = {
     },
     smartHomes: async function (req, res, next) {
         try {
-            console.log(req.session.uuid + 'recv');
+
             var ss = req.session;
-            console.log(Object.keys(ss).length);
+            //console.log(Object.keys(ss).length);
 
             if (ss == undefined || !(Object.keys(ss).length - 1)) {
                 return res.redirect(constants.API_URI + '/loginPage');
@@ -77,7 +77,7 @@ module.exports = {
     showAuthButton: async function (req, res, next) {
         try {
             var ss = req.session;
-            console.log(Object.keys(ss).length);
+            //console.log(Object.keys(ss).length);
 
             if (ss == undefined || !(Object.keys(ss).length - 1)) {
                 // return res.redirect(constants.API_URI + '/error');
@@ -93,9 +93,8 @@ module.exports = {
     },
     detail: async function (req, res, next) {
         try {
-            console.log(req.session.uuid + 'recv');
             var ss = req.session;
-            console.log(Object.keys(ss).length);
+            //console.log(Object.keys(ss).length);
 
             if (ss == undefined || !(Object.keys(ss).length - 1)) {
                 return res.redirect(constants.API_URI + '/loginPage');
@@ -239,7 +238,7 @@ module.exports = {
     webHook: async function (req, res, next) {
         try {
             const data = req.body;
-            console.log(data); 
+            console.log(data);
 
             return res.json({
                 speech: 'Something went wrong!',

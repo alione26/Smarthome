@@ -8,7 +8,7 @@ const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-
 module.exports = {
     middleware : async function (req, res, next) {
         var currentUUID =  req.headers.uuid;
-        console.log(currentUUID);
+        console.log('currentUUID in middleware checking : ' + currentUUID);
 
         try {
             var checkUUID =  await userDeviceService.checkUUID(currentUUID);
@@ -86,7 +86,6 @@ module.exports = {
 
     logout: async function (req, res, next) {
         var currentUUID =  req.headers.uuid;
-        console.log('uuid'+currentUUID);
 
         try {
             var logoutData = await userService.logout(currentUUID);
