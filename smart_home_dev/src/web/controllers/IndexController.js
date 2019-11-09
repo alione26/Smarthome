@@ -25,8 +25,8 @@ module.exports = {
                 return res.status(400).json({ success: response.data.success });
             }
             req.session.signed = !response.data.success;
+            console.log('check-logout :' + response.data.success);
             return res.status(200).json({ success: response.data.success });
-            console.log('check-logout' + response.data.success);
         } catch (error) {
             console.log(error);
         }

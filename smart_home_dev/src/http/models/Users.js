@@ -160,7 +160,7 @@ module.exports = {
     logout : async function (userDeviceUuid) {
         try {
              var getUserDevice = await userDevice.getUserDeviceByUUID(userDeviceUuid);
-             console.log(getUserDevice.status);
+             //console.log(getUserDevice.status);
              if (!getUserDevice.status && !getUserDevice.data) {
                 return { status: false, message: 'Uuid not exist.' };
              }
