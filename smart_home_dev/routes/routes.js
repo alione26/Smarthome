@@ -79,6 +79,11 @@ var appRouter = function (app) {
     //Google Assistant
     const dialogFlowApp = require('../src/gga/DialogFlowApp');
     app.post('/gga', dialogFlowApp);
+
+    //Admin Auth
+    const authAdminController = require('../src/admin/http/controllers/AdminAuthController');
+    app.get('/admin/login', authAdminController.login);
+    
 }
 
 module.exports = appRouter;
