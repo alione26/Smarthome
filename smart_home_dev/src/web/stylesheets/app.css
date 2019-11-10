@@ -8,8 +8,8 @@
     margin-top: 5%;
     transform: translate(-50%, -50%);
     padding: 30px;
-    min-width: 40%;    
-    background: transparent; 
+    min-width: 40%;
+    background: transparent;
 }
 form {
     max-width: 80%;
@@ -54,7 +54,7 @@ div.data .input-data label {
     border-radius: 10px;
     border: none;
     cursor: pointer;
-    outline: none;   
+    outline: none;
 }
 .data>input[value="Log In"]:hover {
     color: #000;
@@ -72,7 +72,7 @@ div.data .input-data label {
     border-radius: 10px;
     border: none;
     cursor: pointer;
-    outline: none;  
+    outline: none;
 }
 .data>a:hover {
     background: rgb(75, 163, 235);
@@ -99,10 +99,19 @@ form>input[value="Submit"] {
     border: none;
     cursor: pointer;
     outline: none;
-    
+
 }
 form>input[value="Submit"]:hover {
     color: #fff;
+}
+#errorSignUp {
+    display: block;
+    margin-top: 3px;
+    max-width: 100%;
+    color: #ff0000;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
 }
 @media screen and (max-width:500px) {
     .login {
@@ -120,6 +129,6 @@ form>input[value="Submit"]:hover {
     form {
         min-width: 80vw;
     }
-    
-  
+
+
 }

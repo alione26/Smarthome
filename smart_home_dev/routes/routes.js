@@ -66,11 +66,12 @@ var appRouter = function (app) {
     app.post('/smart-homes/do-action', indexController.doAction);
     app.post('/smart-homes/devices/finger-action', indexController.fingerAction);
     app.post('/smart-homes/web-hook', indexController.webHook);
-    
+
     // Login page added
     app.get('/loginPage', indexController.loginPage);
-    app.get('/loginPage/signUp', indexController.signUp);
+    app.get('/loginPage/signUp', indexController.signUpPage);
     app.post('/identify/login', indexController.authencation);
+    app.post('/identify/signup', indexController.signUp);
 
     app.get('/showAuthButton', indexController.showAuthButton);
     // app.get('/checkSignedIn', authController.middleware);
@@ -83,7 +84,7 @@ var appRouter = function (app) {
     //Admin Auth
     const authAdminController = require('../src/admin/http/controllers/AdminAuthController');
     app.get('/admin/login', authAdminController.login);
-    
+
 }
 
 module.exports = appRouter;

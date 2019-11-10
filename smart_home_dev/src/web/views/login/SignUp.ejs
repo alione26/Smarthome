@@ -10,20 +10,20 @@
         <form>
             <div class="data">
                 <div class="input-data">
-                    <label>UserName:</label><input type="text">
+                    <label>UserName:</label><input type="text" value="" id="nameSignUp" oninput="inp1()">
                 </div>
                 <div class="input-data">
-                    <label>PassWord:</label><input type="password">
+                    <label>PassWord:</label><input type="password" value="" id="passSignUp" oninput="inp1()">
                 </div>
                 <div class="input-data">
-                    <label>Confirm PassWord:</label><input type="text">
+                    <label>Confirm PassWord:</label><input type="password" value="" id="rePassSignUp" oninput="inp1()">
                 </div>
                 <div class="input-data">
-                    <label>Email:</label><input type="email">
+                    <label>Email:</label><input type="email" value="" id="mailSignUp" oninput="inp1()">
                 </div>
             </div>
             <br>
-            <input type="submit" value="Submit">
+            <input type="button" value="Submit" id="signUp" onclick="Register()"><span id="errorSignUp"></span>
         </form>
     </div>
 </body>

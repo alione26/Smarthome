@@ -41,12 +41,16 @@ module.exports = {
             var getUser = await Users.getUserByEmail(loginData.email);
             if (getUser.status && getUser.data) {
                 var UserData = getUser.data;
+                var userContent = UserData[Object.keys(UserData)[0]];
+              if (userContent.active) {
                 var user = await Users.login(loginData, UserData);
                 if (user.status) {
                 return {status : true, message : user.message, user : user.user};
                 }
                 return {status : false, message : user.message};
-            }
+              }
+            return {status : false, message : 'Account is not Activated'};
+          }
             return {status : false, message : 'Email not exist'};
         }catch(e) {
             throw Error(e.message);

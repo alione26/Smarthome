@@ -30,9 +30,13 @@ module.exports = {
 
     register : async function (req, res, next) {
         var user_id = uuidv4();
+        var active = false;
+        var gender = '';
+        var phone = '';
+        var date_of_birth = '';
 
-        var userData = { user_id: user_id, name : req.body.name, password: req.body.password, email : req.body.email, phone : req.body.phone,
-            gender : req.body.gender, date_of_birth : req.body.date_of_birth };
+        var userData = { user_id: user_id, name : req.body.name, password: req.body.password, email : req.body.email, phone : phone,
+            gender : gender, date_of_birth : date_of_birth, active : active };
 
         if (!emailRegexp.test(userData.email)) {
             return res.status(400).json({ success: false, message: 'Email invalid.' });

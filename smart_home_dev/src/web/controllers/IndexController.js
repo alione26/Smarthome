@@ -13,10 +13,49 @@ module.exports = {
     loginPage: async function (req, res, next) {
         res.render(viewPath + '/login/index.ejs', { page: 'Login', menuId: 'login' });
     },
-    signUp: async function (req, res, next) {
+    signUpPage: async function (req, res, next) {
         res.render(viewPath + '/login/SignUp.ejs', { page: 'SignUp', menuId: 'signUp' });
 
     },
+    signUp: async function (req, res, next) {
+      try {
+      var name = req.body.name;
+      var email = req.body.email;
+      var password = req.body.password;
+      var response = await axios.post(constants.API_URI + '/auth/register', {
+          name: name,
+          password: password,
+          email: email
+      })
+          .then(function (response) {
+              console.log(response);
+              if (!response.data.success) {
+                  //errorSignUp.innerHTML = "Fail to Sign Up !!!";
+                  return res.status(400).json({ success: false, message: 'Fail to Sign Up' });
+
+              }
+              // alert("Your request is sent. We will sent you an confirm email soon!");
+              // window.location.assign("/loginPage");
+              return res.status(200).json({ success: true, message: 'Signed Up Successfully' });
+
+
+
+
+          })
+          .catch(function (error) {
+
+              // errorSignUp.innerHTML = "Fail to Sign Up!!!";
+              // return res.status(400).json({ success: false, message: 'Fail to Sign Up' });
+              console.log(error.response.data);
+              return res.status(400).json({ success: false, message: error.response.data.message });
+          });
+          //console.log(response.message);
+    }catch(error) {
+      //console.log(error);
+      return res.status(400).json({ success: false, message: 'Fail to Sign Up' });
+    }
+    },
+
     logOut: async function (req, res, next) {
         //console.log('hihihi');
         try {
