@@ -1,6 +1,6 @@
 const socket = io('https://webrtc-socket-server.herokuapp.com/');
 
-$('#div-chat').hide();
+//$('#div-chat').hide();
 //$("#div-dang-ky").hide();
 
 
@@ -22,7 +22,7 @@ customConfig = {
 }
 
 socket.on('DANH_SACH_ONLINE', arrUserInfo => {
-    $('#div-chat').show();
+    //$('#div-chat').show();
     //$('#div-dang-ky').hide();
 
     arrUserInfo.forEach(user => {
