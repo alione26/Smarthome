@@ -144,3 +144,8 @@
 #btn-camera:hover {
     background: rgb(76, 159, 228);
 }
+@media screen and (max-width:500px) {
+    #btn-camera {
+        max-width: 50%;
+    }
+}

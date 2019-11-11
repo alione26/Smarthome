@@ -2,15 +2,31 @@
 <html lang="en">
 <head>
   <% include ../partials/head %> 
+  <link rel="stylesheet" type="text/css" href="/app.css">
 </head>
 
 <body>
   <% include ../partials/menu %>
-  <div class="container bg-3 text-center">
-    <h3>
-      <%= page %>
-    </h3><br>
-    <div>Hellloasdasdasdasdasd</div>
+  <div id="CameraBody">
+    <h3 id="CameraBodyH3"><%= page %></h3>
+    <div id="playCam">
+      <div id="div-chat" style="overflow: hidden;">
+        <p style="display:none;">Online user:</p>
+        <ul id="ulUser" style="display:none;">
+        </ul>
+        <h3 id="my-peer" style="display:none;">Your Id: </h3>
+        <video id="localStream" width="300" controls style="display:none;"></video>
+        <video id="remoteStream" controls></video>
+        <br /><br />
+        <input type="text" id="remoteId" placeholder="Remote ID" style="display:none;">
+        <button id="btnCall" style="display:none;">Call</button>
+      </div>
+      <div id="div-dang-ky" style="display:none;">
+          <br /><br />
+          <input type="text" id="txtUsername" placeholder="Enter your username">
+          <button id="btnSignUp">Sign Up</button>
+      </div>
+    </div>
   </div>
 </body>
 <% include ../partials/script %>

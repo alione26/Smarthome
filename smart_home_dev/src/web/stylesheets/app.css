@@ -113,6 +113,37 @@ form>input[value="Submit"]:hover {
     font-weight: bold;
     text-align: center;
 }
+/************************************************
+\************************************************\
+    Set cho Camera
+\************************************************\
+*************************************************/
+#CameraBody {
+    max-width: 100%;
+    text-align: center;
+    background: url('/smart-homes/smart/Camera_back.jpg') no-repeat;
+    background-size: cover;
+}
+#CameraBodyH3{
+    padding-top: 10px;
+    margin: 0;
+}
+#playCam {
+    position: relative;
+    max-width: 100%;
+    min-height: auto;
+    margin: auto;
+    background: transparent;
+    
+}
+#playCam video {
+    background: lightblue;
+    display: block;
+    width: 50% !important;
+    height: auto;
+    margin-top: 20px !important;
+    margin: auto;
+}
 @media screen and (max-width:500px) {
     .login {
         min-width: 100%;
