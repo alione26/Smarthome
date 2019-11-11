@@ -160,6 +160,8 @@ form>input[value="Submit"]:hover {
     form {
         min-width: 80vw;
     }
-
+    #playCam video {
+        width: 80% !important;
+    }
 
 }

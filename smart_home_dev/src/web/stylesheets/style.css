@@ -93,15 +93,15 @@
 \************************************************\
 *************************************************/
 .container .butLog {
+    float: right;
     outline: 0;
     border: 0;
-    background: blue;
+    /*background: blue;*/
     margin-top: 0;
     color: green;
 }
 .container .butLog button {
-    float: right;
-    display: block;
+    display: inline-block;
     min-width: 30px;
     min-height: 20px;
     padding: .8vw .8vw;
@@ -112,7 +112,6 @@
     outline: 0;
     border-radius: 2vw;
     font-family: octicons;
-    
 }
 .container .butLog button:hover {
     
