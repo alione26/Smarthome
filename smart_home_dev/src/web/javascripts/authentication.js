@@ -72,21 +72,26 @@ async function go() {
 }
 axios.get('/showAuthButton')
   .then((response) => {
-    //console.log(response.data);
+   // console.log(response.data.signed);
     if (!response.data.signed) {
-      document.getElementById("butLogIn").style.display = "block";
-      document.getElementById("butLogOut").style.display = "none";
+      $('#butLogIn').html(`<i class="glyphicon glyphicon-log-in"></i> Sign in`);
+      document.getElementById("butLogIn").value = "Sign in";
     } else {
-      document.getElementById("butLogIn").style.display = "none";
-      document.getElementById("butLogOut").style.display = "block";
+      $('#butLogIn').html(`Sign out <i class="glyphicon glyphicon-log-out"></i>`);
+      document.getElementById("butLogIn").value = "Sign out";
     }
   })
-document.getElementById("butLogIn").addEventListener("click", changeLog);
+document.getElementById("butLogIn").addEventListener("click", function(){
+  if (document.getElementById("butLogIn").value == "Sign in") {
+    return changeLog();
+  }
+  return logout();
+});
 
 function changeLog() {
   window.location.assign("/loginPage");
 }
-document.getElementById("butLogOut").addEventListener("click", logout);
+//document.getElementById("butLogIn").addEventListener("click", logout);
 async function logout() {
   await axios.get('/userLogout')
     .then((response) => {
