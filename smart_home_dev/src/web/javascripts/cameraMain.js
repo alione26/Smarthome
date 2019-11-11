@@ -38,7 +38,7 @@ socket.on('DANH_SACH_ONLINE', arrUserInfo => {
             if ($("#" + firstCamId).length == 0 ) {
                 $('#ulUser').append(`<li id="${firstCamId}" class="tu arrUserInfo">${firstCamTen}</li>`);
             }
-            
+
             $("#"+firstCamId).click();
         }
     });
@@ -51,13 +51,13 @@ socket.on('DANH_SACH_ONLINE', arrUserInfo => {
            loadAgain = true;
             classForMainCam = "classForMainCam";
         }
-       
+
         $('#ulUser').append(`<li id="${peerId}" class="${classForMainCam}">${ten}</li>`);
         //console.log(peerId+"nguoi dung moi");
         console.log('so thu tu CO_NGUOI_DUNG_MOI: '+stt);
         console.log($('#ulUser').children().length);
         console.log($("#ulUser li").length +'2222');
-        
+
         if ((firstCamId && firstCamId != peerId) || loadAgain) {
             console.log(123);
             if ($("#" + firstCamId).length == 0 ) {
@@ -159,10 +159,10 @@ $('#ulUser').on('click', 'li', function() {
 
 $( document ).ready(function() {
   // Handler for .ready() called.
-    
+
     var randomN = $.now();
     $("#txtUsername").val("linh"+randomN);
-    setTimeout(function() { 
+    setTimeout(function() {
         console.log(234);
         $("#btnSignUp").trigger('click');
     }, 2500);
