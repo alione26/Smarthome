@@ -10,6 +10,10 @@ module.exports = {
     error: async function (req, res, next) {
         res.render(viewPath + '/error.ejs', { page: 'Error', menuId: '', message: 'Empty response.' });
     },
+    cameraPage: async function (req, res, next) {
+        res.render(viewPath + '/camera/camera.ejs', { page: 'Camera IP', menuId: 'camera' });
+    },
+
     loginPage: async function (req, res, next) {
         res.render(viewPath + '/login/index.ejs', { page: 'Login', menuId: 'login' });
     },

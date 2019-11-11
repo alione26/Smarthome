@@ -118,3 +118,29 @@
     
     color: blue;
 }
+/************************************************
+\************************************************\
+    Button camera
+\************************************************\
+*************************************************/
+#btn-camera {
+    box-sizing: border-box;
+    max-width: 11vw;
+    height: auto;
+    margin: auto;
+    margin-top: 10px;
+    padding: 15px 15px;
+    background: #5BC0DE;
+    border-radius: 20px ;
+    
+}
+#btn-camera a {
+    display: block;
+    max-width: 100%;
+    text-decoration: none;
+    font: 18px bold ;
+    color: #ffffff;
+}
+#btn-camera:hover {
+    background: rgb(76, 159, 228);
+}
