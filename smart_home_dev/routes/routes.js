@@ -79,7 +79,7 @@ var appRouter = function (app) {
     app.get('/userLogout', indexController.logOut);
 
     //Google Assistant
-    const dialogFlowApp = require('../src/gga/DialogFlowApp');
+    const dialogFlowApp = require('../src/gga/DialogflowApp');
     app.post('/gga', dialogFlowApp);
 
     //Admin Auth
