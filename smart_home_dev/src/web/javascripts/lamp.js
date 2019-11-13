@@ -1,5 +1,16 @@
 let tem =[0,0,0,0]
 let temChek = ['che1','che2','che3','che4']
+function kiemTraChe() 
+{
+	if ((document.getElementById("tragThaiCheck").checked)) 
+	{
+		document.getElementById(temChek[0]).style.background = "lightblue";
+		document.getElementById(temChek[1]).style.background = "lightblue";
+		document.getElementById(temChek[2]).style.background = "lightblue";
+		document.getElementById(temChek[3]).style.background = "lightblue";
+       
+	}
+}
 function chag(identy, lamp) {
 	let identy1 = document.getElementById(identy);
 	if(identy1.id == "che1")
