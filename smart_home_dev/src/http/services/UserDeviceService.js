@@ -39,6 +39,7 @@ module.exports = {
             var latestTime = Math.floor(Date.now()/1000) - parseInt(userDeviceContent.latest);
 
             if (latestTime > (2 * 60 * 60)) {
+                console.log('Uuid has expired. Please login again!');
                 return { status: false, message: 'Uuid has expired. Please login again!' };
             }
 
