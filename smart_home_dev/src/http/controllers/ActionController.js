@@ -7,6 +7,7 @@ var smartHomeDevice = require('../models/SmarthomeDevices')
 module.exports = {
     action: async function (req, res) {
         var token = req.headers.uuid;
+        console.log(token+'koko');
         var smarthome_device_id = req.body.smarthome_device_id;
         var action = req.body.action;
 

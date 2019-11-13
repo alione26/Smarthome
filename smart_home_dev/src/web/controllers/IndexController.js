@@ -188,6 +188,7 @@ module.exports = {
             var smarthomeDevice_id = req.body.smarthomeDevice_id;
             var smarthome_id = req.body.smarthome_id;
             var action = req.body.action;
+            var ss = req.session;
 
             // var response = await axios.get(constants.API_URI + '/smarthome/get_by_id/' + smarthome_id);
             // if (!response.data.success) {
@@ -222,7 +223,8 @@ module.exports = {
             };
 
             var doAction = axios({
-                headers: { 'uuid': constants.DEMO_USER_TOKEN },
+                // headers: { 'uuid': constants.DEMO_USER_TOKEN },
+                headers: { 'uuid': ss.uuid },
                 method: 'post',
                 url: constants.API_URI + '/action',
                 data: actionData
@@ -234,6 +236,31 @@ module.exports = {
             return res.status(400).json({ success: false, message: error });
         }
     },
+    changeBrightness: async function(req, res, next){
+      try {
+          var smarthomeDevice_id = req.body.smarthomeDevice_id;
+          var smarthome_id = req.body.smarthome_id;
+          var brightness = req.body.action;
+          var ss = req.session;
+          var actionData = {
+              smarthome_device_id: smarthomeDevice_id,
+              action: brightness
+          };
+
+          var doAction = axios({
+              // headers: { 'uuid': constants.DEMO_USER_TOKEN },
+              headers: { 'uuid': ss.uuid },
+              method: 'post',
+              url: constants.API_URI + '/action',
+              data: actionData
+          });
+
+          return res.status(200).json({ success: true, message: 'Successfully' });
+
+      } catch (error) {
+          return res.status(400).json({ success: false, message: error });
+      }
+  },
     fingerAction: async function (req, res, next) {
         try {
             var smarthomeDevice_id = req.body.smarthomeDevice_id;

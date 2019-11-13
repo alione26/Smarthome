@@ -7,7 +7,7 @@
 
 <body>
     <% include ../partials/menu %>
-    
+
     <div class="container bg-3 text-center">
         <h3>
             <%= page %>
@@ -35,7 +35,7 @@
                         <% } %>
                         <% if (smartHomeDevices[item].machine_type == 'Bedroom_Light') { %>
                             <img src="./smart/light_on.png" width="250px" height="220px" style="display:block;margin:auto;">
-                            
+
                         <% } %>
                         <% if (smartHomeDevices[item].machine_type == 'DHT22') { %>
                             <img src="./smart/Temperature.png" width="250px" height="220px" style="display:block;margin:auto;">
@@ -45,7 +45,7 @@
                         <% } %>
                         <% if (smartHomeDevices[item].machine_type == 'Livingroom_Light') { %>
                             <img src="./smart/light_on.png" width="250px" height="220px" style="display:block;margin:auto;">
-                           
+
                         <% } %>
                         <% if (smartHomeDevices[item].machine_type == 'DHT22') { %>
                         <div>
@@ -72,12 +72,14 @@
                             <!-- ************************ -->
                             <div class="chel1chel2">
                                 <div id="che1" onclick="chag(this.id)" data-dosag = "25" data-id="
-                                <%= smartHomeDevices[item].smarthomeDevice_id %>"> 
+                                <%= smartHomeDevices[item].smarthomeDevice_id %>" data-smarthomeid="
+                                <%= smartHomeDevices[item].smarthome_id %>"> 
                                     <span>25%</span>
                                 </div>
                                 <!-- ************************ -->
                                 <div id="che2" onclick="chag(this.id)" data-dosag = "50" data-id="
-                                <%= smartHomeDevices[item].smarthomeDevice_id %>">
+                                <%= smartHomeDevices[item].smarthomeDevice_id %>" data-smarthomeid="
+                                <%= smartHomeDevices[item].smarthome_id %>">
                                     <span>50%</span>
                                 </div>
                             </div>
@@ -91,16 +93,18 @@
                             <!-- ************************ -->
                             <div class="chel1chel2">
                                 <div id="che3" onclick="chag(this.id)" data-dosag = "75" data-id="
-                                <%= smartHomeDevices[item].smarthomeDevice_id %>">
+                                <%= smartHomeDevices[item].smarthomeDevice_id %>" data-smarthomeid="
+                                <%= smartHomeDevices[item].smarthome_id %>">
                                     <span>75%</span>
                                 </div>
                                 <!-- ************************ -->
                                 <div id="che4" onclick="chag(this.id)" data-dosag = "100" data-id="
-                                <%= smartHomeDevices[item].smarthomeDevice_id %>">
+                                <%= smartHomeDevices[item].smarthomeDevice_id %>" data-smarthomeid="
+                                <%= smartHomeDevices[item].smarthome_id %>">
                                     <span>100%</span>
                                 </div>
                             </div>
-                            
+
                         <% } else if(smartHomeDevices[item].machine_type != 'DHT22') { %>
                         <a><input type="checkbox" class="control-action" name="control-action" <%-
                                 smartHomeDevices[item].status=='active' ? 'checked' : '' %> data-toggle="toggle"
