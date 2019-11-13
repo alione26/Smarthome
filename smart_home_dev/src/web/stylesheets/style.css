@@ -143,8 +143,31 @@
 #btn-camera:hover {
     background: rgb(76, 159, 228);
 }
+/************************************************
+\************************************************\
+    Set LAMP phan tram
+\************************************************\
+*************************************************/
+.chel1chel2 {
+    display: inline-block;
+}
+#che1, #che2, #che3, #che4
+{   
+    margin: 0 10px;
+    display: inline-block;
+    background: lightblue;
+    padding: 10px 0;
+    text-align: center;
+    width: 70px;
+    border-radius: 20px; 
+}
 @media screen and (max-width:500px) {
     #btn-camera {
         max-width: 50%;
+    }
+    .chel1chel2
+    {
+        display: block;
+        margin: 10px 0; 
     }
 }
