@@ -86,7 +86,9 @@ var appRouter = function (app) {
     //Admin Auth
     const authAdminController = require('../src/admin/http/controllers/AdminAuthController');
     app.get('/admin/login', authAdminController.login);
-
+    app.post('/admin/login', authAdminController.doLogin);
+    app.get('/admin/dashboard', authAdminController.index);
+    app.get('/admin', authAdminController.admin);
 }
 
 module.exports = appRouter;
