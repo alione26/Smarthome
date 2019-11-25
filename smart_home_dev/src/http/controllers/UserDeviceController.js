@@ -8,9 +8,9 @@ module.exports = {
         if (get_list_userDevice.status) {
              return res.status(200).json({ success : true, message : get_list_userDevice.message, data : get_list_userDevice.data});
          }
-        return res.success(400).json({ success : false, message : get_list_userDevice.message});
+        return res.status(400).json({ success : false, message : get_list_userDevice.message});
     },
-    new_userDevice : async function (userId, token, res) {
+    new_userDevice : async function (userId, token) {
         console.log("HTTP POST Request");
         var userDevice_id = uuidv4();
         var userDeviceData = { userDevice_id : userDevice_id, user_id : userId, token : token, created_at : Math.floor(Date.now()/1000),
@@ -21,9 +21,9 @@ module.exports = {
         var create_userDevice = await userDeviceService.add_userDevice(userDeviceData, userDevice_id);
         console.log(create_userDevice);
         if (create_userDevice.status) {
-            return res.status(200).json({ success: true, message: create_userDevice.message });
+            return { success: true, message: create_userDevice.message };
         }
-        return res.status(400).json({ success: false, message: create_userDevice.message});
+        return { success: false, message: create_userDevice.message };
     },
     userDevice_by_id : async function(req, res) {
         console.log("HTTP GET Request");
@@ -33,7 +33,7 @@ module.exports = {
         if (get_by_id.status) {
              return res.status(200).json({ success : true, message : get_by_id.message, data : get_by_id.data});
          }
-        return res.success(400).json({ success : false, message : get_by_id.message});
+        return res.status(400).json({ success : false, message : get_by_id.message});
     },
     update_userDevice : async function(req, res) {
         console.log("HTTP PUT Request");

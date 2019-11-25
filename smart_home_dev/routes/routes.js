@@ -43,10 +43,19 @@ var appRouter = function (app) {
     app.post('/user_device/update/:id', userDeviceController.update_userDevice);
     app.delete('/user_device/delete/:id', userDeviceController.delete_userDevice);
 
+    const adminController = require('../src/http/controllers/AdminController');
+    app.post('/admin/new-admin', adminController.new_admin);
+    app.get('/admin/get_by_id/:id', authControllerUser.adminMiddleware, adminController.admin_by_id);
+
+    const adminDeviceController = require('../src/http/controllers/AdminDeviceController');
+    app.get('/admin_device/get_by_token/:id', adminDeviceController.getAdminDeviceByToken);
+
     const authController = require('../src/http/controllers/AuthController');
     app.post('/auth/register', authController.register);
     app.post('/auth/login', authController.login);
     app.get('/auth/logout', authController.logout);
+    app.post('/auth/admin/login', authController.adminLogin);
+    app.get('/auth/admin/logout', authControllerUser.adminMiddleware, authController.adminLogout);
 
     const actionController = require('../src/http/controllers/ActionController');
     app.post('/action', actionController.action);
@@ -89,6 +98,7 @@ var appRouter = function (app) {
     app.post('/admin/login', authAdminController.doLogin);
     app.get('/admin/dashboard', authAdminController.index);
     app.get('/admin', authAdminController.admin);
+    app.get('/admin/logout', authAdminController.logout);
 }
 
 module.exports = appRouter;

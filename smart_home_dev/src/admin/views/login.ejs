@@ -19,15 +19,16 @@
                         <div class="property-in-edit__Property-sc-1yqxq8u-0 iXaACQ"><label
                                 class="label__StyledLabel-odgp9z-0 label cyHuTm" for="email">Your email</label>
                             <div class="control"><input type="text" name="email" id="email"
-                                    placeholder="Your Email Address" class="input"></div>
+                                    placeholder="Your Email Address" class="input" oninput="adminInput()"></div>
                         </div>
                         <div class="property-in-edit__Property-sc-1yqxq8u-0 iXaACQ"><label
                                 class="label__StyledLabel-odgp9z-0 label cyHuTm" for="password">Password</label>
                             <div class="control"><input type="password" name="password" id="password"
-                                    placeholder="Password" class="input"></div>
+                                    placeholder="Password" class="input" oninput="adminInput()"></div>
                         </div><button
                             class="is-primary is-fullwidth styled-button__StyledButton-sc-27o4jb-0 button cuXEvV"
-                            type="submit" style="margin-top:40px">Login</button>
+                            type="button" style="margin-top:40px" onclick="adminLogin()">Login</button>
+                        <h6 id="Error"></h6>
                     </form>
                 </section>
             </section>
