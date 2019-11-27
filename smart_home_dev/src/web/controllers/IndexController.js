@@ -154,7 +154,7 @@ module.exports = {
             if (!smartHomeDevices.data.success) {
                 res.redirect(constants.API_URI + '/loginPage');
             }
-
+            //console.log('hahaha', smartHomeDevices.data.data);
             res.render(viewPath + '/smart-homes/detail.ejs', { page: 'SMART HOME DEVICES', menuId: 'smart_homes', smartHome: smartHome.data.data, smartHomeDevices: smartHomeDevices.data.data });
         } catch (error) {
             //console.error(error);

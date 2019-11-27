@@ -61,5 +61,18 @@ module.exports = {
             return res.status(200).json({ success: true, message: delete_smarthome.message });
         }
         return res.status(400).json({ success: false, message: delete_smarthome.message});
+    },
+    getSmartHomeById: async function(req, res) {
+      console.log("HTTP GET Request");
+      var smarthomeId = req.params['id'];
+      var get_by_id = await smarthomeService.smarthome_by_id(smarthomeId);
+      //var socketId = get_by_id.data.socketId;
+      //console.log(socketId); //try sockteio
+      //await socketio.emitMessage(socketId, get_by_id.data); //trysocketio
+      console.log(get_by_id);
+      if (get_by_id.status) {
+           return res.status(200).json({ success : true, message : get_by_id.message, data : get_by_id.data});
+       }
+      return res.success(400).json({ success : false, message : get_by_id.message});
     }
 }

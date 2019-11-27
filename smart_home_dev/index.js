@@ -36,12 +36,12 @@ app.engine('ejs', require('ejs').renderFile);
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/src/web/stylesheets'));
 app.use(express.static(__dirname + '/src/web/javascripts'));
-app.use(express.static(__dirname + '/src/web/views')); 
-//app.use(express.static(__dirname + '/src/web/views/camera')); 
-//app.use(express.static(__dirname + '/src/web/views/smart-homes/smart')); 
+app.use(express.static(__dirname + '/src/web/views'));
+//app.use(express.static(__dirname + '/src/web/views/camera'));
+//app.use(express.static(__dirname + '/src/web/views/smart-homes/smart'));
 app.use(express.static(__dirname + '/src/admin/stylesheets'));
 app.use(express.static(__dirname + '/src/admin/javascripts'));
-
+app.use(express.static(__dirname + '/src/admin/views')); 
 routes(app);
 socketio.connect();
 socketio.recievedSmartHomeId();

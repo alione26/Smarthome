@@ -19,5 +19,8 @@ module.exports = {
     },
     getSmartHomeUserBySmartHomeId : async function(smarthomeId) {
         return await smarthomeUser.getSmartHomeUserBySmartHomeId(smarthomeId);
+    },
+    getSmartHomeUserByUserId : async function(userId) {
+        return await smarthomeUser.getSmartHomeUserByUserId(userId);
     }
 }

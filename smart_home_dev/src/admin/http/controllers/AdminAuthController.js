@@ -35,6 +35,7 @@ module.exports = {
               res.redirect(constants.API_URI + '/error');
           }
           var adminData = getAdmin.data.data;
+          req.session.adminName = adminData.name;
           //console.log(adminData.email, 'is adminEmail');
           // var adminContent = adminData[Object.keys(adminData)[0]];
           // console.log('adminData:', adminContent.email);
@@ -85,7 +86,7 @@ module.exports = {
         res.render(viewPath + '/login.ejs', { page: 'Login', menuId: 'home' });
     },
     logout: async function (req, res, next) {
-        //console.log('hihihi');
+        console.log(req.session.adminUuid);
         try {
             var response = await axios.get(constants.API_URI + '/auth/admin/logout', { 'headers': { 'uuid': req.session.adminUuid } });
             if (!response.data.success) {
@@ -99,4 +100,70 @@ module.exports = {
             console.log(error);
         }
     },
+    userManagement: async function (req, res, next) {
+      try {
+        //console.log(req.session.adminUuid);
+        //var getUserList = await axios.get(constants.API_URI + '/user/get_list', { 'headers': { 'uuid': req.senssion.adminUuid } });
+        var getUserList = await axios.get(constants.API_URI + '/user/get_list');
+        if(!getUserList.data.success) {
+          return res.status(400).json({ success: getUserList.data.success });
+        }
+        var userListData = getUserList.data.data;
+        var userListLength = Object.keys(userListData).length;
+        //console.log(userListData);
+        //console.log( 'userListLength:', userListLength);
+        var userCount;
+        for ( userCount = 0; userCount < userListLength; userCount++) {
+          //console.log('userCount:', userCount);
+          var userInfor = userListData[Object.keys(userListData)[userCount]];
+          var userId = userInfor.user_id;
+          //var userCheck;
+          var getSmartHomeUser = await axios.get(constants.API_URI + '/smarthome_user/getByUserId/' + userId)
+            .then(async function(response) {
+              var smartHomeUserData = response.data.data;
+              //console.log('smartHomeUserData:', smartHomeUserData);
+              var smartHomeUserInfor = smartHomeUserData[Object.keys(smartHomeUserData)[0]];
+              var smartHomeId = smartHomeUserInfor.smarthome_id;
+              userInfor.smarthome_id = smartHomeId;
+              var getSmartHome = await axios.get(constants.API_URI + '/smarthome/' + smartHomeId)
+                .then(function(response){
+                  //console.log('smarthome-check:', response.data.data);
+                  var smartHomeData = response.data.data;
+                  //var smartHomeInfor = smartHomeData[Object.keys(smartHomeData)[0]];
+                  var smartHomeName = smartHomeData.name;
+                  //console.log('name:', smartHomeName);
+                  userInfor.smarthome_name = smartHomeName;
+                  //console.log('check:', userInfor);
+                })
+                .catch(function(error){
+                  console.log(error);
+                });
+              //console.log('smartHomeUserInfor:', smartHomeUserInfor);
+              //userCheck = 1;
+            })
+            .catch(function(error){
+              userInfor.smarthome_id = '';
+              userInfor.smarthome_name = '';
+              //console.log('test response:', error.response.data);
+              //userCheck = 0;
+            });
+            //console.log('userCheck:', userCheck);
+          // if(!getSmartHomeUser.data.success) {
+          //   return res.status(400).json({ success: getSmartHomeUser.data.success });
+          // }
+          // var smartHomeUser = getSmartHomeUser.data.data;
+          // console.log('smartHomeUser:', smartHomeUser);
+          //console.log('user', userCount, ':', userInfor);
+        }
+        console.log("USER-DATA-2-SENT", userListData);
+        res.render(viewPath + '/user/user.ejs', { page: 'User Managment', menuId: 'home', userListData: userListData, adminName : req.session.adminName });
+
+        //console.log('test:', getUserList.data);
+        // var getSmartHomeList = await ;
+        // var getSmartHomeUser = await;
+
+      } catch (error) {
+        console.log('user-management Error:', error);
+      }
+    }
 }

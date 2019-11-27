@@ -4,7 +4,9 @@ module.exports = {
     user_list : async function(req, res, next) {
         console.log("HTTP GET Request");
         var get_list_user = await userService.get_list();
-        console.log(get_list_user);
+        console.log(get_list_user.data);
+        // var count = Object.keys(get_list_user.data).length;
+        // console.log(count);
         if (get_list_user.status) {
              return res.status(200).json({ success : true, message : get_list_user.message, data : get_list_user.data});
          }

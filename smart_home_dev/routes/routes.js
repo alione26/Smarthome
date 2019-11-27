@@ -5,7 +5,8 @@ var appRouter = function (app) {
     const userController = require('../src/http/controllers/UserController');
     //to handle HTTP get request
     const authControllerUser = require('../src/http/controllers/AuthController');
-    app.get('/user/get_list', authControllerUser.middleware , userController.user_list);
+    //app.get('/user/get_list', authControllerUser.adminMiddleware , userController.user_list);
+    app.get('/user/get_list', userController.user_list);
     app.get('/user/get_by_id/:id', userController.user_by_id);
     app.post('/user/add', userController.new_user);
     app.post('/user/update/:id', userController.update_user);
@@ -17,6 +18,7 @@ var appRouter = function (app) {
     app.post('/smarthome/add', smarthomeController.new_smarthome);
     app.post('/smarthome/update/:id', smarthomeController.update_smarthome);
     app.delete('/smarthome/delete/:id', smarthomeController.delete_smarthome);
+    app.get('/smarthome/:id', smarthomeController.getSmartHomeById);
 
     const smarthomeUserController = require('../src/http/controllers/SmarthomeUserController');
     app.get('/smarthome_user/get_list', smarthomeUserController.smarthomeUser_list);
@@ -26,6 +28,7 @@ var appRouter = function (app) {
     app.post('/smarthome_user/update-fingerId/:id', smarthomeUserController.updateFingerId);
     app.delete('/smarthome_user/delete/:id', smarthomeUserController.delete_smarthomeUser);
     app.get('/smarthome_user/getBySmarthomeId/:id', smarthomeUserController.getSmartHomeUserBySmartHomeId);
+    app.get('/smarthome_user/getByUserId/:id', smarthomeUserController.getSmartHomeUserByUserId);
 
     const smarthomeDeviceController = require('../src/http/controllers/SmarthomeDeviceController');
     app.get('/smarthome_device/get_list', smarthomeDeviceController.smarthomeDevice_list);
@@ -99,6 +102,7 @@ var appRouter = function (app) {
     app.get('/admin/dashboard', authAdminController.index);
     app.get('/admin', authAdminController.admin);
     app.get('/admin/logout', authAdminController.logout);
+    app.get('/admin/user-management', authAdminController.userManagement);
 }
 
 module.exports = appRouter;

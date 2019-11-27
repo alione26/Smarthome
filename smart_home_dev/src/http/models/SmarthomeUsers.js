@@ -135,5 +135,27 @@ module.exports = {
         }catch (e) {
             throw Error(e.message);
         }
+    },
+    getSmartHomeUserByUserId : async function(userId) {
+        var smartHomeUserReference = firebase.database().ref("/smarthomeUsers");
+        try {
+              return await smartHomeUserReference.orderByChild("user_id")
+                .equalTo(userId)
+                .once('value').then(
+                    function(snapshot){
+                        if (snapshot.val()) {
+                            return { status : true, message :"The read smarthomeUsers succeeded", data : snapshot.val()};
+                        }
+                        return { status : false, message : "The read smarthomeUsers failed", data: null };
+                        smartHomeUserReference.off("value");
+                    },
+                    function(errorObject){
+                        console.log("The read failed: " + errorObject.code);
+                        return { status : false, message : "The read failed: " + errorObject.code, data: null };
+                    }
+              );
+        }catch (e) {
+            throw Error(e.message);
+        }
     }
 }

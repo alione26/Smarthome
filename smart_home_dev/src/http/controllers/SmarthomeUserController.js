@@ -75,5 +75,14 @@ module.exports = {
             return res.status(200).json({ success : true, message : getSmartHomeUser.message, data : getSmartHomeUser.data});
         }
         return res.status(400).json({success : false, message : getSmartHomeUser.message});
+    },
+    getSmartHomeUserByUserId : async function(req, res) {
+        var userId = req.params['id'];
+        var getSmartHomeUser = await smarthomeUserService.getSmartHomeUserByUserId(userId);
+        //console.log(getSmartHomeUser);
+        if (getSmartHomeUser.status) {
+            return res.status(200).json({ success : true, message : getSmartHomeUser.message, data : getSmartHomeUser.data});
+        }
+        return res.status(400).json({success : false, message : getSmartHomeUser.message});
     }
 }
