@@ -13,7 +13,7 @@ var appRouter = function (app) {
     app.delete('/user/delete/:id', userController.delete_user);
 
     const smarthomeController = require('../src/http/controllers/SmarthomeController');
-    app.get('/smarthome/get_list', authControllerUser.middleware, smarthomeController.smarthome_list);
+    app.get('/smarthome/get_list', smarthomeController.smarthome_list);
     app.get('/smarthome/get_by_id/:id', authControllerUser.middleware, smarthomeController.smarthome_by_id);
     app.post('/smarthome/add', smarthomeController.new_smarthome);
     app.post('/smarthome/update/:id', smarthomeController.update_smarthome);

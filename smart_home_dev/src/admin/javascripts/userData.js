@@ -7,7 +7,7 @@ for(let key in layListData)
     mangListData[i] = layListData[key];
     i++;
 }
-console.log(mangListData);
+//console.log(mangListData);
 //Hàm loadBody sẽ khởi chạy đầu tiên khi mở web
 function loadBody()
 {
@@ -73,18 +73,71 @@ function search()
 }
 //// Hàm hiện lên cửa sổ
 
-function chag(index)
+async function chag(index)
 {
 
     // let par = document.getElementById("info-user");
-    // console.log(index);
+    
+    let smartHomeList = await axios.get('/smarthome/get_list');
+    let smartHomeListData = smartHomeList.data.data;
+    let mangsmartHomeListData = [];
+    let i = 0;
+    for(key in smartHomeListData)
+    {
+        mangsmartHomeListData[i] = smartHomeListData[key];
+        // console.log('smarthomeListData:', mangsmartHomeListData[i]);
+        i++;
+    }
+    //********************************************************* */
+    let elementSelect = document.getElementById("luaChon");
+    let tagOption = elementSelect.getElementsByTagName("option");
+    for((tagOption.length - 1) ; (tagOption.length -1) >= 0; )
+    {
+    // console.log(tagOption[(tagOption.length - 1)].outerHTML);
+    tagOption[(tagOption.length - 1)].remove();
+    }
+    
+    for(let key of mangsmartHomeListData)
+    {
+        let elementSelect = document.getElementById("luaChon");
+        let elementOption = document.createElement("option");
+        // console.log(key.name);
+        // console.log("hien ra",mangListData[index].smarthome_name);
+        if(mangListData[index].smarthome_name == key.name)
+        {
+            // console.log("đã đúng ");
+            elementOption.innerHTML = "<option>" + key.name + "</option>";
+            elementOption.selected = "true";
+            elementOption.value = key.smarthome_id;
+        }
+        else
+        {
+            elementOption.innerHTML = "<option>" + key.name + "</option>";
+            elementOption.value = key.smarthome_id;
+        }
+        elementSelect.append(elementOption);
+        // console.log('smarthomeListData:', key.name);
+    }
+
+    // console.log(document.getElementById("luaChon").children[3].value);
+    
+    
+
+
+
+
+
+
+
+
+
     let ktraActive = document.getElementById("actived");
     let elementInforUser = document.getElementById("info-user");
-    console.log("đánh dâu");
+    //console.log("đánh dâu");
     let tagP = elementInforUser.getElementsByTagName("p");
     for((tagP.length - 1) ; (tagP.length -1) >= 0; )
     {
-        console.log(tagP[(tagP.length - 1)].outerHTML);
+        // console.log(tagP[(tagP.length - 1)].outerHTML);
         tagP[(tagP.length - 1)].remove();
     }
     
@@ -101,7 +154,7 @@ function chag(index)
             if(showName[i] == key)
             {
                 let createEleP = document.createElement("p");
-                createEleP.innerHTML = "<strong>" + showName_1[i] + "</strong>" + " : " + mangListData[index][key];
+                createEleP.innerHTML = "<strong>" + showName_1[i] + " : " + "</strong>"  + mangListData[index][key];
                 elementInforUser.prepend(createEleP);
             }
             
@@ -114,14 +167,11 @@ function chag(index)
     // /****************************************** */
     // if((par.children[0].lastChild.innerHTML) ==  mangDoiTuog[index].name)
     // {
-    //     let x = document.getElementById("luaChon");
-    //     let y = document.getElementById("actived");
-    //     y.checked = mangDoiTuog[index].active;
-    //     for (let key of x.children) {
-    //        console.log(key.innerHTML);
-    //        if(key.innerHTML == mangDoiTuog[index].home)
-    //        key.selected = "true";
-    //     }
+        // let elementSelect = document.getElementById("luaChon");
+        // let elementOption = createElement("option");
+        // let y = document.getElementById("actived");
+        // y.checked = mangDoiTuog[index].active;
+        
     // }
     /******************************** */
     document.body.style.overflow = "hidden";
@@ -130,14 +180,39 @@ function chag(index)
 // Hàm nhận data sau khi ấn OK và đóng cửa sổ
 function accept_and_cls()
 {
-    let x = document.getElementById("luaChon");
+    
+    // let x = document.getElementById("luaChon");
     let par = document.getElementById("info-user");
-    let y = document.getElementById("check-active");
+    let traVeActive = document.getElementById("check-active");
     /*********************************** */
+    let laySelect = document.getElementById("luaChon");
+    let smartHomeIdData;
+    for(let key in laySelect.children)
+    {
+        if(laySelect.children[key].selected == true)
+        smarthomeIdData = laySelect.children[key].value;
+    }
+    let traVeUserData = [];
+    for(let key=0 ; key < (par.children.length-3); key++)
+    {
+        // console.log(par.children[key].lastChild.nodeValue);
+        traVeUserData[key] = par.children[key].lastChild.nodeValue;
+    }
+    //console.log(traVeUserData);
+    let userIdData = traVeUserData[2];
+    console.log('smarthomeID:', smarthomeIdData);
+    console.log('userID:', userIdData);
+    
+    let activeStatus = traVeActive.children[0].checked;
+    console.log('active:', activeStatus, typeof activeStatus);
+    // console.log(document.getElementById("luaChon").children[index].value);
+    /************************************* */
     document.getElementById("fix-block").style.display = "none";
     document.body.style.overflow = "";
     console.log("OK đã xác nhận");
     //************************* */
+    
+
 }
 // Hàm thay đổi kích thước cửa sổ hiện lên theo kích thước window
 function doiSize() {
@@ -160,7 +235,7 @@ function doiSize() {
        
 
        //*****
-       console.log(window.innerHeight);
+    //    console.log(window.innerHeight);
 }
 function esc_close(eve, accept_and_cls)
 {
