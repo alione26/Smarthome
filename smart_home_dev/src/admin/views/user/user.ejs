@@ -7,55 +7,72 @@
 
 <!------ Include the above in your HEAD tag ---------->
 
-<body>
+<body onload="loadBody()" onresize="doiSize()" 
+    onkeyup="esc_close(window.event,accept_and_cls)" data-layuserdata = "<%= JSON.stringify(userListData) %>">
     <div id="throbber" style="display:none; min-height:120px;"></div>
     <div id="noty-holder"></div>
     <% include ../admin %>
-
     <div id="wrapper">
 
-        <div id="page-wrapper">
-            <div class="container-fluid">
+        
+        <!-- <div id="page-wrapper" style=""> -->
+            <!-- <div class="container-fluid"> -->
                 <!-- Page Heading -->
-                <div class="row" id="main">
+                <!-- <div class="row" id="main">
                     <div class="col-sm-12 col-md-12 well" id="content">
-                        <p id="user-12" data-user="<%= userListData %>"></p>
+                    </div>
+                </div> -->
+                <!-- /.row -->
+            <!-- </div> -->
+            <!-- /.container-fluid -->
+        <!-- </div> -->
+        <!-- /#page-wrapper -->
+        <div id="id-0">
+            <button onclick="createTb()">click to create table</button>
+            <!-- <button onclick="countRow()" id="btnCount">Số hàng của bảng là : </button> -->
+        </div>
+        <p id="do-dai"></p>
+        <div id="table-user" style="background: lightgreen;">
+            <div id="id-search" style="float: right;margin: 5px;">
+                <input type="text" placeholder="tìm bằng tên" oninput="search()">
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>User Id</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Smart Home Id</th>
+                        <th>Smart Home Name</th>
+                        <th>Active</th>
+                        <th>Phân quyền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Cửa sổ bật lên -->
+
+        <div id="fix-block" style="display: none;">
+            <div id="fix-block-content">
+                <div id="fix-block-ok" onclick="accept_and_cls()">
+                        OK
+                </div>
+                <div id="info-user">
+                    <select name="" id="luaChon">
+                    </select>
+                    <div id="check-active">
+                        <input type="checkbox" id="actived">
+                        <label for="actived">Actived</label>
                     </div>
                 </div>
-                <!-- /.row -->
             </div>
-            <!-- /.container-fluid -->
         </div>
-        <!-- /#page-wrapper -->
     </div><!-- /#wrapper -->
-
 </body>
 <% include ../partials/script %>
-<script>
-  // let x = document;
-  // console.log(x[key]);
-   // let x = document.getElementById("user-12");
-   // console.log(x.dataset.ngdata);
-   let x = <%-JSON.stringify(userListData) %>;
-   console.log(x);
-   // for(let key in x)
-   // console.log(x[key]);
-   //console.log(JSON.parse(userData));
-  //  for(var property in userData) {
-  //   alert(property + "=" + userData[property]);
-  // }
-   //console.log(userData);
-   // var userContent = userData[Object.keys(userData)[0]];
-   // console.log(userContent);
-   // //var parseData = JSON.parse(userData);
-   // var car = {type:"Fiat", model:"500", color:"white"};
-   // console.log(car);
-  // // let y = JSON.parse(`${x.dataset.ngdata}`);
-  //  console.log(x.dataset.ngdata);
-  //  var userData = x.dataset.ngdata;
-  // var userContent = userData[Object.keys(userData)[0]];
-  // console.log(userContent);
-
-</script>
 
 </html>
