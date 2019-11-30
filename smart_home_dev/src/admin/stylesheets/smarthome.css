@@ -1,0 +1,133 @@
+/* body { */
+    /* margin: 0;
+    padding: 0; */
+    /* position: relative; */
+    /* background: #3eb0dd; */
+    /* overflow: hidden; */
+/* } */
+#wrapper {
+    /* background: rgba(3, 121, 29, 0.9); */
+    background: white;
+    border: 5px solid rgb(9, 31, 228);
+    height: 100vh;
+    overflow: auto;
+    /* padding: 0; */
+    /* margin: 0; */
+    /* padding: ; */
+}
+
+
+
+
+#table-user-smarthome th, td {
+    /* border: 1px solid black; */
+    /* padding: 5px; */
+    outline: 1px solid black;
+    outline-offset: -1px;
+    border: none;
+}
+#table-user-smarthome table {
+    /* border-collapse: collapse; */
+    outline: 1px solid black;
+    width: 100%;
+    /* background: rgb(129, 212, 132) ; */
+    background: white;
+    overflow: auto;
+}
+#table-user-smarthome td {
+    padding: 1px !important;
+    /* width: 100%; */
+    font-size: 13px;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}
+#table-user-smarthome thead th{
+    position: sticky;
+    top: 0;
+    padding: 3px;
+    background: #4CAF50;
+    outline: 1px solid black;
+    outline-offset: -1px;
+    border: none;
+}
+#table-user-smarthome {
+    color: black;
+    padding: 0;
+    margin: 0;
+    width: 99%;
+    margin: auto;
+    /* height: 100%; */
+    max-height: 80%;
+    overflow: auto;
+    /* background: rgb(129, 212, 132) ; */
+}
+
+#icon-setting ,#icon-edit,#icon-trash {
+    margin: 4px;
+    font-size: 18px;
+}
+#newUser-smarthome {
+    margin:8px 0 0 5px;width: 10%;
+    background: #3eb0dd;
+    border: none;
+    outline: none;
+    border-radius: 2px;
+    /* color: white; */
+}
+#table-user-smarthome #btnEdit:hover {
+    width: 100%;
+    background: rgb(55, 97, 236);
+    /* outline: none; */
+}
+#id-search-smarthome input{
+    /* width: 100%; */
+    /* background: turquoise; */
+    display: block;
+    width: 99%;
+    margin: auto;
+}
+/* ********************************************** */
+#fix-block-smarthome {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    border: 2px solid black;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 99999;
+    overflow: hidden;
+}
+
+#fix-block-ok-smarthome {
+    position: absolute;
+    bottom: 0;
+    right: 50%;
+    margin-bottom: 5px ;
+    transform: translate(50%);
+    width: 10%;
+    text-align: center;
+    padding: 5px;
+    background: #3eeeee;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+#fix-block-ok-smarthome:hover {
+    background: rgb(55, 97, 236);
+    color: #fff;
+    cursor: pointer;
+}
+
+#fix-block-content-smarthome {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    left: 0;
+    overflow: auto;
+    margin: auto;
+    width: 99%;
+    min-height: 50%;
+    padding: 50px;
+    background: #3eb0dd;
+    border: 5px solid lightgreen;
+    border-radius: 5px;
+}

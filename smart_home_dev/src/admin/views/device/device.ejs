@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../partials/head %>
+</head>
+
+<!------ Include the above in your HEAD tag ---------->
+
+<body onload="loadBody_device()" onresize="doiSize_device()" 
+    onkeyup="esc_close_device(window.event,accept_and_cls_device)" data-laydevicedata = "<%= JSON.stringify(deviceListData) %>">
+    <div id="throbber" style="display:none; min-height:120px;"></div>
+    <div id="noty-holder"></div>
+    <% include ../admin %>
+    <div id="wrapper" style="padding: 0;">
+
+        
+        <!-- <div id="page-wrapper" style=""> -->
+            <!-- <div class="container-fluid"> -->
+                <!-- Page Heading -->
+                <!-- <div class="row" id="main">
+                    <div class="col-sm-12 col-md-12 well" id="content">
+                    </div>
+                </div> -->
+                <!-- /.row -->
+            <!-- </div> -->
+            <!-- /.container-fluid -->
+        <!-- </div> -->
+        <!-- /#page-wrapper -->
+        <!-- <span>User Data Table</span> -->
+        <p id="do-dai-device"></p>
+        <div style="text-align: center;font-size: 20px;">
+            <caption><strong>Devices Data Table</strong></caption>
+        </div>
+        
+        <div id="id-search-device">
+            <input type="text" placeholder="Searching" oninput="search_device()">
+        </div>
+        <div id="table-user-device">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Device Name</th>
+                        <th>Machine Type</th>
+                        <th>Series Number</th>
+                        <th>SmartHome Device Id</th>
+                        <th>SmartHome Id</th>
+                        <th>SmartHome Name</th>
+                        <th>Status</th>
+                        <th>Update at</th>
+                        <th>Create at</th>
+                        <th>Options</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+        </div>
+        <button id="newUser-device"><i class="fas fa-plus" ></i> New User</button>
+        <div id="id-0-device" style="display:inline-block">
+            <button onclick="createTb_device()">click to create table</button>
+            <!-- <button onclick="countRow()" id="btnCount">Số hàng của bảng là : </button> -->
+        </div>
+
+        <!-- Cửa sổ bật lên -->
+
+        <div id="fix-block-device" style="display: none;">
+            <div id="fix-block-content-device">
+                <div id="fix-block-ok-device" onclick="accept_and_cls_device()">
+                        OK
+                </div>
+                <div id="info-user-device">
+                    <label for="luaChon-device">Choose Smart Home</label>
+                    <select name="" id="luaChon-device" style="width:10%">
+                    </select> 
+                    <div id="check-active-device">
+                        <input type="checkbox" id="actived-device">
+                        <label for="actived-device">Active</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- /#wrapper -->
+</body>
+<% include ../partials/script %>
+
+</html>

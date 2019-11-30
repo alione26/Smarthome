@@ -174,7 +174,7 @@ module.exports = {
         }
         var smartHomeListData = getSmartHomeList.data.data;
         console.log('SMARTHOME LIST DATA 2 SENT:', smartHomeListData);
-        res.render(viewPath + '/smarthome/smarthome.ejs', { page: 'Smart Home Manangment', menuId: 'home', smartHomeListData: smartHomeListData});
+        res.render(viewPath + '/smarthome/smarthome.ejs', { page: 'Smart Home Manangment', menuId: 'home', smartHomeListData: smartHomeListData, adminName : req.session.adminName});
       } catch(error) {
         console.log('smarthome-management Error:', error);
       }
@@ -210,7 +210,7 @@ module.exports = {
             });
       }
       console.log('DEVICES LIST DATA TO SENT:', deviceListData);
-      res.render(viewPath + '/device/device.ejs', { page: 'Devices Manangment', menuId: 'home', deviceListData : deviceListData});
+      res.render(viewPath + '/device/device.ejs', { page: 'Devices Manangment', menuId: 'home', deviceListData : deviceListData, adminName : req.session.adminName});
     } catch( error ) {
       console.log('device-management Error:', error);
     }

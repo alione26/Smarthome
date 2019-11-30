@@ -1,50 +1,54 @@
 
-let layListData = {};
-let mangListData = [];
-function loadData()
+let layDeviceData = {};
+let mangDeviceData = [];
+function loadData_device()
 {
-    layListData = JSON.parse(document.body.dataset.layuserdata);
-    // mangListData = [];
+    layDeviceData = JSON.parse(document.body.dataset.laydevicedata);
+    // mangDeviceData = [];
     let i = 0;
-    for(let key in layListData)
+    for(let key in layDeviceData)
     {
-        mangListData[i] = layListData[key];
+        mangDeviceData[i] = layDeviceData[key];
         i++;
     }
-    console.log(mangListData);
+    console.log(mangDeviceData);
 }
-// let layListData = JSON.parse(document.body.dataset.layuserdata);
-// let mangListData = [];
+// let layDeviceData = JSON.parse(document.body.dataset.layuserdata);
+// let mangDeviceData = [];
 // let i = 0;
-// for(let key in layListData)
+// for(let key in layDeviceData)
 // {
-//     mangListData[i] = layListData[key];
+//     mangDeviceData[i] = layDeviceData[key];
 //     i++;
 // }
-//console.log(mangListData);
+//console.log(mangDeviceData);
 //Hàm loadBody sẽ khởi chạy đầu tiên khi mở web
-function loadBody()
+function loadBody_device()
 {
-    loadData();
-    createTb();
-    doiSize();
+    loadData_device();
+    createTb_device();
+    doiSize_device();
     
 }
 // Hàm đọc data và tạo bảng
-function createTb() 
+function createTb_device() 
 {
 let elemenTableBody = document.getElementsByTagName("tbody");
-    mangListData.forEach(function(item,index) {
+    mangDeviceData.forEach(function(item,index) {
     let createRow = document.createElement('tr');
-    createRow.innerHTML = "<td>"+ item.user_id + "</td>"+
-    "<td>"+ item.name + "</td>"+ 
-    "<td>"+ item.email + "</td>" +
+    createRow.innerHTML = 
+    "<td>"+ item.name + "</td>"+
+    "<td>"+ item.machine_type + "</td>"+ 
+    "<td>"+ item.series_number + "</td>" +
+    "<td>"+ item.smarthomeDevice_id + "</td>" +
     "<td>"+ item.smarthome_id + "</td>" +
     "<td>"+ item.smarthome_name + "</td>" +
-    "<td>"+ item.active + "</td>" +
+    "<td>"+ item.status + "</td>" +
+    "<td>"+ item.updated_at + "</td>" +
+    "<td>"+ item.created_at + "</td>" +
     "<td>" + 
     // '<button id="btnEdit" onclick="chag(' + index +')">More</button>' + 
-    '<i class="fas fa-cog" id="icon-setting" onclick="chag( '+ index +')"></i>'  +
+    '<i class="fas fa-cog" id="icon-setting" onclick="chag_device( '+ index +')"></i>'  +
     '<i class="far fa-edit" id="icon-edit"'  + '</i>' +
     '<i class="far fa-trash-alt" id="icon-trash">' + '</i>' +
         // onclick="chag(' + index +')"
@@ -55,9 +59,9 @@ let elemenTableBody = document.getElementsByTagName("tbody");
 
 // Tìm kiếm 
 // ******************
-function search() 
+function search_device() 
 {
-    let nameSearch = document.getElementById("id-search");
+    let nameSearch = document.getElementById("id-search-device");
     let elemenTableBody = document.getElementsByTagName("tbody");
     
     console.log(nameSearch.children[0].value);
@@ -91,7 +95,7 @@ function search()
 }
 //// Hàm hiện lên cửa sổ
 
-async function chag(index)
+async function chag_device(index)
 {
 
     // let par = document.getElementById("info-user");
@@ -107,7 +111,7 @@ async function chag(index)
         i++;
     }
     //********************************************************* */
-    let elementSelect = document.getElementById("luaChon");
+    let elementSelect = document.getElementById("luaChon-device");
     let tagOption = elementSelect.getElementsByTagName("option");
     for((tagOption.length - 1) ; (tagOption.length -1) >= 0; )
     {
@@ -117,11 +121,11 @@ async function chag(index)
     
     for(let key of mangsmartHomeListData)
     {
-        let elementSelect = document.getElementById("luaChon");
+        let elementSelect = document.getElementById("luaChon-device");
         let elementOption = document.createElement("option");
         // console.log(key.name);
-        // console.log("hien ra",mangListData[index].smarthome_name);
-        if(mangListData[index].smarthome_name == key.name)
+        // console.log("hien ra",mangDeviceData[index].smarthome_name);
+        if(mangDeviceData[index].smarthome_name == key.name)
         {
             // console.log("đã đúng ");
             elementOption.innerHTML = "<option>" + key.name + "</option>";
@@ -149,8 +153,8 @@ async function chag(index)
 
 
 
-    let ktraActive = document.getElementById("actived");
-    let elementInforUser = document.getElementById("info-user");
+    let ktraActive = document.getElementById("actived-device");
+    let elementInforUser = document.getElementById("info-user-device");
     //console.log("đánh dâu");
     let tagP = elementInforUser.getElementsByTagName("p");
     for((tagP.length - 1) ; (tagP.length -1) >= 0; )
@@ -161,23 +165,32 @@ async function chag(index)
     
     // console.log(tagP[i].innerHTML);
 
-    ktraActive.checked = mangListData[index].active
-    for(key in mangListData[index])
+    ktraActive.checked = mangDeviceData[index].active
     {
-        let showName = ["name","email","user_id","smarthome_name","smarthome_id",];
-        let showName_1 = ["Name","Email","User Id","Smart Home Name","Smart Home Id",];
-        // console.log(key.length);   
-        for(let i = 0; i < showName.length; i ++)
+        for(key in mangDeviceData[index])
         {
-            if(showName[i] == key)
+            let showName = ["machine_type","series_number","smarthomeDevice_id","smarthome_id","smarthome_name","status","updated_at","created_at",];
+            let showName_1 = ["Machine Type","Series Number","SmartHome Device Id","SmartHome Id","SmartHome Name","Status","Update at","Create at",];
+            // console.log(key.length);   
+            for(let i = 0; i < showName.length; i ++)
             {
-                let createEleP = document.createElement("p");
-                createEleP.innerHTML = "<strong>" + showName_1[i] + " : " + "</strong>"  + mangListData[index][key];
-                elementInforUser.prepend(createEleP);
+                if(showName[i] == key )
+                {
+                    let createEleP = document.createElement("p");
+                    createEleP.innerHTML = "<strong>" + showName_1[i] + " : " + "</strong>"  + mangDeviceData[index][key];
+                    elementInforUser.prepend(createEleP);
+                }
+                
             }
-            
         }
+        let createEleP = document.createElement("p");
+        createEleP.innerHTML = "<strong>Device Name : </strong>"  + mangDeviceData[index].name;
+        createEleP.style.textAlign = "center";
+        createEleP.style.fontSize = "18px";
+        elementInforUser.prepend(createEleP);
+        
     }
+    
     // par.children[0].innerHTML = "Tên User : " + "<strong>" 
     //                             + mangDoiTuog[index].name + "</strong>";
     // /***************************************** */
@@ -193,22 +206,22 @@ async function chag(index)
     // }
     /******************************** */
     document.body.style.overflow = "hidden";
-    document.getElementById("fix-block").style.display = "block";
+    document.getElementById("fix-block-device").style.display = "block";
 }
 // Hàm nhận data sau khi ấn OK và đóng cửa sổ
-function accept_and_cls()
+function accept_and_cls_device()
 {
     
     // let x = document.getElementById("luaChon");
-    let par = document.getElementById("info-user");
-    let traVeActive = document.getElementById("check-active");
+    let par = document.getElementById("info-user-device");
+    let traVeActive = document.getElementById("check-active-device");
     /*********************************** */
-    let laySelect = document.getElementById("luaChon");
+    let laySelect = document.getElementById("luaChon-device");
     let smartHomeIdData;
     for(let key in laySelect.children)
     {
         if(laySelect.children[key].selected == true)
-        smarthomeIdData = laySelect.children[key].value;
+        smartHomeIdData = laySelect.children[key].value;
     }
     let traVeUserData = [];
     for(let key=0 ; key < (par.children.length-3); key++)
@@ -217,15 +230,17 @@ function accept_and_cls()
         traVeUserData[key] = par.children[key].lastChild.nodeValue;
     }
     //console.log(traVeUserData);
-    let userIdData = traVeUserData[2];
-    console.log('smarthomeID:', smarthomeIdData);
-    console.log('userID:', userIdData);
+    let smartHomeIdDataOld = traVeUserData[4];
+    let smartHomeDeviceId = traVeUserData[5];
+    console.log('smarthomeID mới chọn:', smartHomeIdData);
+    console.log('Smart Home Id cũ:', smartHomeIdDataOld);
+    console.log("Smart Home Device Id", smartHomeDeviceId);
     
     let activeStatus = traVeActive.children[0].checked;
     console.log('active:', activeStatus, typeof activeStatus);
     // console.log(document.getElementById("luaChon").children[index].value);
     /************************************* */
-    document.getElementById("fix-block").style.display = "none";
+    document.getElementById("fix-block-device").style.display = "none";
     document.body.style.overflow = "";
     console.log("OK đã xác nhận");
     //************************* */
@@ -233,10 +248,10 @@ function accept_and_cls()
 
 }
 // Hàm thay đổi kích thước cửa sổ hiện lên theo kích thước window
-function doiSize() {
+function doiSize_device() {
     if(window.innerWidth <= 768)
     {
-       document.getElementById("fix-block").style.width = (window.innerWidth) +'px';
+       document.getElementById("fix-block-device").style.width = (window.innerWidth) +'px';
        document.getElementById("wrapper").style.marginTop = "110px";
        document.getElementById("wrapper").style.height =  (window.innerHeight - 110) +"px";
        document.getElementById("wrapper").style.width =  (window.innerWidth ) +"px";
@@ -244,7 +259,7 @@ function doiSize() {
     }
     else
     {
-    document.getElementById("fix-block").style.width = (window.innerWidth - 225) +'px';
+    document.getElementById("fix-block-device").style.width = (window.innerWidth - 225) +'px';
     document.getElementById("wrapper").style.marginTop = "60px";
     document.getElementById("wrapper").style.marginLeft = "225px";
     document.getElementById("wrapper").style.height =  (window.innerHeight - 60) + "px";
@@ -255,11 +270,11 @@ function doiSize() {
        //*****
     //    console.log(window.innerHeight);
 }
-function esc_close(eve, accept_and_cls)
+function esc_close_device(eve, accept_and_cls_device)
 {
     if(eve.keyCode == 27 || eve.which == 27)
     {
-        document.getElementById("fix-block").style.display = "none";
+        document.getElementById("fix-block-device").style.display = "none";
         document.body.style.overflow = "";
     }
     else if(eve.keyCode == 13 || eve.which == 13)

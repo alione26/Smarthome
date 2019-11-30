@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../partials/head %>
+</head>
+
+<!------ Include the above in your HEAD tag ---------->
+
+<body onload="loadBody_smarthome()" onresize="doiSize_smarthome()" data-laysmarthomedata = "<%= JSON.stringify(smartHomeListData) %>">
+    <div id="throbber" style="display:none; min-height:120px;"></div>
+    <div id="noty-holder"></div>
+    <% include ../admin %>
+    <div id="wrapper" style="padding: 0;">
+
+        
+        <!-- <div id="page-wrapper" style=""> -->
+            <!-- <div class="container-fluid"> -->
+                <!-- Page Heading -->
+                <!-- <div class="row" id="main">
+                    <div class="col-sm-12 col-md-12 well" id="content">
+                    </div>
+                </div> -->
+                <!-- /.row -->
+            <!-- </div> -->
+            <!-- /.container-fluid -->
+        <!-- </div> -->
+        <!-- /#page-wrapper -->
+        <!-- <span>User Data Table</span> -->
+        <p id="do-dai"></p>
+        <div style="text-align: center;font-size: 20px;">
+            <caption><strong>SmartHomes Data Table</strong></caption>
+        </div>
+        
+        <div id="id-search-smarthome">
+            <input type="text" placeholder="Searching" oninput="search_smarthome()">
+        </div>
+        <div id="table-user-smarthome">
+            <table>
+                <thead>
+                    <tr>
+                        <!-- <th>User Id</th> -->
+                        <th>SmartHome Name</th>
+                        <th>Machine Type</th>
+                        <th>SmartHome Id</th>
+                        <th>Series Number</th>
+                        <th>SmartHome User Id</th>
+                        <th>Status</th>
+                        <th>Update at</th>
+                        <th>Create at</th>
+                        <th>Options</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+        </div>
+        <button id="newUser-smarthome"><i class="fas fa-plus" ></i> New User</button>
+        <div id="id-0-smarthome" style="display:inline-block">
+            <button onclick="createTb_smarthome()">click to create table</button>
+            <!-- <button onclick="countRow()" id="btnCount">Số hàng của bảng là : </button> -->
+        </div>
+
+        <!-- Cửa sổ bật lên -->
+
+        <div id="fix-block-smarthome" style="display: none;">
+            <div id="fix-block-content-smarthome">
+                <div id="fix-block-ok-smarthome" onclick="accept_and_cls_smarthome()">
+                        OK
+                </div>
+                <div id="info-user-smarthome">
+                    <label for="luaChon-smarthome">Choose Smart Home</label>
+                    <select name="" id="luaChon-smarthome" style="width:10%">
+                    </select> 
+                    <div id="check-active-smarthome">
+                        <input type="checkbox" id="actived-smarthome">
+                        <label for="actived">Active</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- /#wrapper -->
+</body>
+<% include ../partials/script %>
+
+</html>
