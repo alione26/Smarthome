@@ -1,13 +1,14 @@
-body {
+/* body { */
     /* margin: 0;
     padding: 0; */
     /* position: relative; */
     /* background: #3eb0dd; */
     /* overflow: hidden; */
-}
+/* } */
 #wrapper {
-    background: lightcoral;
-    border: 5px solid rgb(152, 80, 235);
+    /* background: rgba(3, 121, 29, 0.9); */
+    background: white;
+    border: 5px solid rgb(9, 31, 228);
     height: 100vh;
     overflow: auto;
     /* padding: 0; */
@@ -18,7 +19,7 @@ body {
 
 
 
-#table-user table, th, td {
+#table-user th, td {
     /* border: 1px solid black; */
     /* padding: 5px; */
     outline: 1px solid black;
@@ -26,12 +27,17 @@ body {
     border: none;
 }
 #table-user table {
-    border-collapse: collapse;
-    outline: 2px solid black;
+    /* border-collapse: collapse; */
+    outline: 1px solid black;
     width: 100%;
+    /* background: rgb(129, 212, 132) ; */
+    background: white;
+    overflow: auto;
 }
 #table-user td {
-    padding: 3px !important;
+    padding: 1px !important;
+    /* width: 100%; */
+    font-size: 13px;
     text-align: center;
     padding: 0;
     margin: 0;
@@ -39,33 +45,47 @@ body {
 #table-user thead th{
     position: sticky;
     top: 0;
-    padding: 5px;
+    padding: 3px;
     background: #4CAF50;
     outline: 1px solid black;
     outline-offset: -1px;
     border: none;
 }
 #table-user {
+    color: black;
     padding: 0;
     margin: 0;
     width: 99%;
+    margin: auto;
     /* height: 100%; */
-    height: 80%;
+    max-height: 80%;
     overflow: auto;
-    background: #3eb0dd;
+    /* background: rgb(129, 212, 132) ; */
 }
 
-#table-user #btnEdit {
-    width: 100%;
+#icon-setting ,#icon-edit,#icon-trash {
+    margin: 4px;
+    font-size: 18px;
+}
+#newUser {
+    margin:8px 0 0 5px;width: 10%;
     background: #3eb0dd;
     border: none;
-    border-radius: 5px;
-    /* outline: none; */
+    outline: none;
+    border-radius: 2px;
+    /* color: white; */
 }
 #table-user #btnEdit:hover {
     width: 100%;
     background: rgb(55, 97, 236);
     /* outline: none; */
+}
+#id-search input{
+    /* width: 100%; */
+    /* background: turquoise; */
+    display: block;
+    width: 99%;
+    margin: auto;
 }
 /* ********************************************** */
 #fix-block {

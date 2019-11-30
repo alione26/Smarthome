@@ -28,9 +28,12 @@ let elemenTableBody = document.getElementsByTagName("tbody");
     "<td>"+ item.smarthome_name + "</td>" +
     "<td>"+ item.active + "</td>" +
     "<td>" + 
-    '<button id="btnEdit" onclick="chag(' + index +')">Edit</butotn>' + 
+    // '<button id="btnEdit" onclick="chag(' + index +')">More</button>' + 
+    '<i class="fas fa-cog" id="icon-setting" onclick="chag( '+ index +')"></i>'  +
+    '<i class="far fa-edit" id="icon-edit"'  + '</i>' +
+    '<i class="far fa-trash-alt" id="icon-trash">' + '</i>' +
         // onclick="chag(' + index +')"
-    "</td>";;
+    "</td>";
     elemenTableBody[0].append(createRow);
 });
 }
@@ -220,17 +223,17 @@ function doiSize() {
     {
        document.getElementById("fix-block").style.width = (window.innerWidth) +'px';
        document.getElementById("wrapper").style.marginTop = "110px";
-    //    document.getElementById("wrapper").style.marginLeft = "";
        document.getElementById("wrapper").style.height =  (window.innerHeight - 110) +"px";
-    //    document.getElementById("wrapper").style.width =  (window.innerWidth) +"px";
+       document.getElementById("wrapper").style.width =  (window.innerWidth ) +"px";
+       document.getElementById("wrapper").style.marginLeft = "";
     }
     else
     {
     document.getElementById("fix-block").style.width = (window.innerWidth - 225) +'px';
     document.getElementById("wrapper").style.marginTop = "60px";
-    // document.getElementById("wrapper").style.marginLeft = "225px";
+    document.getElementById("wrapper").style.marginLeft = "225px";
     document.getElementById("wrapper").style.height =  (window.innerHeight - 60) + "px";
-    // document.getElementById("wrapper").style.width =  (window.innerWidth - 225) + "px";
+    document.getElementById("wrapper").style.width =  (window.innerWidth - 225) + "px";
     }
        
 
