@@ -104,6 +104,8 @@ var appRouter = function (app) {
     app.get('/admin/logout', authAdminController.logout);
     app.get('/admin/user-management', authAdminController.userManagement);
     app.get('/admin/smarthome-mangament', authAdminController.smarthomeManagement);
+    app.get('/admin/devices-management', authAdminController.deviceManagement);
+
 }
 
 module.exports = appRouter;

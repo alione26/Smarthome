@@ -174,9 +174,45 @@ module.exports = {
         }
         var smartHomeListData = getSmartHomeList.data.data;
         console.log('SMARTHOME LIST DATA 2 SENT:', smartHomeListData);
-        res.render(viewPath + '/smarthome/smarthome.ejs', { page: 'Smart Home Manangment', menuId: 'home', smartHomeListData});
+        res.render(viewPath + '/smarthome/smarthome.ejs', { page: 'Smart Home Manangment', menuId: 'home', smartHomeListData: smartHomeListData});
       } catch(error) {
         console.log('smarthome-management Error:', error);
       }
+    },
+    deviceManagement : async function(req, res, next) {
+      try {
+        var getDeviceList = await axios.get(constants.API_URI + '/smarthome_device/get_list');
+        if(!getDeviceList.data.success) {
+          return res.status(400).json({ success: getDeviceList.data.success });
+        }
+        var deviceListData = getDeviceList.data.data;
+        var deviceListLength = Object.keys(deviceListData).length;
+        //console.log(deviceListData);
+        //console.log( 'deviceListLength:', deviceListLength);
+        var deviceCount;
+        for ( deviceCount = 0; deviceCount < deviceListLength; deviceCount++) {
+          //console.log('userCount:', userCount);
+          var deviceInfor = deviceListData[Object.keys(deviceListData)[deviceCount]];
+          var smartHomeId = deviceInfor.smarthome_id;
+          //console.log('smartHomeId:', smartHomeId);
+          var getSmartHome = await axios.get(constants.API_URI + '/smarthome/' + smartHomeId)
+            .then(function(response) {
+              var smartHomeInfor = response.data.data;
+              //console.log('smartHomeData:', smartHomeInfor);
+              //var smartHomeInfor = smartHomeData[Object.keys(smartHomeData)[0]];
+              var smartHomeName = smartHomeInfor.name;
+              //console.log('smartHomeName:', smartHomeName);
+              deviceInfor.smarthome_name = smartHomeName;
+            })
+            .catch(function(error){
+              console.log(error);
+              deviceInfor.smarthome_name = '';
+            });
+      }
+      console.log('DEVICES LIST DATA TO SENT:', deviceListData);
+      res.render(viewPath + '/device/device.ejs', { page: 'Devices Manangment', menuId: 'home', deviceListData : deviceListData});
+    } catch( error ) {
+      console.log('device-management Error:', error);
     }
+}
 }
