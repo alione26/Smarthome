@@ -165,5 +165,18 @@ module.exports = {
       } catch (error) {
         console.log('user-management Error:', error);
       }
+    },
+    smarthomeManagement : async function(req, res, next) {
+      try {
+        var getSmartHomeList = await axios.get(constants.API_URI + '/smarthome/get_list');
+        if(!getSmartHomeList.data.success) {
+          return res.status(400).json({ success: getSmartHomeList.data.success });
+        }
+        var smartHomeListData = getSmartHomeList.data.data;
+        console.log('SMARTHOME LIST DATA 2 SENT:', smartHomeListData);
+        res.render(viewPath + '/smarthome/smarthome.ejs', { page: 'Smart Home Manangment', menuId: 'home', smartHomeListData});
+      } catch(error) {
+        console.log('smarthome-management Error:', error);
+      }
     }
 }
