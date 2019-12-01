@@ -1,4 +1,3 @@
-
 let layListData = {};
 let mangListData = [];
 function loadData()
@@ -13,6 +12,7 @@ function loadData()
     console.log(mangListData);
 }
 //Hàm loadBody sẽ khởi chạy đầu tiên khi mở web
+// ******************
 function loadBody()
 {
     loadData();
@@ -20,6 +20,7 @@ function loadBody()
     doiSize();
 }
 // Hàm đọc data và tạo bảng
+// ******************
 function createTb() 
 {
 let elemenTableBody = document.getElementsByTagName("tbody");
@@ -34,10 +35,25 @@ let elemenTableBody = document.getElementsByTagName("tbody");
     "<td>" + 
     '<i class="fas fa-cog" id="icon-setting" onclick="chag( '+ index +')"></i>'  +
     '<i class="far fa-edit" id="icon-edit"'  + '</i>' +
-    '<i class="far fa-trash-alt" id="icon-trash">' + '</i>' +
+    '<i class="far fa-trash-alt" id="icon-trash" onclick="deleteUser( '+ index +')"></i>' +
     "</td>";
     elemenTableBody[0].append(createRow);
 });
+}
+// Xóa User
+// ******************
+function deleteUser(index) 
+{
+    let txt = "";
+    if (confirm("Bạn có chắc muốn xóa User : " +  mangListData[index].name)) 
+      {
+        txt = "OK bạn đã xóa User : " + mangListData[index].user_id;
+
+      } else 
+      {
+        txt = "Thoát ra";
+      }
+      console.log(txt);
 }
 // Tìm kiếm 
 // ******************
@@ -73,7 +89,7 @@ function search()
     }
 }
 //// Hàm hiện lên cửa sổ
-
+// ******************
 async function chag(index)
 {
     let smartHomeList = await axios.get('/smarthome/get_list');
@@ -144,6 +160,7 @@ async function chag(index)
     document.getElementById("fix-block").style.display = "block";
 }
 // Hàm nhận data sau khi ấn OK và đóng cửa sổ
+// ******************
 function accept_and_cls()
 {
     let par = document.getElementById("info-user");
@@ -173,6 +190,7 @@ function accept_and_cls()
     //************************* */
 }
 // Hàm thay đổi kích thước cửa sổ hiện lên theo kích thước window
+// ******************
 function doiSize() {
     if(window.innerWidth <= 768)
     {

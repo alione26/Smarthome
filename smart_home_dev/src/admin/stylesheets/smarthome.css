@@ -1,42 +1,21 @@
-/* body { */
-    /* margin: 0;
-    padding: 0; */
-    /* position: relative; */
-    /* background: #3eb0dd; */
-    /* overflow: hidden; */
-/* } */
 #wrapper {
-    /* background: rgba(3, 121, 29, 0.9); */
     background: white;
-    /* border: 5px solid rgb(9, 31, 228); */
     height: 100vh;
     overflow: auto;
-    /* padding: 0; */
-    /* margin: 0; */
-    /* padding: ; */
 }
-
-
-
-
 #table-user-smarthome th, td {
-    /* border: 1px solid black; */
-    /* padding: 5px; */
     outline: 1px solid black;
     outline-offset: -1px;
     border: none;
 }
 #table-user-smarthome table {
-    /* border-collapse: collapse; */
     outline: 1px solid black;
     width: 100%;
-    /* background: rgb(129, 212, 132) ; */
     background: white;
     overflow: auto;
 }
 #table-user-smarthome td {
     padding: 1px !important;
-    /* width: 100%; */
     font-size: 13px;
     text-align: center;
     padding: 0;
@@ -57,12 +36,9 @@
     margin: 0;
     width: 99%;
     margin: auto;
-    /* height: 100%; */
     max-height: 80%;
     overflow: auto;
-    /* background: rgb(129, 212, 132) ; */
 }
-
 #icon-setting ,#icon-edit,#icon-trash {
     margin: 4px;
     font-size: 18px;
@@ -73,20 +49,18 @@
     border: none;
     outline: none;
     border-radius: 2px;
-    /* color: white; */
 }
 #table-user-smarthome #btnEdit:hover {
     width: 100%;
     background: rgb(55, 97, 236);
-    /* outline: none; */
 }
 #id-search-smarthome input{
-    /* width: 100%; */
-    /* background: turquoise; */
     display: block;
     width: 99%;
     margin: auto;
 }
+/* ********************************************** */
+/* *********************Cửa sổ Hiện lên********** */
 /* ********************************************** */
 #fix-block-smarthome {
     position: absolute;
@@ -97,7 +71,6 @@
     z-index: 99999;
     overflow: hidden;
 }
-
 #fix-block-ok-smarthome {
     position: absolute;
     bottom: 0;
@@ -116,7 +89,6 @@
     color: #fff;
     cursor: pointer;
 }
-
 #fix-block-content-smarthome {
     position: absolute;
     top: 50%;
