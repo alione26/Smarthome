@@ -252,6 +252,7 @@ function doiSize_device() {
     if(window.innerWidth <= 768)
     {
        document.getElementById("fix-block-device").style.width = (window.innerWidth) +'px';
+       document.getElementById("fix-block-device").style.left = "0";
        document.getElementById("wrapper").style.marginTop = "110px";
        document.getElementById("wrapper").style.height =  (window.innerHeight - 110) +"px";
        document.getElementById("wrapper").style.width =  (window.innerWidth ) +"px";
@@ -259,7 +260,8 @@ function doiSize_device() {
     }
     else
     {
-    document.getElementById("fix-block-device").style.width = (window.innerWidth - 225) +'px';
+    document.getElementById("fix-block-device").style.width = (window.innerWidth - 223) +'px';
+    document.getElementById("fix-block-device").style.left = "223px";
     document.getElementById("wrapper").style.marginTop = "60px";
     document.getElementById("wrapper").style.marginLeft = "225px";
     document.getElementById("wrapper").style.height =  (window.innerHeight - 60) + "px";

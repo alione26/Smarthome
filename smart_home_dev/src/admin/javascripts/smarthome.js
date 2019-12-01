@@ -166,22 +166,45 @@ async function chag_smarthome(index)
     // console.log(tagP[i].innerHTML);
 
     ktraActive.checked = mangSmartHomeData[index].active
-    for(key in mangSmartHomeData[index])
     {
-        let showName = ["name","email","user_id","smarthome_name","smarthome_id",];
-        let showName_1 = ["Name","Email","User Id","Smart Home Name","Smart Home Id",];
-        // console.log(key.length);   
-        for(let i = 0; i < showName.length; i ++)
+        for(key in mangSmartHomeData[index])
         {
-            if(showName[i] == key)
+            let showName = ["email","user_id","smarthome_name","smarthome_id",];
+            let showName_1 = ["Email","User Id","Smart Home Name","Smart Home Id",];
+            // console.log(key.length);   
+            for(let i = 0; i < showName.length; i ++)
             {
-                let createEleP = document.createElement("p");
-                createEleP.innerHTML = "<strong>" + showName_1[i] + " : " + "</strong>"  + mangSmartHomeData[index][key];
-                elementInforUser.prepend(createEleP);
+                if(showName[i] == key)
+                {
+                    let createEleP = document.createElement("p");
+                    createEleP.innerHTML = "<strong>" + showName_1[i] + " : " + "</strong>"  + mangSmartHomeData[index][key];
+                    elementInforUser.prepend(createEleP);
+                }
+                
             }
-            
         }
+        let createEleP = document.createElement("p");
+        createEleP.innerHTML = "<strong>SmartHome Name : </strong>"  + mangSmartHomeData[index].name;
+        createEleP.style.textAlign = "center";
+        createEleP.style.fontSize = "18px";
+        elementInforUser.prepend(createEleP);
     }
+    // for(key in mangSmartHomeData[index])
+    // {
+    //     let showName = ["name","email","user_id","smarthome_name","smarthome_id",];
+    //     let showName_1 = ["Name","Email","User Id","Smart Home Name","Smart Home Id",];
+    //     // console.log(key.length);   
+    //     for(let i = 0; i < showName.length; i ++)
+    //     {
+    //         if(showName[i] == key)
+    //         {
+    //             let createEleP = document.createElement("p");
+    //             createEleP.innerHTML = "<strong>" + showName_1[i] + " : " + "</strong>"  + mangSmartHomeData[index][key];
+    //             elementInforUser.prepend(createEleP);
+    //         }
+            
+    //     }
+    // }
     // par.children[0].innerHTML = "Tên User : " + "<strong>" 
     //                             + mangDoiTuog[index].name + "</strong>";
     // /***************************************** */
@@ -241,6 +264,7 @@ function doiSize_smarthome() {
     if(window.innerWidth <= 768)
     {
        document.getElementById("fix-block-smarthome").style.width = (window.innerWidth) +'px';
+       document.getElementById("fix-block-smarthome").style.left = "0";
        document.getElementById("wrapper").style.marginTop = "110px";
        document.getElementById("wrapper").style.height =  (window.innerHeight - 110) +"px";
        document.getElementById("wrapper").style.width =  (window.innerWidth ) +"px";
@@ -248,7 +272,8 @@ function doiSize_smarthome() {
     }
     else
     {
-    document.getElementById("fix-block-smarthome").style.width = (window.innerWidth - 225) +'px';
+    document.getElementById("fix-block-smarthome").style.width = (window.innerWidth - 223) +'px';
+    document.getElementById("fix-block-smarthome").style.left = "223px";
     document.getElementById("wrapper").style.marginTop = "60px";
     document.getElementById("wrapper").style.marginLeft = "225px";
     document.getElementById("wrapper").style.height =  (window.innerHeight - 60) + "px";
