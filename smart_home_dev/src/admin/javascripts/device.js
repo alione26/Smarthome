@@ -39,7 +39,7 @@ let elemenTableBody = document.getElementsByTagName("tbody");
     "<td>"+ item.created_at + "</td>" +
     "<td>" + 
     '<i class="fas fa-cog" id="icon-setting" onclick="chag_device( '+ index +')"></i>'  +
-    '<i class="far fa-edit" id="icon-edit"'  + '</i>' +
+    '<i class="far fa-edit" id="icon-edit" onclick="editDevice( '+ index +')"></i>'  +
     '<i class="far fa-trash-alt" id="icon-trash" onclick="deleteDevice( '+ index +')"></i>' +
     "</td>";
     elemenTableBody[0].append(createRow);
@@ -181,15 +181,15 @@ function accept_and_cls_device()
     }
     let smartHomeIdDataOld = traVeUserData[4];
     let smartHomeDeviceId = traVeUserData[5];
-    console.log('smarthomeID mới chọn:', smartHomeIdData);
-    console.log('Smart Home Id cũ:', smartHomeIdDataOld);
-    console.log("Smart Home Device Id", smartHomeDeviceId);
+    // console.log('smarthomeID mới chọn:', smartHomeIdData);
+    // console.log('Smart Home Id cũ:', smartHomeIdDataOld);
+    // console.log("Smart Home Device Id", smartHomeDeviceId);
     let activeStatus = traVeActive.children[0].checked;
-    console.log('active:', activeStatus, typeof activeStatus);
+    // console.log('active:', activeStatus, typeof activeStatus);
     /************************************* */
     document.getElementById("fix-block-device").style.display = "none";
     document.body.style.overflow = "";
-    console.log("OK đã xác nhận");
+    console.log("OK xác nhận thông tin cho device");
     //************************* */
 }
 // Hàm thay đổi kích thước cửa sổ hiện lên theo kích thước window
@@ -199,7 +199,11 @@ function doiSize_device() {
     {
        document.getElementById("fix-block-device").style.width = (window.innerWidth) +'px';
        document.getElementById("fix-block-device").style.left = "0";
-       document.getElementById("wrapper").style.marginTop = "110px";
+       document.getElementById("fix-block-create-newdevice").style.width = (window.innerWidth) +'px';
+       document.getElementById("fix-block-create-newdevice").style.left = "0";
+       document.getElementById("fix-block-edit-device").style.width = (window.innerWidth) +'px';
+       document.getElementById("fix-block-edit-device").style.left = "0";
+       document.getElementById("wrapper").style.marginTop = "160px";
        document.getElementById("wrapper").style.height =  (window.innerHeight - 110) +"px";
        document.getElementById("wrapper").style.width =  (window.innerWidth ) +"px";
        document.getElementById("wrapper").style.marginLeft = "";
@@ -208,21 +212,76 @@ function doiSize_device() {
     {
     document.getElementById("fix-block-device").style.width = (window.innerWidth - 223) +'px';
     document.getElementById("fix-block-device").style.left = "223px";
+    document.getElementById("fix-block-create-newdevice").style.width = (window.innerWidth - 223) +'px';
+    document.getElementById("fix-block-create-newdevice").style.left = "223px";
+    document.getElementById("fix-block-edit-device").style.width = (window.innerWidth - 223) +'px';
+    document.getElementById("fix-block-edit-device").style.left = "223px";
     document.getElementById("wrapper").style.marginTop = "60px";
     document.getElementById("wrapper").style.marginLeft = "225px";
     document.getElementById("wrapper").style.height =  (window.innerHeight - 60) + "px";
     document.getElementById("wrapper").style.width =  (window.innerWidth - 225) + "px";
     }
 }
-function esc_close_device(eve, accept_and_cls_device)
+function key_close_device(eve, accept_and_cls_device)
 {
     if(eve.keyCode == 27 || eve.which == 27)
     {
         document.getElementById("fix-block-device").style.display = "none";
+        document.getElementById("fix-block-create-newdevice").style.display = "none";
+        document.getElementById("fix-block-edit-device").style.display = "none";
         document.body.style.overflow = "";
     }
     else if(eve.keyCode == 13 || eve.which == 13)
     {
-        accept_and_cls();
+        if(document.getElementById("fix-block-device").style.display == "block")
+        accept_and_cls_device();
+        if(document.getElementById("fix-block-create-newdevice").style.display == "block")
+        accept_and_cls_newDevice();
+        if(document.getElementById("fix-block-edit-device").style.display == "block")
+        accept_and_cls_editDevice();
     }
+}
+// Hàm Create New Device
+// ******************
+function newDevice()
+{
+    document.body.style.overflow = "hidden";
+    document.getElementById("fix-block-create-newdevice").style.display = "block";
+}
+function accept_and_cls_newDevice()
+{
+    document.getElementById("fix-block-create-newdevice").style.display = "none";
+    let x = document.getElementById("name-newdevice");
+    document.body.style.overflow = "";
+    console.log(x.value);
+    console.log("OK đã tạo Device mới");
+}
+// Hàm Edit User
+// ******************
+function editDevice(index) 
+{
+    document.getElementById("edit-name-device").value = mangDeviceData[index].name;
+    document.getElementById("edit-machine-type-device").value = mangDeviceData[index].machine_type;
+    document.getElementById("edit-series-number-device").value = mangDeviceData[index].series_number;
+    // ****************************************
+    document.body.style.overflow = "hidden";
+    document.getElementById("fix-block-edit-device").style.display = "block";
+}
+function accept_and_cls_editDevice()
+{
+    document.getElementById("fix-block-edit-device").style.display = "none";
+    // let x = document.getElementById("info-edit-user");
+    document.body.style.overflow = "";
+    // console.log(x.children[0].value);
+    console.log("OK đã chỉnh sửa Device");
+}
+// ************************************************
+// Hàm Tắt cửa sổ cho Thiết bị di động
+// ************************************************
+function cancel_block()
+{
+    document.getElementById("fix-block-device").style.display = "none";
+    document.getElementById("fix-block-create-newdevice").style.display = "none";
+    document.getElementById("fix-block-edit-device").style.display = "none";
+    document.body.style.overflow = "";
 }

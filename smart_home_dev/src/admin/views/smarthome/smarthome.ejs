@@ -2,12 +2,15 @@
 <html lang="en">
 
 <head>
+        <link rel="stylesheet" href="/smarthome.css">
     <% include ../partials/head %>
 </head>
 
 <!------ Include the above in your HEAD tag ---------->
 
-<body onload="loadBody_smarthome()" onresize="doiSize_smarthome()" data-laysmarthomedata = "<%= JSON.stringify(smartHomeListData) %>">
+<body onload="loadBody_smarthome()" onresize="doiSize_smarthome()" 
+    onkeyup="key_close_smarthome(window.event,accept_and_cls_smarthome,accept_and_cls_newSmartHome,accept_and_cls_editSmartHome)" 
+    data-laysmarthomedata = "<%= JSON.stringify(smartHomeListData) %>">
     <div id="throbber" style="display:none; min-height:120px;"></div>
     <div id="noty-holder"></div>
     <% include ../admin %>
@@ -43,21 +46,24 @@
                 </tbody>
             </table>
         </div>
-        <button id="newUser-smarthome"><i class="fas fa-plus" ></i> New User</button>
+        <button id="newUser-smarthome" onclick="newSmartHome()"><i class="fas fa-plus"></i> New SmartHome</button>
         <div id="id-0-smarthome" style="display:inline-block">
             <button onclick="createTb_smarthome()">click to create table</button>
         </div>
         <!-- ************************* -->
-        <!-- Cửa sổ bật lên -->
+        <!-- Cửa sổ Thông tin smartHome bật lên -->
         <!-- ************************* -->
         <div id="fix-block-smarthome" style="display: none;">
             <div id="fix-block-content-smarthome">
                 <div id="fix-block-ok-smarthome" onclick="accept_and_cls_smarthome()">
                         OK
                 </div>
+                <div id="fix-block-cancel" onclick="cancel_block()">
+                        Cancel
+                </div>
                 <div id="info-user-smarthome">
                     <label for="luaChon-smarthome">Choose Smart Home</label>
-                    <select name="" id="luaChon-smarthome" style="width:10%">
+                    <select name="" id="luaChon-smarthome">
                     </select> 
                     <div id="check-active-smarthome">
                         <input type="checkbox" id="actived-smarthome">
@@ -66,8 +72,67 @@
                 </div>
             </div>
         </div>
+        <!-- ************************* -->
+        <!-- Cửa sổ New SmartHome bật lên -->
+        <!-- ************************* -->
+        <div id="fix-block-create-newsmarthome" style="display:none">
+            <div id="fix-block-newsmarthome-content">
+                <div id="fix-block-newsmarthome-ok" onclick="accept_and_cls_newSmartHome()">
+                    OK
+                </div>
+                <div id="fix-block-cancel" onclick="cancel_block()">
+                        Cancel
+                </div>
+                <div id="info-create-newsmarthome">
+                    <h3 style="text-align:center">Thông tin New SmartHome</h3>
+                    <br>
+                    <!-- User Name -->
+                    <label for="name-newsmarthome">SmartHome Name</label>
+                    <input type="text" name="name-newsmarthome" id="name-newsmarthome">
+                    <br><br>
+                    <!-- Email -->
+                    <label for="machine-type-newsmarthome">SmartHome Machine Type</label>
+                    <input type="text" name="machine_type" id="machine-type-newsmarthome">
+                    <br><br>
+                    <!-- PassWord -->
+                    <label for="series-number-newsmarthome">SmartHome Series Number</label>
+                    <input type="text" name="series_number" id="series-number-newsmarthome">
+                    <br><br>
+                </div>
+            </div>
+        </div>
+        <!-- ************************* -->
+        <!-- Cửa sổ Edit SmartHome bật lên -->
+        <!-- ************************* -->
+        <div id="fix-block-edit-smarthome" style="display:none">
+            <div id="fix-block-edit-smarthome-content">
+                <div id="fix-block-edit-smarthome-ok" onclick="accept_and_cls_editSmartHome()">
+                    OK
+                </div>
+                <div id="fix-block-cancel" onclick="cancel_block()">
+                        Cancel
+                </div>
+                <div id="info-edit-smarthome">
+                    <h3 style="text-align:center">Thông tin SmartHome</h3>
+                    <br>
+                    <!-- SmartHome Name -->
+                    <label for="edit-name-smarthome">SmartHome Name</label>
+                    <input type="text" name="name" id="edit-name-smarthome">
+                    <br><br>
+                    <!-- Machine Type -->
+                    <label for="edit-machine-type-smarthome">SmartHome Machine Type</label>
+                    <input type="text" name="name" id="edit-machine-type-smarthome">
+                    <br><br>
+                    <!-- Series Number  -->
+                    <label for="edit-series-number-smarthome">SmartHome Series Number</label>
+                    <input type="text" name="name" id="edit-series-number-smarthome">
+                    <br>
+                </div>
+            </div>
+        </div>
     </div><!-- /#wrapper -->
 </body>
+<script src="/smarthome.js"></script>
 <% include ../partials/script %>
 
 </html>

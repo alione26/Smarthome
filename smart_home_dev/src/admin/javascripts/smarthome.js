@@ -11,16 +11,18 @@ function loadData_smarthome()
     }
     console.log(mangSmartHomeData);
 }
+// ************************************************
 //Hàm loadBody sẽ khởi chạy đầu tiên khi mở web
-// ******************
+// ************************************************
 function loadBody_smarthome()
 {
     loadData_smarthome()
     createTb_smarthome();
     doiSize_smarthome();
 }
+// ************************************************
 // Hàm đọc data và tạo bảng
-// ******************
+// ************************************************
 function createTb_smarthome() 
 {
 let elemenTableBody = document.getElementsByTagName("tbody");
@@ -37,14 +39,15 @@ let elemenTableBody = document.getElementsByTagName("tbody");
     "<td>"+ item.created_at + "</td>" +
     "<td>" + 
     '<i class="fas fa-cog" id="icon-setting" onclick="chag_smarthome( '+ index +')"></i>'  +
-    '<i class="far fa-edit" id="icon-edit"'  + '</i>' +
+    '<i class="far fa-edit" id="icon-edit" onclick="editSmartHome( '+ index +')"></i>'  +
     '<i class="far fa-trash-alt" id="icon-trash" onclick="deleteSmartHome( '+ index +')"></i>' +
     "</td>";
     elemenTableBody[0].append(createRow);
 });
 }
+// ************************************************
 // Xóa Smart HOme Id
-// ******************
+// ************************************************
 function deleteSmartHome(index) 
 {
     let txt = "";
@@ -58,8 +61,9 @@ function deleteSmartHome(index)
       }
       console.log(txt);
 }
+// ************************************************
 // Tìm kiếm 
-// ******************
+// ************************************************
 function search_smarthome() 
 {
     let nameSearch = document.getElementById("id-search-smarthome");
@@ -90,8 +94,9 @@ function search_smarthome()
         }
     }
 }
-//// Hàm hiện lên cửa sổ
-// ******************
+// ************************************************
+// Hàm hiện lên cửa sổ
+// ************************************************
 async function chag_smarthome(index)
 {
     let smartHomeList = await axios.get('/smarthome/get_list');
@@ -161,8 +166,9 @@ async function chag_smarthome(index)
     document.body.style.overflow = "hidden";
     document.getElementById("fix-block-smarthome").style.display = "block";
 }
+// ************************************************
 // Hàm nhận data sau khi ấn OK và đóng cửa sổ
-// ******************
+// ************************************************
 function accept_and_cls_smarthome()
 {
     let par = document.getElementById("info-user-smarthome");
@@ -181,24 +187,29 @@ function accept_and_cls_smarthome()
         traVeUserData[key] = par.children[key].lastChild.nodeValue;
     }
     let userIdData = traVeUserData[2];
-    console.log('smarthomeID:', smarthomeIdData);
-    console.log('userID:', userIdData);
+    // console.log('smarthomeID:', smarthomeIdData);
+    // console.log('userID:', userIdData);
     let activeStatus = traVeActive.children[0].checked;
-    console.log('active:', activeStatus, typeof activeStatus);
+    // console.log('active:', activeStatus, typeof activeStatus);
     /************************************* */
     document.getElementById("fix-block-smarthome").style.display = "none";
     document.body.style.overflow = "";
-    console.log("OK đã xác nhận");
+    console.log("OK xác nhận thông tin cho smarthome");
     //************************* */
 }
+// ************************************************
 // // Hàm thay đổi kích thước cửa sổ hiện lên theo kích thước window
-// ******************
+// ************************************************
 function doiSize_smarthome() {
     if(window.innerWidth <= 768)
     {
        document.getElementById("fix-block-smarthome").style.width = (window.innerWidth) +'px';
        document.getElementById("fix-block-smarthome").style.left = "0";
-       document.getElementById("wrapper").style.marginTop = "110px";
+       document.getElementById("fix-block-create-newsmarthome").style.width = (window.innerWidth) +'px';
+       document.getElementById("fix-block-create-newsmarthome").style.left = "0";
+       document.getElementById("fix-block-edit-smarthome").style.width = (window.innerWidth) +'px';
+       document.getElementById("fix-block-edit-smarthome").style.left = "0";
+       document.getElementById("wrapper").style.marginTop = "160px";
        document.getElementById("wrapper").style.height =  (window.innerHeight - 110) +"px";
        document.getElementById("wrapper").style.width =  (window.innerWidth ) +"px";
        document.getElementById("wrapper").style.marginLeft = "";
@@ -207,21 +218,78 @@ function doiSize_smarthome() {
     {
     document.getElementById("fix-block-smarthome").style.width = (window.innerWidth - 223) +'px';
     document.getElementById("fix-block-smarthome").style.left = "223px";
+    document.getElementById("fix-block-create-newsmarthome").style.width = (window.innerWidth - 223) +'px';
+    document.getElementById("fix-block-create-newsmarthome").style.left = "223px";
+    document.getElementById("fix-block-edit-smarthome").style.width = (window.innerWidth - 223) +'px';
+    document.getElementById("fix-block-edit-smarthome").style.left = "223px";
     document.getElementById("wrapper").style.marginTop = "60px";
     document.getElementById("wrapper").style.marginLeft = "225px";
     document.getElementById("wrapper").style.height =  (window.innerHeight - 60) + "px";
     document.getElementById("wrapper").style.width =  (window.innerWidth - 225) + "px";
     }
 }
-function esc_close_smarthome(eve, accept_and_cls)
+function key_close_smarthome(eve, accept_and_cls_smarthome,accept_and_cls_newSmartHome,accept_and_cls_editSmartHome)
 {
     if(eve.keyCode == 27 || eve.which == 27)
     {
         document.getElementById("fix-block-smarthome").style.display = "none";
+        document.getElementById("fix-block-create-newsmarthome").style.display = "none";
+        document.getElementById("fix-block-edit-smarthome").style.display = "none";
         document.body.style.overflow = "";
     }
     else if(eve.keyCode == 13 || eve.which == 13)
     {
-        accept_and_cls();
+        if(document.getElementById("fix-block-smarthome").style.display == "block")
+        accept_and_cls_smarthome();
+        if(document.getElementById("fix-block-create-newsmarthome").style.display == "block")
+        accept_and_cls_newSmartHome();
+        if(document.getElementById("fix-block-edit-smarthome").style.display == "block")
+        accept_and_cls_editSmartHome();
     }
+}
+// ************************************************
+// Hàm Create New SmartHome
+// ************************************************
+function newSmartHome()
+{
+    document.body.style.overflow = "hidden";
+    document.getElementById("fix-block-create-newsmarthome").style.display = "block";
+}
+function accept_and_cls_newSmartHome()
+{
+    document.getElementById("fix-block-create-newsmarthome").style.display = "none";
+    let x = document.getElementById("name-newsmarthome");
+    document.body.style.overflow = "";
+    console.log(x.value);
+    console.log("OK đã tạo User mới");
+}
+// ************************************************
+// Hàm Edit User
+// ************************************************
+function editSmartHome(index) 
+{
+    document.getElementById("edit-name-smarthome").value = mangSmartHomeData[index].name;
+    document.getElementById("edit-machine-type-smarthome").value = mangSmartHomeData[index].machine_type;
+    document.getElementById("edit-series-number-smarthome").value = mangSmartHomeData[index].series_number;
+    // ****************************************
+    document.body.style.overflow = "hidden";
+    document.getElementById("fix-block-edit-smarthome").style.display = "block";
+}
+function accept_and_cls_editSmartHome()
+{
+    document.getElementById("fix-block-edit-smarthome").style.display = "none";
+    // let x = document.getElementById("info-edit-user");
+    document.body.style.overflow = "";
+    // console.log(x.children[0].value);
+    console.log("OK đã chỉnh sửa smarthome");
+}
+// ************************************************
+// Hàm Tắt cửa sổ cho Thiết bị di động
+// ************************************************
+function cancel_block()
+{
+    document.getElementById("fix-block-smarthome").style.display = "none";
+    document.getElementById("fix-block-create-newsmarthome").style.display = "none";
+    document.getElementById("fix-block-edit-smarthome").style.display = "none";
+    document.body.style.overflow = "";
 }

@@ -76,9 +76,13 @@ axios.get('/showAuthButton')
     if (!response.data.signed) {
       $('#butLogIn').html(`<i class="glyphicon glyphicon-log-in"></i> Sign in`);
       document.getElementById("butLogIn").value = "Sign in";
+      document.getElementById("change-pass").style.display = "none";
+      document.getElementById("edit-file").style.display = "none";
     } else {
       $('#butLogIn').html(`Sign out <i class="glyphicon glyphicon-log-out"></i>`);
       document.getElementById("butLogIn").value = "Sign out";
+      document.getElementById("change-pass").style.display = "block";
+      document.getElementById("edit-file").style.display = "block";
     }
   })
 document.getElementById("butLogIn").addEventListener("click", function(){
@@ -98,4 +102,52 @@ async function logout() {
       console.log('user-logout' + response.data.success);
       window.location.replace("/");
     })
+}
+// *********************************************
+// Hàm hiện menu Change Pass và SignIn, SignOUT
+// *********************************************
+let dem = 0;
+function showPass() {
+  if(dem == 0)
+  {
+    document.getElementById("show-content").style.display = "block";
+    dem++;
+  }
+  else
+  {
+    document.getElementById("show-content").style.display = "none";
+    dem = 0;
+  }
+}
+
+function open_pass() 
+{
+  document.getElementById("fix-block").style.display = "block";
+  document.body.style.overflow = "hidden";
+}
+function ok_save()
+{
+  document.getElementById("fix-block").style.display = "none";
+  document.body.style.overflow = "auto";
+}
+function cancel_pass() 
+{
+  document.getElementById("fix-block").style.display = "none";
+  document.body.style.overflow = "auto";
+}
+// **************************************************
+function open_edit() 
+{
+  document.getElementById("fix-block-edit").style.display = "block";
+  document.body.style.overflow = "hidden";
+}
+function ok_edit_save()
+{
+  document.getElementById("fix-block-edit").style.display = "none";
+  document.body.style.overflow = "auto";
+}
+function cancel_edit() 
+{
+  document.getElementById("fix-block-edit").style.display = "none";
+  document.body.style.overflow = "auto";
 }

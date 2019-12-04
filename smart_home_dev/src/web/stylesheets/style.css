@@ -17,14 +17,14 @@
 }
 .navbar-nav li:hover {
     display:block;
-    min-width: 40px;
-    min-height: 20px;
+    min-width: 35px;
+    min-height: 15px;
     border-radius: 20px;
     background: rgb(76, 159, 228);
 }
 .navbar-nav  li a:hover {
     color: #8decd9 !important;
-    font-size: 17px;
+    font-size: 15px;
     
 }
 
@@ -92,20 +92,20 @@
     Button Login, logout in MENU 24/10/2019
 \************************************************\
 *************************************************/
-.container .butLog {
-    float: right;
+.butLog {
+    /* float: right;s */
     outline: 0;
     border: 0;
     /*background: blue;*/
     margin-top: 0;
     color: green;
 }
-.container .butLog button {
+.butLog button {
     display: inline-block;
-    min-width: 30px;
-    min-height: 20px;
-    padding: .8vw .8vw;
-    font-size: 18px;
+    width: 100%;
+    /* min-height: 20px; */
+    padding: 5px;
+    font-size: 15px;
     font-weight: bold;
     background: transparent;
     border: 0;
@@ -113,7 +113,7 @@
     border-radius: 2vw;
     font-family: octicons;
 }
-.container .butLog button:hover {
+.butLog button:hover {
     
     color: blue;
 }
@@ -161,6 +161,125 @@
     width: 70px;
     border-radius: 20px; 
 }
+/************************************************
+\************************************************\
+    Button Change Password, 24/10/2019
+\************************************************\
+*************************************************/
+.container #butPas {
+    outline: 0;
+    border: 0;
+    position: relative;
+    text-align: center;
+    margin: auto;
+    margin-top: 12px;
+}
+.container #butPas #but-change-pass {
+    display: inline-block;
+    /* padding: .8vw 0 0 0; */
+    font-size: 18px;
+    font-weight: bold;
+    background: transparent;
+    border: 0;
+    outline: 0;
+}
+.container #butPas #but-change-pass:hover {
+    color: blue;
+}
+
+#show-content {
+    position: absolute;
+    top: 100%;
+    right: 30%;
+    z-index: 9999;
+    display: none;
+    padding: 5px;
+    min-width: 220px;
+    background: lightblue;
+}
+#show-content span {
+    display: block;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: octicons;
+    width: 100%;
+    text-align: center;
+    margin-top: 2px;
+    color: green;
+}
+#show-content span:hover {
+    color: blue;
+    cursor: pointer;
+}
+/* ************************************* */
+/* ************************************* */
+#fix-block, #fix-block-edit {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99999;
+    display: none;
+    overflow: auto;
+    background: rgba(0, 0, 0, 0.75);
+    width: 100vw;
+    height: 100vh;
+}
+#fix-block-ok, #fix-block-edit-ok {
+    position: absolute;
+    bottom: 0;
+    right: 50%;
+    margin-bottom: 5px ;
+    transform: translate(50%);
+    width: 10vw;
+    text-align: center;
+    padding: 5px;
+    background: #3eeeee;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+#fix-block-ok:hover, #fix-block-cancel:hover,
+#fix-block-edit-ok:hover, #fix-block-edit-cancel:hover {
+    background: rgb(55, 97, 236);
+    color: #fff;
+    cursor: pointer;
+}
+#fix-block-content, #fix-block-edit-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: auto;
+    margin: auto;
+    width: 50%;
+    min-height: 50vh;
+    padding: 50px;
+    background: #3eb0dd;
+    border: 5px solid lightgreen;
+    border-radius: 5px;
+}
+#fix-block-cancel, #fix-block-edit-cancel {
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-bottom: 5px ;
+    width: 20vw;
+    text-align: center;
+    padding: 5px;
+    background: #3eeeee;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+#info-user label, #info-user-edit label {
+    display: inline-block;
+    /* font-family: 'Times New Roman', serif; */
+    letter-spacing: 0;
+    font-size: 13px;
+    font-weight: bold;
+    width: 13vw;
+    margin-top: 10px;
+    margin-right: 2%;
+}
 @media screen and (max-width:500px) {
     #btn-camera {
         max-width: 50%;
@@ -169,5 +288,20 @@
     {
         display: block;
         margin: 10px 0; 
+    }
+    #show-content {
+        position: absolute;
+        top: 100%;
+        left: 0%;
+        display: none;
+        padding: 5px;
+        width: 100%;
+        background: lightblue;
+    }
+    #fix-block-content {
+        width: 80%;
+    }
+    #fix-block-edit-content {
+        width: 80%;
     }
 }

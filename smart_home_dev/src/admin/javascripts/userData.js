@@ -1,6 +1,6 @@
 let layListData = {};
 let mangListData = [];
-function loadData()
+function loadDataUser()
 {
     layListData = JSON.parse(document.body.dataset.layuserdata);
     let i = 0;
@@ -11,17 +11,19 @@ function loadData()
     }
     console.log(mangListData);
 }
-//Hàm loadBody sẽ khởi chạy đầu tiên khi mở web
-// ******************
-function loadBody()
+// ************************************************
+//Hàm loadBodyUser sẽ khởi chạy đầu tiên khi mở web
+// ************************************************
+function loadBodyUser()
 {
-    loadData();
-    createTb();
-    doiSize();
+    loadDataUser();
+    createUserTb();
+    doiSizeUser();
 }
+// ************************************************
 // Hàm đọc data và tạo bảng
-// ******************
-function createTb() 
+// ************************************************
+function createUserTb() 
 {
 let elemenTableBody = document.getElementsByTagName("tbody");
     mangListData.forEach(function(item,index) {
@@ -33,15 +35,16 @@ let elemenTableBody = document.getElementsByTagName("tbody");
     "<td>"+ item.smarthome_name + "</td>" +
     "<td>"+ item.active + "</td>" +
     "<td>" + 
-    '<i class="fas fa-cog" id="icon-setting" onclick="chag( '+ index +')"></i>'  +
-    '<i class="far fa-edit" id="icon-edit"'  + '</i>' +
+    '<i class="fas fa-cog" id="icon-setting" onclick="chagUser( '+ index +')"></i>'  +
+    '<i class="far fa-edit" id="icon-edit" onclick="editUser( '+ index +')"></i>'  +
     '<i class="far fa-trash-alt" id="icon-trash" onclick="deleteUser( '+ index +')"></i>' +
     "</td>";
     elemenTableBody[0].append(createRow);
 });
 }
+// ************************************************
 // Xóa User
-// ******************
+// ************************************************
 function deleteUser(index) 
 {
     let txt = "";
@@ -55,9 +58,10 @@ function deleteUser(index)
       }
       console.log(txt);
 }
+// ************************************************
 // Tìm kiếm 
-// ******************
-function search() 
+// ************************************************
+function searchUser() 
 {
     let nameSearch = document.getElementById("id-search");
     let elemenTableBody = document.getElementsByTagName("tbody");
@@ -88,9 +92,10 @@ function search()
         }
     }
 }
-//// Hàm hiện lên cửa sổ
-// ******************
-async function chag(index)
+// ************************************************
+// Hàm hiện lên cửa sổ
+// ************************************************
+async function chagUser(index)
 {
     let smartHomeList = await axios.get('/smarthome/get_list');
     let smartHomeListData = smartHomeList.data.data;
@@ -159,9 +164,10 @@ async function chag(index)
     document.body.style.overflow = "hidden";
     document.getElementById("fix-block").style.display = "block";
 }
+// ************************************************
 // Hàm nhận data sau khi ấn OK và đóng cửa sổ
-// ******************
-function accept_and_cls()
+// ************************************************
+function accept_and_cls_User()
 {
     let par = document.getElementById("info-user");
     let traVeActive = document.getElementById("check-active");
@@ -179,24 +185,30 @@ function accept_and_cls()
         traVeUserData[key] = par.children[key].lastChild.nodeValue;
     }
     let userIdData = traVeUserData[2];
-    console.log('smarthomeID:', smarthomeIdData);
-    console.log('userID:', userIdData);
+    // console.log('smarthomeID:', smarthomeIdData);
+    // console.log('userID:', userIdData);
     let activeStatus = traVeActive.children[0].checked;
-    console.log('active:', activeStatus, typeof activeStatus);
+    // console.log('active:', activeStatus, typeof activeStatus);
     /************************************* */
     document.getElementById("fix-block").style.display = "none";
     document.body.style.overflow = "";
-    console.log("OK đã xác nhận");
+    console.log("OK xác nhận thông tin cho User");
     //************************* */
 }
+// ************************************************
 // Hàm thay đổi kích thước cửa sổ hiện lên theo kích thước window
-// ******************
-function doiSize() {
+// ************************************************
+function doiSizeUser() {
+    // console.log();
     if(window.innerWidth <= 768)
     {
        document.getElementById("fix-block").style.width = (window.innerWidth) +'px';
        document.getElementById("fix-block").style.left = "0";
-       document.getElementById("wrapper-0").style.marginTop = "110px";
+       document.getElementById("fix-block-create-user").style.width = (window.innerWidth) +'px';
+       document.getElementById("fix-block-create-user").style.left = "0";
+       document.getElementById("fix-block-edit-user").style.width = (window.innerWidth) +'px';
+       document.getElementById("fix-block-edit-user").style.left = "0";
+       document.getElementById("wrapper-0").style.marginTop = "160px";
        document.getElementById("wrapper-0").style.height =  (window.innerHeight - 110) +"px";
        document.getElementById("wrapper-0").style.width =  (window.innerWidth ) +"px";
        document.getElementById("wrapper-0").style.marginLeft = "";
@@ -205,22 +217,94 @@ function doiSize() {
     {
     document.getElementById("fix-block").style.width = (window.innerWidth - 223) +'px';
     document.getElementById("fix-block").style.left = "223px";
+    document.getElementById("fix-block-create-user").style.width = (window.innerWidth - 223) +'px';
+    document.getElementById("fix-block-create-user").style.left = "223px";
+    document.getElementById("fix-block-edit-user").style.width = (window.innerWidth - 223) +'px';
+    document.getElementById("fix-block-edit-user").style.left = "223px";
     document.getElementById("wrapper-0").style.marginTop = "60px";
     document.getElementById("wrapper-0").style.marginLeft = "225px";
     document.getElementById("wrapper-0").style.height =  (window.innerHeight - 60) + "px";
     document.getElementById("wrapper-0").style.width =  (window.innerWidth - 225) + "px";
     }
 }
-function esc_close(eve, accept_and_cls)
+function key_close_User(eve, accept_and_cls_User,accept_and_cls_newUser,accept_and_cls_editUser)
 {
     if(eve.keyCode == 27 || eve.which == 27)
     {
         document.getElementById("fix-block").style.display = "none";
+        document.getElementById("fix-block-create-user").style.display = "none";
+        document.getElementById("fix-block-edit-user").style.display = "none";
         document.body.style.overflow = "";
     }
     else if(eve.keyCode == 13 || eve.which == 13)
     {
-        accept_and_cls();
+        if(document.getElementById("fix-block").style.display == "block")
+        accept_and_cls_User();
+        if(document.getElementById("fix-block-create-user").style.display == "block")
+        accept_and_cls_newUser();
+        if(document.getElementById("fix-block-edit-user").style.display == "block")
+        accept_and_cls_editUser();
+    }  
+}
+// ************************************************
+// Hàm Create New User
+// ************************************************
+function newUser()
+{
+    document.body.style.overflow = "hidden";
+    document.getElementById("fix-block-create-user").style.display = "block";
+}
+function accept_and_cls_newUser()
+{
+    document.getElementById("fix-block-create-user").style.display = "none";
+    let x = document.getElementById("content-name-user");
+    document.body.style.overflow = "";
+    console.log(x.value);
+    console.log("OK đã tạo User mới");
+}
+// ************************************************
+// Hàm Edit User
+// ************************************************
+function editUser(index) 
+{
+    let checkDate = document.getElementById("edit-birthday-user");
+    checkDate.value = mangListData[index].date_of_birth;
+    let checkGender = document.getElementById("edit-gender-user").getElementsByTagName("input");
+    if(mangListData[index].gender == checkGender[0].value)
+    {
+        checkGender[0].checked = true;
     }
-    
+    else if(mangListData[index].gender == checkGender[1].value)
+    {
+        checkGender[1].checked = true;
+    }
+    else
+    {
+        checkGender[0].checked = false;
+        checkGender[1].checked = false;
+    }
+    document.getElementById("edit-name-user").value = mangListData[index].name;
+    document.getElementById("edit-phone-user").value = mangListData[index].phone;
+
+    // ****************************************
+    document.body.style.overflow = "hidden";
+    document.getElementById("fix-block-edit-user").style.display = "block";
+}
+function accept_and_cls_editUser()
+{
+    document.getElementById("fix-block-edit-user").style.display = "none";
+    // let x = document.getElementById("info-edit-user");
+    document.body.style.overflow = "";
+    // console.log(x.children[0].value);
+    console.log("OK đã chỉnh sửa User");
+}
+// ************************************************
+// Hàm Tắt cửa sổ cho Thiết bị di động
+// ************************************************
+function cancel_block()
+{
+    document.getElementById("fix-block").style.display = "none";
+    document.getElementById("fix-block-create-user").style.display = "none";
+    document.getElementById("fix-block-edit-user").style.display = "none";
+    document.body.style.overflow = "";
 }

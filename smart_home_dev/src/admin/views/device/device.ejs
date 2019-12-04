@@ -2,13 +2,14 @@
 <html lang="en">
 
 <head>
+    <link rel="stylesheet" href="/device.css">
     <% include ../partials/head %>
 </head>
 
 <!------ Include the above in your HEAD tag ---------->
 
 <body onload="loadBody_device()" onresize="doiSize_device()" 
-    onkeyup="esc_close_device(window.event,accept_and_cls_device)" data-laydevicedata = "<%= JSON.stringify(deviceListData) %>">
+    onkeyup="key_close_device(window.event,accept_and_cls_device)" data-laydevicedata = "<%= JSON.stringify(deviceListData) %>">
     <div id="throbber" style="display:none; min-height:120px;"></div>
     <div id="noty-holder"></div>
     <% include ../admin %>
@@ -44,21 +45,24 @@
                 </tbody>
             </table>
         </div>
-        <button id="newUser-device"><i class="fas fa-plus" ></i> New User</button>
+        <button id="newUser-device" onclick="newDevice()"><i class="fas fa-plus" ></i> New Device</button>
         <div id="id-0-device" style="display:inline-block">
             <button onclick="createTb_device()">click to create table</button>
         </div>
         <!-- ************************* -->
-        <!-- Cửa sổ bật lên -->
+        <!-- Cửa sổ Thông tin Device bật lên -->
         <!-- ************************* -->
         <div id="fix-block-device" style="display: none;">
             <div id="fix-block-content-device">
                 <div id="fix-block-ok-device" onclick="accept_and_cls_device()">
                         OK
                 </div>
+                <div id="fix-block-cancel" onclick="cancel_block()">
+                        Cancel
+                </div>
                 <div id="info-user-device">
                     <label for="luaChon-device">Choose Smart Home</label>
-                    <select name="" id="luaChon-device" style="width:10%">
+                    <select name="" id="luaChon-device">
                     </select> 
                     <div id="check-active-device">
                         <input type="checkbox" id="actived-device">
@@ -67,8 +71,67 @@
                 </div>
             </div>
         </div>
+        <!-- ************************* -->
+        <!-- Cửa sổ New Device bật lên -->
+        <!-- ************************* -->
+        <div id="fix-block-create-newdevice" style="display:none">
+            <div id="fix-block-newdevice-content">
+                <div id="fix-block-newdevice-ok" onclick="accept_and_cls_newDevice()">
+                    OK
+                </div>
+                <div id="fix-block-cancel" onclick="cancel_block()">
+                        Cancel
+                </div>
+                <div id="info-create-newdevice">
+                    <h3 style="text-align:center">Thông tin New Device</h3>
+                    <br>
+                    <!-- User Name -->
+                    <label for="name-newdevice">Device Name</label>
+                    <input type="text" name="name-newdevice" id="name-newdevice">
+                    <br><br>
+                    <!-- Email -->
+                    <label for="machine-type-newdevice">Device Machine Type</label>
+                    <input type="text" name="machine_type" id="machine-type-newdevice">
+                    <br><br>
+                    <!-- PassWord -->
+                    <label for="series-number-newdevice">Device Series Number</label>
+                    <input type="text" name="series_number" id="series-number-newdevice">
+                    <br><br>
+                </div>
+            </div>
+        </div>
+        <!-- ************************* -->
+        <!-- Cửa sổ Edit Device bật lên -->
+        <!-- ************************* -->
+        <div id="fix-block-edit-device" style="display:none">
+            <div id="fix-block-edit-device-content">
+                <div id="fix-block-edit-device-ok" onclick="accept_and_cls_editDevice()">
+                    OK
+                </div>
+                <div id="fix-block-cancel" onclick="cancel_block()">
+                        Cancel
+                </div>
+                <div id="info-edit-device">
+                    <h3 style="text-align:center">Thông tin Device</h3>
+                    <br>
+                    <!-- SmartHome Name -->
+                    <label for="edit-name-device">Device Name</label>
+                    <input type="text" name="name" id="edit-name-device">
+                    <br><br>
+                    <!-- Machine Type -->
+                    <label for="edit-machine-type-device">Device Machine Type</label>
+                    <input type="text" name="name" id="edit-machine-type-device">
+                    <br><br>
+                    <!-- Series Number  -->
+                    <label for="edit-series-number-device">Device Series Number</label>
+                    <input type="text" name="name" id="edit-series-number-device">
+                    <br>
+                </div>
+            </div>
+        </div>
     </div><!-- /#wrapper -->
 </body>
+<script src="/device.js"></script>
 <% include ../partials/script %>
 
 </html>
