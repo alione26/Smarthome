@@ -45,6 +45,7 @@ var appRouter = function (app) {
     app.post('/user_device/add', userDeviceController.new_userDevice);
     app.post('/user_device/update/:id', userDeviceController.update_userDevice);
     app.delete('/user_device/delete/:id', userDeviceController.delete_userDevice);
+    app.get('/user_device/get_by_token', userDeviceController.userDeviceByToken);
 
     const adminController = require('../src/http/controllers/AdminController');
     app.post('/admin/new-admin', adminController.new_admin);

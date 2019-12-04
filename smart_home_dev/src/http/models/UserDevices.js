@@ -56,6 +56,26 @@ module.exports = {
             throw Error(e.message);
         }
     },
+    userDevice_by_token : async function(userDeviceToken) {
+        var userDeviceToken = userDeviceToken;
+        var userDeviceReference = firebase.database().ref("/userDevices/");
+        try {
+            return await userDeviceReference.orderByChild("token")
+                .equalTo(userDeviceToken)
+                .once("value").then(
+                         function(snapshot){
+                            return { status : true, message :"The read User by token succeeded", data : snapshot.val()};
+                            userDeviceReference.off("value");
+                         },
+                         function(errorObject){
+                            console.log("The read user device by token failed: " + errorObject.code);
+                            return { status : false, message : "The read user device by token failed: " + errorObject.code };
+                         },
+              );
+        }catch (e) {
+            throw Error(e.message);
+        }
+    },
     update_userDevice : async function(userDeviceId, userDeviceData) {
         var userDeviceReference = firebase.database().ref("/userDevices/"+ userDeviceId);
         try {

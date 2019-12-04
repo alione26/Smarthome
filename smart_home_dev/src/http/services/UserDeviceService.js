@@ -11,6 +11,9 @@ module.exports = {
     userDevice_by_id : async function(userDeviceId) {
         return await userDevice.userDevice_by_id(userDeviceId);
     },
+    userDevice_by_token : async function(userDeviceToken) {
+        return await userDevice.userDevice_by_token(userDeviceToken);
+    },
     update_userDevice : async function(userDeviceId,userDeviceData) {
         return await userDevice.update_userDevice(userDeviceId,userDeviceData);
     },
