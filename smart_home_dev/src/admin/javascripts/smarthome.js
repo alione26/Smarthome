@@ -68,7 +68,6 @@ function search_smarthome()
 {
     let nameSearch = document.getElementById("id-search-smarthome");
     let elemenTableBody = document.getElementsByTagName("tbody");
-    
     console.log(nameSearch.children[0].value);
     for (let key of elemenTableBody[0].children) {
         let noiString = "";
@@ -133,26 +132,26 @@ async function chag_smarthome(index)
         }
         elementSelect.append(elementOption);
     }
-    let ktraActive = document.getElementById("actived-smarthome");
+    // let ktraActive = document.getElementById("actived-smarthome");
     let elementInforUser = document.getElementById("info-user-smarthome");
     let tagP = elementInforUser.getElementsByTagName("p");
     for((tagP.length - 1) ; (tagP.length -1) >= 0; )
     {
         tagP[(tagP.length - 1)].remove();
     }
-    ktraActive.checked = mangSmartHomeData[index].active
+    // ktraActive.checked = mangSmartHomeData[index].active
     {
-        for(key in mangSmartHomeData[index])
+        for(let key in mangSmartHomeData[index])
         {
-            let showName = ["email","user_id","smarthome_name","smarthome_id",];
-            let showName_1 = ["Email","User Id","Smart Home Name","Smart Home Id",];
-            for(let i = 0; i < showName.length; i ++)
+            let showName = ["socketId","status","machine_type","series_number","smarthome_user_id","smarthome_id",];
+            let showName_1 = ["Socket Id","Status","Machine Type","Series Number","Smart Home UserId","Smart Home Id",];
+            for(let i = 0; i < showName.length; i++)
             {
                 if(showName[i] == key)
                 {
                     let createEleP = document.createElement("p");
                     createEleP.innerHTML = "<strong>" + showName_1[i] + " : " + "</strong>"  + mangSmartHomeData[index][key];
-                    elementInforUser.prepend(createEleP);
+                    elementInforUser.append(createEleP);
                 }
             }
         }
@@ -172,7 +171,7 @@ async function chag_smarthome(index)
 function accept_and_cls_smarthome()
 {
     let par = document.getElementById("info-user-smarthome");
-    let traVeActive = document.getElementById("check-active-smarthome");
+    // let traVeActive = document.getElementById("check-active-smarthome");
     /*********************************** */
     let laySelect = document.getElementById("luaChon-smarthome");
     let smartHomeIdData;
@@ -189,7 +188,7 @@ function accept_and_cls_smarthome()
     let userIdData = traVeUserData[2];
     // console.log('smarthomeID:', smarthomeIdData);
     // console.log('userID:', userIdData);
-    let activeStatus = traVeActive.children[0].checked;
+    // let activeStatus = traVeActive.children[0].checked;
     // console.log('active:', activeStatus, typeof activeStatus);
     /************************************* */
     document.getElementById("fix-block-smarthome").style.display = "none";
@@ -257,11 +256,12 @@ function newSmartHome()
 }
 function accept_and_cls_newSmartHome()
 {
-    document.getElementById("fix-block-create-newsmarthome").style.display = "none";
-    let x = document.getElementById("name-newsmarthome");
-    document.body.style.overflow = "";
-    console.log(x.value);
     console.log("OK đã tạo User mới");
+    console.log("SmartHome Name:",document.getElementById("name-newsmarthome").value);
+    console.log("SmartHome Machine Type:",document.getElementById("machine-type-newsmarthome").value);
+    console.log("SmartHome Series Number:",document.getElementById("series-number-newsmarthome").value);
+    document.getElementById("fix-block-create-newsmarthome").style.display = "none";
+    document.body.style.overflow = "";
 }
 // ************************************************
 // Hàm Edit User
@@ -277,11 +277,15 @@ function editSmartHome(index)
 }
 function accept_and_cls_editSmartHome()
 {
-    document.getElementById("fix-block-edit-smarthome").style.display = "none";
-    // let x = document.getElementById("info-edit-user");
-    document.body.style.overflow = "";
-    // console.log(x.children[0].value);
+
     console.log("OK đã chỉnh sửa smarthome");
+    console.log("SmartHome Name:",document.getElementById("edit-name-smarthome").value);
+    console.log("SmartHome Machine Type:",document.getElementById("edit-machine-type-smarthome").value);
+    console.log("SmartHome Series Number:",document.getElementById("edit-series-number-smarthome").value);
+    document.getElementById("fix-block-edit-smarthome").style.display = "none";
+    document.body.style.overflow = "";
+    // let x = document.getElementById("info-edit-user");
+    // console.log(x.children[0].value);
 }
 // ************************************************
 // Hàm Tắt cửa sổ cho Thiết bị di động

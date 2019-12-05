@@ -170,7 +170,7 @@ async function chagUser(index)
 function accept_and_cls_User()
 {
     let par = document.getElementById("info-user");
-    let traVeActive = document.getElementById("check-active");
+    // let traVeActive = document.getElementById("check-active");
     /*********************************** */
     let laySelect = document.getElementById("luaChon");
     let smartHomeIdData;
@@ -184,15 +184,15 @@ function accept_and_cls_User()
     {
         traVeUserData[key] = par.children[key].lastChild.nodeValue;
     }
-    let userIdData = traVeUserData[2];
-    // console.log('smarthomeID:', smarthomeIdData);
-    // console.log('userID:', userIdData);
-    let activeStatus = traVeActive.children[0].checked;
-    // console.log('active:', activeStatus, typeof activeStatus);
+    let userIdData = traVeUserData[3];
+    console.log("OK xác nhận thông tin cho User");
+    console.log('smarthomeID vừa chọn:', smarthomeIdData);
+    console.log('userID cũ:', userIdData);
+    // let activeStatus = traVeActive.children[0].checked;
+    console.log('active Status:', document.getElementById("actived").checked);
     /************************************* */
     document.getElementById("fix-block").style.display = "none";
     document.body.style.overflow = "";
-    console.log("OK xác nhận thông tin cho User");
     //************************* */
 }
 // ************************************************
@@ -256,11 +256,29 @@ function newUser()
 }
 function accept_and_cls_newUser()
 {
-    document.getElementById("fix-block-create-user").style.display = "none";
-    let x = document.getElementById("content-name-user");
-    document.body.style.overflow = "";
-    console.log(x.value);
+    let checkGenderOk = document.getElementById("content-gender-user").getElementsByTagName("input");
+    let valueGender = '';
+    if(checkGenderOk[0].checked == true)
+    {
+        valueGender = checkGenderOk[0].value;
+    }
+    else if(checkGenderOk[1].checked == true)
+    {
+        valueGender = checkGenderOk[1].value;
+    }
+    else
+    {
+        valueGender = '';
+    }
     console.log("OK đã tạo User mới");
+    console.log("User Name:", document.getElementById("content-name-user").value);
+    console.log("User Email:", document.getElementById("content-email-user").value);
+    console.log("User Pass:", document.getElementById("content-password-user").value);
+    console.log("User Phone:", document.getElementById("content-phone-user").value);
+    console.log("User Birthday:", document.getElementById("content-birthday-user").value);
+    console.log("User Gender:", valueGender);
+    document.getElementById("fix-block-create-user").style.display = "none";
+    document.body.style.overflow = "";
 }
 // ************************************************
 // Hàm Edit User
@@ -292,11 +310,27 @@ function editUser(index)
 }
 function accept_and_cls_editUser()
 {
-    document.getElementById("fix-block-edit-user").style.display = "none";
-    // let x = document.getElementById("info-edit-user");
-    document.body.style.overflow = "";
-    // console.log(x.children[0].value);
+    let checkGenderOk = document.getElementById("edit-gender-user").getElementsByTagName("input");
+    let valueGender = '';
+    if(checkGenderOk[0].checked == true)
+    {
+        valueGender = checkGenderOk[0].value;
+    }
+    else if(checkGenderOk[1].checked == true)
+    {
+        valueGender = checkGenderOk[1].value;
+    }
+    else
+    {
+        valueGender = '';
+    }
     console.log("OK đã chỉnh sửa User");
+    console.log("User Name:", document.getElementById("edit-name-user").value);
+    console.log("User Phone:", document.getElementById("edit-phone-user").value);
+    console.log("User birthday:", document.getElementById("edit-birthday-user").value);
+    console.log("User Gender:", valueGender);
+    document.getElementById("fix-block-edit-user").style.display = "none";
+    document.body.style.overflow = "";
 }
 // ************************************************
 // Hàm Tắt cửa sổ cho Thiết bị di động
