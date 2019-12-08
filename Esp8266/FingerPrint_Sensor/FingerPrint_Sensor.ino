@@ -13,6 +13,11 @@
 #include "FPM.h"
 //servo include
 #include <Servo.h>
+
+const long intervalTime = 4000;
+//const long intervalTimeMotor = 15;
+bool open_door = 0;
+bool buttonError = 0;
 Servo myservo;
 
 LiquidCrystal_PCF8574 lcd(0x27);
@@ -26,12 +31,12 @@ FPM_System_Params params;
 // WiFi
 // Make sure to update this for your own WiFi network!
 int flag = 0;
-const char* ssid = "ALADIN";
-const char* wifi_password = "xuka03072016";
+const char* ssid = "CHILINH";
+const char* wifi_password = "chilinh123";
 
 // MQTT
 // Make sure to update this for your own MQTT Broker!
-const char* mqtt_server = "192.168.1.200";
+const char* mqtt_server = "192.168.43.200";
 const char* mqtt_command_topic = "smarthome/fingerprint/command";
 const char* mqtt_reply_topic = "smarthome/fingerprint/feedback";
 const char* mqtt_username = "chilinh";
@@ -108,6 +113,7 @@ void setup() {
   pinMode(14, INPUT);
   
   attachInterrupt(14, identification, FALLING);
+  attachInterrupt(12, door, RISING);
   // Begin Serial on 115200
   // Remember to choose the correct Baudrate on the Serial monitor!
   // This is just for debugging purposes
@@ -154,6 +160,52 @@ void setup() {
 void identification(void) {
   flag = 1;
 }
+void door(void){
+   if ( buttonError == 0 ) {
+    buttonError = 1;
+    int pos;
+    if (!open_door) {
+    for (pos = 90; pos >= 0; pos -= 1) { // goes from 90 degrees to 0 degrees
+            myservo.write(pos);
+            //delay(15);
+    }
+    open_door = 1;
+  }else {
+    for (pos = 0; pos <= 90; pos += 1) { // goes from 0 degrees to 90 degrees
+            myservo.write(pos);
+            //delay(15);
+    }
+    open_door = 0;
+  }
+  
+}else buttonError = 0;
+}
+//void interruptDoor(void) {
+//  if (error == 0) {
+//    error = 1;
+//  }
+//  else error = 0;
+//}
+void fp_lcd(const char * lcd_char) {
+    Wire.begin();
+    Wire.beginTransmission(0x27);
+    lcd.begin(16, 2);
+    lcd.setBacklight(64);
+    lcd.home(); lcd.clear();
+    lcd.print(lcd_char);
+    delay(500);
+    size_t len_of_char = strlen(lcd_char);
+    size_t i;
+    if (len_of_char > 17) {
+        for (i=0; i < (len_of_char - 16); i++) {
+            lcd.scrollDisplayLeft();
+            delay(150);
+        }
+        len_of_char = 17;
+        lcd.clear();
+    }
+
+}
 
 void loop() {
   // If the connection is lost, try to connect again
@@ -164,6 +216,9 @@ void loop() {
     search_database();
     flag = 0;
   }
+//  if(error) {
+//    openDoor();
+//  }
   //search_database();
   
   // client.loop() just tells the MQTT client code to do what it needs to do itself (i.e. check for messages, etc.)
@@ -582,11 +637,36 @@ int search_database(void) {
       if (p == FPM_OK) {
           Serial.println("Found a print match!");
           //servo open door
+          const char* lcd_char;
+          fp_lcd(lcd_char = "Welcome home!");
           int pos;
+          if ( !open_door) {
           for (pos = 90; pos >= 0; pos -= 1) { // goes from 90 degrees to 0 degrees
             myservo.write(pos);
             delay(15);
           }
+//          unsigned long previousMillis = millis();
+//          open_door = 1;
+//          bool complete = 0;
+//          while( !complete) {
+//          unsigned long currentMillis = millis();
+//          if ( currentMillis - previousMillis >= intervalTime ) {
+//            previousMillis = currentMillis;
+//            for (pos = 0; pos <= 90; pos += 1) { // goes from 90 degrees to 0 degrees
+//              myservo.write(pos);
+//              delay(15);
+//            }
+//            open_door = 0;
+//            complete = 1;
+//          }
+//          }
+          delay(4000);
+          for (pos = 0; pos <= 90; pos += 1) { // goes from 90 degrees to 0 degrees
+              myservo.write(pos);
+              delay(15);
+            }
+          open_door = 0;
+           
           DynamicJsonBuffer jsonBuffer;
           JsonObject& root = jsonBuffer.createObject();
 
@@ -624,30 +704,19 @@ int search_database(void) {
       }
       
       // found a match!
-      const char* lcd_char;
-      fp_lcd(lcd_char = "Welcome home!");
       Serial.print("Found ID #"); Serial.print(fid);
       Serial.print(" with confidence of "); Serial.println(score);
   }
 }
-//function_lcd
-void fp_lcd(const char * lcd_char) {
-    Wire.begin();
-    Wire.beginTransmission(0x27);
-    lcd.begin(16, 2);
-    lcd.setBacklight(64);
-    lcd.home(); lcd.clear();
-    lcd.print(lcd_char);
-    delay(500);
-    size_t len_of_char = strlen(lcd_char);
-    size_t i;
-    if (len_of_char > 17) {
-        for (i=0; i < (len_of_char - 16); i++) {
-            lcd.scrollDisplayLeft();
-            delay(150);
-        }
-        len_of_char = 17;
-        lcd.clear();
-    }
-
 }
+//function_lcd
+
+
+
+//void delayTime(int pos){
+//  unsigned long previousTimeMotor = 0
+//  unsigned long currentTimeMotor = millis();
+//  if ( currentTimeMotor - previousTimeMotor >= intervalTimeMotor){
+//    previousTimeMotor = currentTimeMotor;
+//  }
+//}

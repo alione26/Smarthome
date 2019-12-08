@@ -10,29 +10,57 @@ Servo myservo;
 
 #include <SPI.h>
 #include <MFRC522.h>
-
+bool open_door = 0;
 MFRC522 mfrc522(SS_PIN, RST_PIN);   // Create MFRC522 instance.
 int statuss = 0;
 int out = 0;
 void setup() 
 {
-  pinMode(4, INPUT);
-  attachInterrupt(4, lightControl, RISING);
+//  pinMode(4, INPUT);
+//  attachInterrupt(4, lightControl, RISING);
+  attachInterrupt(4, button4, RISING);
+  attachInterrupt(5, button5, RISING);
   myservo.attach(15);
-  pinMode(5, OUTPUT);
-  digitalWrite(5, LOW);
+//  pinMode(5, OUTPUT);
+//  digitalWrite(5, LOW);
   
   
   Serial.begin(115200);   // Initiate a serial communication
   SPI.begin();      // Initiate  SPI bus
   mfrc522.PCD_Init();   // Initiate MFRC522
 }
+void button4(void){
+  Serial.println("button4");
+  if(!open_door){
+    openDoor();
+    open_door = 1;
+  }
+}
+void button5(void){
+  Serial.println("button5");
+  if(open_door){
+    closeDoor();
+    open_door = 0;
+  }
+}
+void openDoor(void) {
+  int pos;
+  for (pos = 90; pos >= 0; pos -= 1) { // goes from 90 degrees to 0 degrees
+      myservo.write(pos);
+}
+}
+void closeDoor(void) {
+  int pos;
+  for (pos = 0; pos <= 90; pos += 1) { // goes from 90 degrees to 0 degrees
+      myservo.write(pos);
+}
+}
 void loop() 
 {
-  bool turnOff = digitalRead(4);
-  if (!turnOff) {
-    digitalWrite(5, LOW);
-  }
+//  bool turnOff = digitalRead(4);
+//  if (!turnOff) {
+//    digitalWrite(5, LOW);
+//  }
   // Look for new cards
   if ( ! mfrc522.PICC_IsNewCardPresent()) 
   {
@@ -61,10 +89,22 @@ void loop()
   {
     Serial.println(" Access Granted ");
     Serial.println(" Welcome Mr.Circuit ");
+    
+    Serial.println(String(open_door));
     //delay(1000);
-    doorControl();
-    Serial.println(" Have FUN ");
-    Serial.println();
+    if (open_door) {
+      closeDoor();
+      delay(1000);
+      open_door = 0;
+    
+    } else {
+      openDoor();
+      delay(4000);
+      closeDoor();
+      open_door = 0;
+    }
+//    Serial.println(" Have FUN ");
+//    Serial.println();
     statuss = 1;
   }
   
@@ -73,13 +113,13 @@ void loop()
     delay(3000);
   }
 } 
-void lightControl(void) {
-  digitalWrite(5, HIGH);
-}
-void doorControl(void) {
-  int pos;
-  for (pos = 90; pos >= 0; pos -= 1) { // goes from 90 degrees to 0 degrees
-      myservo.write(pos);
-      delay(15);
-  }
-}
+//void lightControl(void) {
+//  digitalWrite(5, HIGH);
+//}
+//void doorControl(void) {
+//  int pos;
+//  for (pos = 90; pos >= 0; pos -= 1) { // goes from 90 degrees to 0 degrees
+//      myservo.write(pos);
+//      delay(15);
+//  }
+//}

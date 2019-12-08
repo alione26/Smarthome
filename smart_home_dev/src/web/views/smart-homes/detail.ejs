@@ -27,7 +27,7 @@
                         <% if (smartHomeDevices[item].machine_type == 'CAMERA') { %>
                             <img src="./smart/camera.png" width="250px" height="220px" style="display:block;margin:auto;">
                         <% } %>
-                        <% if (smartHomeDevices[item].machine_type == 'Restroom_Light') { %>
+                        <% if (smartHomeDevices[item].machine_type == 'Kitchen_Light') { %>
                             <img src="./smart/light_on.png" width="250px" height="220px" style="display:block;margin:auto;">
                         <% } %>
                         <% if (smartHomeDevices[item].machine_type == 'Fan') { %>
@@ -73,7 +73,7 @@
                             <div class="chel1chel2">
                                 <div id="che1" onclick="chag(this.id)" data-dosag = "25" data-id="
                                 <%= smartHomeDevices[item].smarthomeDevice_id %>" data-smarthomeid="
-                                <%= smartHomeDevices[item].smarthome_id %>"> 
+                                <%= smartHomeDevices[item].smarthome_id %>">
                                     <span>25%</span>
                                 </div>
                                 <!-- ************************ -->

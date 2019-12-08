@@ -17,7 +17,11 @@ DHT dht(DHTPIN, DHTTYPE);
 #include <Wire.h>
 #include <LiquidCrystal_PCF8574.h>
 LiquidCrystal_PCF8574 lcd(0x27);
-
+//light status var
+bool livStatus = 0;
+bool kitStatus = 0;
+bool livButtonError = 0;
+bool kitButtonError = 0;
 // WiFi
 // Make sure to update this for your own WiFi network!
 const char* ssid = "CHILINH";
@@ -28,10 +32,10 @@ const char* wifi_password = "chilinh123";
 const char* mqtt_server = "192.168.43.200";
 //const char* mqtt_topic = "smarthome/fingerprint/command";
 const char* mqtt_topic_livingroom_light = "smarthome/light/livingroom";
-const char* mqtt_topic_bedroom_light = "smarthome/light/bedroom";
+//const char* mqtt_topic_bedroom_light = "smarthome/light/bedroom";
 const char* mqtt_topic_kitchen_light = "smarthome/light/kitchen";
-const char* mqtt_topic_fan = "smarthome/fan/controll";
-const char* mqtt_fan_reply_topic = "smarthome/fan/feedback";
+//const char* mqtt_topic_fan = "smarthome/fan/controll";
+//const char* mqtt_fan_reply_topic = "smarthome/fan/feedback";
 const char* mqtt_light_reply_topic = "smarthome/light/feedback";
 const char* mqtt_transmit_dht22_topic = "smarthome/dht22";
 const char* mqtt_username = "chilinh";
@@ -60,25 +64,56 @@ bool Connect() {
   if (client.connect(clientID, mqtt_username, mqtt_password)) {
       //client.subscribe(mqtt_topic);
       client.subscribe(mqtt_topic_livingroom_light);
-      client.subscribe(mqtt_topic_bedroom_light);
+      //client.subscribe(mqtt_topic_bedroom_light);
       client.subscribe(mqtt_topic_kitchen_light);
-      client.subscribe(mqtt_topic_fan);
+      //client.subscribe(mqtt_topic_fan);
       return true;
     }
     else {
       return false;
   }
 }
+void livButton(void) {
+  Serial.println("livButtonPressed");
+  if ( livButtonError == 0 ) {
+    livButtonError = 1;
+    livStatus = digitalRead(15);
+    if (livStatus) {
+      digitalWrite(15, LOW);
+      livStatus = 0;
+    } else {
+      digitalWrite(15, HIGH);
+      livStatus = 1;
+    }
+  } else livButtonError = 0;
+}
+void kitButton(void) {
+    if ( kitButtonError == 0 ) {
+      kitButtonError = 1;
+      kitStatus = digitalRead(13);
+      if (kitStatus) {
+          digitalWrite(13, LOW);
+          kitStatus = 0;
+      } else {
+          digitalWrite(13, HIGH);
+          kitStatus = 1;
+    }
+   } else kitButtonError = 0;
+}
 
 void setup() {
   pinMode(15, OUTPUT); //livingroom
   digitalWrite(15, LOW);
-  pinMode(13, OUTPUT); //bedroom
+  pinMode(13, OUTPUT); //kitchen
   digitalWrite(13, LOW);
-  pinMode(12, OUTPUT); //kitchen
-  digitalWrite(12, LOW);
-  pinMode(14, OUTPUT); //fan
-  digitalWrite(14, LOW);
+  attachInterrupt(14, livButton, RISING);
+  attachInterrupt(12, kitButton, RISING);
+//  pinMode(13, OUTPUT); //bedroom
+//  digitalWrite(13, LOW);
+//  pinMode(12, OUTPUT); //kitchen
+//  digitalWrite(12, LOW);
+//  pinMode(14, OUTPUT); //fan
+//  digitalWrite(14, LOW);
   
   // dth22 begin
   dht.begin();
@@ -157,56 +192,60 @@ void controll(char* topic, char* command) {
       digitalWrite(15, HIGH);
       Serial.println("livingroom on");
       lightstatus = "on";
+      livStatus = 1;
     }
     if (!strcmp(command,"off")) {
       digitalWrite(15, LOW);
       Serial.println("livingroom off");
       lightstatus = "off";
+      livStatus = 0;
     }
     feedback("livingroomlight", lightstatus);
   }
-  if (!strcmp(topic,mqtt_topic_bedroom_light)) {
-    char* lightstatus;
-     if (!strcmp(command,"on")) {
-      digitalWrite(13, HIGH);
-      Serial.println("bedroom_light on");
-      lightstatus = "on";
-    }
-    if (!strcmp(command,"off")) {
-      digitalWrite(13, LOW);
-      Serial.println("bedroom_light off");
-      lightstatus = "off";
-    }
-    feedback("bedroomlight", lightstatus);
-  }
+//  if (!strcmp(topic,mqtt_topic_bedroom_light)) {
+//    char* lightstatus;
+//     if (!strcmp(command,"on")) {
+//      digitalWrite(13, HIGH);
+//      Serial.println("bedroom_light on");
+//      lightstatus = "on";
+//    }
+//    if (!strcmp(command,"off")) {
+//      digitalWrite(13, LOW);
+//      Serial.println("bedroom_light off");
+//      lightstatus = "off";
+//    }
+//    feedback("bedroomlight", lightstatus);
+//  }
   if (!strcmp(topic,mqtt_topic_kitchen_light)) {
     char* lightstatus;
      if (!strcmp(command,"on")) {
       digitalWrite(12, HIGH);
       Serial.println("kitchen_light on");
       lightstatus = "on";
+      kitStatus = 1;
     }
     if (!strcmp(command,"off")) {
       digitalWrite(12, LOW);
       Serial.println("kitchen_light off");
       lightstatus = "off";
+      kitStatus = 0;
     }
     feedback("kitchenlight", lightstatus);
   }
-  if (!strcmp(topic,mqtt_topic_fan)) {
-    char* fanstatus;
-     if (!strcmp(command,"on")) {
-      digitalWrite(14, HIGH);
-      Serial.println("fan on");
-      fanstatus = "on";
-    }
-    if (!strcmp(command,"off")) {
-      digitalWrite(14, LOW);
-      Serial.println("fan off");
-      fanstatus = "off";
-    }
-    fan_feedback("fan", fanstatus);
-  }
+//  if (!strcmp(topic,mqtt_topic_fan)) {
+//    char* fanstatus;
+//     if (!strcmp(command,"on")) {
+//      digitalWrite(14, HIGH);
+//      Serial.println("fan on");
+//      fanstatus = "on";
+//    }
+//    if (!strcmp(command,"off")) {
+//      digitalWrite(14, LOW);
+//      Serial.println("fan off");
+//      fanstatus = "off";
+//    }
+//    fan_feedback("fan", fanstatus);
+//  }
 }
 void feedback(char* light, char* lightstatus) {
   DynamicJsonBuffer jsonBuffer;
@@ -226,24 +265,24 @@ void feedback(char* light, char* lightstatus) {
         client.publish(mqtt_light_reply_topic, char_reply);
   }
 }
-void fan_feedback(char* fan, char* fanstatus) {
-  DynamicJsonBuffer jsonBuffer;
-  JsonObject& root = jsonBuffer.createObject();
-
-  JsonObject& feedback = root.createNestedObject("feedback");
-  feedback["fan"] = fan;
-  feedback["status"] = fanstatus;
-  char char_reply[60];
-  root.printTo(char_reply);
-  Serial.println(char_reply);
-  if (client.publish(mqtt_fan_reply_topic, char_reply))
-       Serial.println("Replied to MQTT server");
-  else {
-       Serial.println("Failed to reply.Reconnecting to MQTT server");
-        Connect();
-        client.publish(mqtt_fan_reply_topic, char_reply);
-  }
-}
+//void fan_feedback(char* fan, char* fanstatus) {
+//  DynamicJsonBuffer jsonBuffer;
+//  JsonObject& root = jsonBuffer.createObject();
+//
+//  JsonObject& feedback = root.createNestedObject("feedback");
+//  feedback["fan"] = fan;
+//  feedback["status"] = fanstatus;
+//  char char_reply[60];
+//  root.printTo(char_reply);
+//  Serial.println(char_reply);
+//  if (client.publish(mqtt_fan_reply_topic, char_reply))
+//       Serial.println("Replied to MQTT server");
+//  else {
+//       Serial.println("Failed to reply.Reconnecting to MQTT server");
+//        Connect();
+//        client.publish(mqtt_fan_reply_topic, char_reply);
+//  }
+//}
 void DHT_Transmit(float h, float t) {
   DynamicJsonBuffer jsonBuffer;
   JsonObject& root = jsonBuffer.createObject();
