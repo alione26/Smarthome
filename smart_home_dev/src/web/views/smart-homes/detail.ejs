@@ -24,6 +24,15 @@
                         <% if (smartHomeDevices[item].machine_type == 'LAMP') { %>
                             <img src="./smart/lamp_bed.png" width="250px" height="220px" style="display:block;margin:auto;">
                         <% } %>
+                        <% if (smartHomeDevices[item].machine_type == 'RFID') { %>
+                            <img src="./smart/RFD_logo.png" width="250px" height="220px" style="display:block;margin:auto;">
+                        <% } %>
+                        <% if (smartHomeDevices[item].machine_type == 'RESTROOM_LIGHT') { %>
+                            <img src="./smart/light_on.png" width="250px" height="220px" style="display:block;margin:auto;">
+                        <% } %>
+                        <% if (smartHomeDevices[item].machine_type == 'BEDROOM_DHT22') { %>
+                            <img src="./smart/Temperature.png" width="250px" height="220px" style="display:block;margin:auto;">
+                        <% } %>
                         <% if (smartHomeDevices[item].machine_type == 'CAMERA') { %>
                             <img src="./smart/camera.png" width="250px" height="220px" style="display:block;margin:auto;">
                         <% } %>
@@ -47,7 +56,7 @@
                             <img src="./smart/light_on.png" width="250px" height="220px" style="display:block;margin:auto;">
 
                         <% } %>
-                        <% if (smartHomeDevices[item].machine_type == 'DHT22') { %>
+                        <% if (smartHomeDevices[item].machine_type == 'DHT22' || smartHomeDevices[item].machine_type == 'BEDROOM_DHT22') { %>
                         <div>
                             <div class="temperature" style="text-align: center;">
                                 <span>Temperature: </span> <span class="specific">
@@ -68,6 +77,9 @@
                             <div id="btn-camera">
                                 <a href="/smart-homes/devices/camera">Open Camera</a>
                             </div>
+                        <% } else if(smartHomeDevices[item].machine_type == 'RFID') { %>
+                            <a href="/smart-homes/devices/<%= item %>/users" class="btn btn-info show-list-finger-user">Show
+                                RFID</a>
                         <% } else if(smartHomeDevices[item].machine_type == 'LAMP') { %>
                             <!-- ************************ -->
                             <div class="chel1chel2">
@@ -105,7 +117,7 @@
                                 </div>
                             </div>
 
-                        <% } else if(smartHomeDevices[item].machine_type != 'DHT22') { %>
+                        <% } else if(smartHomeDevices[item].machine_type != 'DHT22' && smartHomeDevices[item].machine_type != 'BEDROOM_DHT22') { %>
                         <a><input type="checkbox" class="control-action" name="control-action" <%-
                                 smartHomeDevices[item].status=='active' ? 'checked' : '' %> data-toggle="toggle"
                             data-onstyle="success" data-width="130"

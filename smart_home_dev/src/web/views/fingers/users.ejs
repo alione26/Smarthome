@@ -21,27 +21,30 @@
                             <%= smartHomeUser[item].id %></span>
                     </div>
                     <div class="device-info finger-info">
-                        <p>smarthomeUser_id:
-                            <%= smartHomeUser[item].smarthomeUser_id %>
-                        </p>
-                        <p>smarthome_id:
-                            <%= smartHomeUser[item].smarthome_id %>
-                        </p>
-                        <p id="fingerUserId<%= smartHomeUser[item].smarthomeUser_id %>">finger_id:
-                            <%= smartHomeUser[item].finger_id %>
-                        </p>
-                        <p>created_at:
-                            <%= smartHomeUser[item].created_at %>
-                        </p>
-                        <p>updated_at:
-                            <%= smartHomeUser[item].updated_at %>
-                        </p>
-                        <p>user_id:
-                            <%= smartHomeUser[item].user_id %>
-                        </p>
-                        <p>rfid_id:
-                            <%= smartHomeUser[item].rfid_id %>
-                        </p>
+                        <img src="/smart-homes/smart/user_icon_1.png" width="250px" style="display:block;margin:auto;">
+                        <div style="display:none">
+                            <p>smarthomeUser_id:
+                                <%= smartHomeUser[item].smarthomeUser_id %>
+                            </p>
+                            <p>smarthome_id:
+                                <%= smartHomeUser[item].smarthome_id %>
+                            </p>
+                            <p id="fingerUserId<%= smartHomeUser[item].smarthomeUser_id %>">finger_id:
+                                <%= smartHomeUser[item].finger_id %>
+                            </p>
+                            <p>created_at:
+                                <%= smartHomeUser[item].created_at %>
+                            </p>
+                            <p>updated_at:
+                                <%= smartHomeUser[item].updated_at %>
+                            </p>
+                            <p>user_id:
+                                <%= smartHomeUser[item].user_id %>
+                            </p>
+                            <p>rfid_id:
+                                <%= smartHomeUser[item].rfid_id %>
+                            </p>
+                        </div>
                     </div>
                     <div class="text-center action-item">
                         <% if (smartHomeUser[item].finger_id != 'Updating') { %>
