@@ -2,13 +2,15 @@
 <html lang="en">
 
 <head>
+    <link rel="stylesheet" href="/user.css">
     <% include ../partials/head %>
 </head>
 
 <!------ Include the above in your HEAD tag ---------->
 
-<body onload="loadBody()" onresize="doiSize()" 
-    onkeyup="esc_close(window.event,accept_and_cls)" data-layuserdata = "<%= JSON.stringify(userListData) %>">
+<body onload="loadBodyUser()" onresize="doiSizeUser()" 
+    onkeyup="key_close_User(window.event,accept_and_cls_User,accept_and_cls_newUser,accept_and_cls_editUser)" 
+    data-layuserdata = "<%= JSON.stringify(userListData) %>">
     <div id="throbber" style="display:none; min-height:120px;"></div>
     <div id="noty-holder"></div>
     <% include ../admin %>
@@ -21,7 +23,7 @@
         <!-- Cửa sổ hiển thị Data -->
         <!-- ************************* -->
         <div id="id-search">
-            <input type="text" placeholder="Searching" oninput="search()">
+            <input type="text" placeholder="Searching" oninput="searchUser()">
         </div>
         <div id="table-user">
             <table>
@@ -40,31 +42,115 @@
                 </tbody>
             </table>
         </div>
-        <button id="newUser"><i class="fas fa-plus" ></i> New User</button>
+        <button id="newUser" onclick="newUser()"><i class="fas fa-plus"></i> New User</button>
         <div id="id-0" style="display:inline-block">
-            <button onclick="createTb()">click to create table</button>
+            <button onclick="createUserTb()">click to create table</button>
         </div>
         <!-- ************************* -->
-        <!-- Cửa sổ bật lên -->
+        <!-- Cửa sổ Thông tin User bật lên -->
         <!-- ************************* -->
         <div id="fix-block" style="display: none;">
             <div id="fix-block-content">
-                <div id="fix-block-ok" onclick="accept_and_cls()">
+                <div id="fix-block-ok" onclick="accept_and_cls_User()">
                         OK
                 </div>
+                <div id="fix-block-cancel" onclick="cancel_block()">
+                    Cancel
+                </div>
                 <div id="info-user">
-                    <label for="luaChon">Choose Smart Home</label>
-                    <select name="" id="luaChon" style="width:10%">
-                    </select> 
-                    <div id="check-active">
-                        <input type="checkbox" id="actived">
-                        <label for="actived">Active</label>
+                        <label for="luaChon">Choose Smart Home</label>
+                        <select name="" id="luaChon" style="width:10%">
+                        </select> 
+                        <div id="check-active">
+                            <input type="checkbox" id="actived">
+                            <label for="actived">Active</label>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <!-- ************************* -->
+        <!-- Cửa sổ New User bật lên -->
+        <!-- ************************* -->
+        <div id="fix-block-create-user" style="display:none">
+            <div id="fix-block-user-content">
+                <div id="fix-block-user-ok" onclick="accept_and_cls_newUser()">
+                    OK
+                </div>
+                <div id="fix-block-user-cancel" onclick="cancel_block()">
+                        Cancel
+                </div>
+                <div id="info-create-user">
+                    <h3 style="text-align:center">Thông tin New User</h3>
+                    <br>
+                    <!-- User Name -->
+                    <label for="content-name-user">UserName</label>
+                    <input type="text" name="name" id="content-name-user">
+                    <br><br>
+                    <!-- Email -->
+                    <label for="content-email-user">Email</label>
+                    <input type="email" name="email" id="content-email-user">
+                    <br><br>
+                    <!-- PassWord -->
+                    <label for="content-password-user">PassWord</label>
+                    <input type="password" name="password" id="content-password-user">
+                    <br><br>
+                    <!-- Phone -->
+                    <label for="content-phone-user">Phone</label>
+                    <input type="tel" name="phone" id="content-phone-user">
+                    <br><br>
+                    <!-- Gender  -->
+                    <div id="content-gender-user">
+                        <label for="content-gender-user">Gender</label>
+                        <input type="radio" name="user-gender" value="Male"> Male
+                        <input type="radio" name="user-gender" value="Female"> Female
                     </div>
+                    <br>
+                    <!-- BirthDay -->
+                    <label for="content-birthday-user">BirthDay</label>
+                    <input type="date" name="birthday" id="content-birthday-user">
+                    <br>
+                </div>
+            </div>
+        </div>
+        <!-- ************************* -->
+        <!-- Cửa sổ Edit User bật lên -->
+        <!-- ************************* -->
+        <div id="fix-block-edit-user" style="display:none">
+            <div id="fix-block-edit-user-content">
+                <div id="fix-block-edit-user-ok" onclick="accept_and_cls_editUser()">
+                    OK
+                </div>
+                <div id="fix-block-edit-user-cancel" onclick="cancel_block()">
+                        Cancel
+                </div>
+                <div id="info-edit-user">
+                    <h3 style="text-align:center">Thông tin User</h3>
+                    <br>
+                    <!-- User Name -->
+                    <label for="content-name-user">UserName</label>
+                    <input type="text" name="name" id="edit-name-user">
+                    <br><br>
+                    <!-- Phone -->
+                    <label for="content-phone-user">Phone</label>
+                    <input type="tel" name="phone" id="edit-phone-user">
+                    <br><br>
+                    <!-- Gender  -->
+                    <div id="edit-gender-user">
+                        <label for="content-gender-user">Gender</label>
+                        <input type="radio" name="user-gender" value="Male"> Male
+                        <input type="radio" name="user-gender" value="Female"> Female
+                    </div>
+                    <br>
+                    <!-- BirthDay -->
+                    <label for="content-birthday-user">BirthDay</label>
+                    <input type="date" name="birthday" id="edit-birthday-user">
+                    <br>
                 </div>
             </div>
         </div>
     </div><!-- /#wrapper -->
 </body>
+<script src="/userData.js"></script>
 <% include ../partials/script %>
 
 </html>

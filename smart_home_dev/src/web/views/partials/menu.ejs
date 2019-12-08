@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default" style="letter-spacing:0;">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -16,14 +16,78 @@
         <li id="smart_homes"><a href="/smart-homes">SMART HOMES</a></li>
         <li id="about"><a href="/about">ABOUT US</a></li>
         <li id="contact"><a href="/contact">CONTACT US</a></li>
+        <li id="butPas" onclick="showPass()">
+          <button id="but-change-pass">Linh <i class="fas fa-bars"></i></button>
+          <div id="show-content">
+            <span id="change-pass" onclick="open_pass()">Change PassWord</span>
+            <span id="edit-file" onclick="open_edit()">Edit Profile</span>
+            <div class="butLog">
+                <button type="button" id="butLogIn"></button>
+            </div>
+          </div>
+      </li>
       </ul>
+      
+    </div>
+    <div id="fix-block">
+        <div id="fix-block-content">
+            <div id="fix-block-ok" onclick="ok_save()">
+                    OK
+            </div>
+            <div id="fix-block-cancel" onclick="cancel_pass()">
+                Cancel
+            </div>
+            <div id="info-user">
+              <h3 style="text-align:center;">Change PassWord</h3>
+              <label for="old-pass">Current Password</label>
+              <input type="text" id="old-pass" required><br>
+              <label for="new-pass">New Password</label>
+              <input type="text" id="new-pass" required><br>
+              <label for="re-new-pass">corfirm Password</label>
+              <input type="text" id="re-new-pass" required><br>
+              <p id="thong-bao" style="letter-spacing: 0;"></p>
+              <p style="letter-spacing: 0;display: none;text-align: center;font-size: 20px;margin-top:20px;" id="icon-ok"><i class="fas fa-stroopwafel fa-spin"></i></p>
+            </div>
+            
+        </div>
+    </div>
+    <div id="fix-block-edit">
+        <div id="fix-block-edit-content">
+            <div id="fix-block-edit-ok" onclick="ok_edit_save()">
+                    OK
+            </div>
+            <div id="fix-block-edit-cancel" onclick="cancel_edit()">
+                Cancel
+            </div>
+            <div id="info-user-edit">
+              <h3 style="text-align:center;">Edit Profile</h3>
+              <label for="edit-0">User Name</label>
+              <input type="text" id="edit-0"><br>
+              <label for="edit-1">Email</label>
+              <input type="text" id="edit-1"><br>
+              <label for="edit-2">Phone</label>
+              <input type="text" id="edit-2"><br>
+              <label for="edit-3">Birth Day</label>
+              <input type="date" id="redit-3"><br>
+            </div>
+        </div>
     </div>
     <!-- ngay 24 thang 10 
      <button type="button" id="butLogIn"><i class="glyphicon glyphicon-log-in"></i> Sign in</button>
       <button type="button" id="butLogOut">Sign out <i class="glyphicon glyphicon-log-out"></i></button>
     -->
-    <div class="butLog">
+    <!-- <div class="butLog">
       <button type="button" id="butLogIn"></button>
-    </div>
+    </div> -->
+    <!-- <div id="butPas" onclick="showPass()">
+        <button id="but-change-pass"><i class="fas fa-bars"></i></button>
+        <div id="show-content">
+          <span id="change-pass">Change PassWord</span>
+          <span id="edit-file">Edit Profile</span>
+          <div class="butLog">
+              <button type="button" id="butLogIn"></button>
+          </div>
+        </div>
+    </div> -->
   </div>
 </nav>

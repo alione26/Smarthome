@@ -57,4 +57,16 @@ module.exports = {
         }
         return res.status(400).json({ success: false, message: delete_userDevice.message});
     },
+    userDeviceByToken: async function(req, res) {
+        console.log("HTTP GET Request");
+        var userDeviceToken = req.session.uuid;
+        console.log("userDeviceToken:", userDeviceToken);
+
+        var get_by_token = await userDeviceService.userDevice_by_token(userDeviceToken);
+        console.log(get_by_token);
+        if (get_by_token.status) {
+             return res.status(200).json({ success : true, message : get_by_token.message, data : get_by_token.data});
+         }
+        return res.status(400).json({ success : false, message : get_by_token.message});
+    }
 }
