@@ -22,6 +22,10 @@ bool livStatus = 0;
 bool kitStatus = 0;
 bool livButtonError = 0;
 bool kitButtonError = 0;
+//delay for transmit dht22
+unsigned int time_2_delay = 10000;
+unsigned int previousTime = 0;
+//
 // WiFi
 // Make sure to update this for your own WiFi network!
 const char* ssid = "BKSMARTHOME";
@@ -176,7 +180,11 @@ void setup() {
 }
 
 void loop() {
+  unsigned int currentTime = millis();
+  if ( (currentTime - previousTime) > time_2_delay) {
+  previousTime = currentTime;
   dht_collect();
+  }
   // If the connection is lost, try to connect again
   if (!client.connected()) {
     Connect();
@@ -219,13 +227,13 @@ void controll(char* topic, char* command) {
   if (!strcmp(topic,mqtt_topic_kitchen_light)) {
     char* lightstatus;
      if (!strcmp(command,"on")) {
-      digitalWrite(12, HIGH);
+      digitalWrite(13, HIGH);
       Serial.println("kitchen_light on");
       lightstatus = "on";
       kitStatus = 1;
     }
     if (!strcmp(command,"off")) {
-      digitalWrite(12, LOW);
+      digitalWrite(13, LOW);
       Serial.println("kitchen_light off");
       lightstatus = "off";
       kitStatus = 0;
@@ -283,6 +291,7 @@ void feedback(char* light, char* lightstatus) {
 //        client.publish(mqtt_fan_reply_topic, char_reply);
 //  }
 //}
+
 void DHT_Transmit(float h, float t) {
   DynamicJsonBuffer jsonBuffer;
   JsonObject& root = jsonBuffer.createObject();
