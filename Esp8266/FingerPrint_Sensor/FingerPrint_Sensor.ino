@@ -31,12 +31,12 @@ FPM_System_Params params;
 // WiFi
 // Make sure to update this for your own WiFi network!
 int flag = 0;
-const char* ssid = "CHILINH";
+const char* ssid = "BKSMARTHOME";
 const char* wifi_password = "chilinh123";
 
 // MQTT
 // Make sure to update this for your own MQTT Broker!
-const char* mqtt_server = "192.168.43.200";
+const char* mqtt_server = "192.168.0.200";
 const char* mqtt_command_topic = "smarthome/fingerprint/command";
 const char* mqtt_reply_topic = "smarthome/fingerprint/feedback";
 const char* mqtt_username = "chilinh";
@@ -638,9 +638,9 @@ int search_database(void) {
           Serial.println("Found a print match!");
           //servo open door
           const char* lcd_char;
-          fp_lcd(lcd_char = "Welcome home!");
           int pos;
           if ( !open_door) {
+          fp_lcd(lcd_char = "Welcome home!");
           for (pos = 90; pos >= 0; pos -= 1) { // goes from 90 degrees to 0 degrees
             myservo.write(pos);
             delay(15);
@@ -665,6 +665,12 @@ int search_database(void) {
               myservo.write(pos);
               delay(15);
             }
+          }else {
+              for (pos = 0; pos <= 90; pos += 1) { // goes from 90 degrees to 0 degrees
+              myservo.write(pos);
+              delay(15);
+              }
+          }
           open_door = 0;
            
           DynamicJsonBuffer jsonBuffer;
@@ -690,6 +696,7 @@ int search_database(void) {
           Serial.println("Communication error");
           return p;
       } else if (p == FPM_NOTFOUND) {
+          fp_lcd(lcd_char = "Invalid fingerprint!");
           Serial.println("Did not find a match");
           return p;
       } else if (p == FPM_TIMEOUT) {
@@ -707,7 +714,6 @@ int search_database(void) {
       Serial.print("Found ID #"); Serial.print(fid);
       Serial.print(" with confidence of "); Serial.println(score);
   }
-}
 }
 //function_lcd
 

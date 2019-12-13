@@ -24,12 +24,12 @@ bool livButtonError = 0;
 bool kitButtonError = 0;
 // WiFi
 // Make sure to update this for your own WiFi network!
-const char* ssid = "CHILINH";
+const char* ssid = "BKSMARTHOME";
 const char* wifi_password = "chilinh123";
 
 // MQTT
 // Make sure to update this for your own MQTT Broker!
-const char* mqtt_server = "192.168.43.200";
+const char* mqtt_server = "192.168.0.200";
 //const char* mqtt_topic = "smarthome/fingerprint/command";
 const char* mqtt_topic_livingroom_light = "smarthome/light/livingroom";
 //const char* mqtt_topic_bedroom_light = "smarthome/light/bedroom";

@@ -43,7 +43,7 @@ module.exports = {
                     socketio.emitMessage(socketId, emitData);
                     break;
                 case 'lclinh/feeds/light.rest-room':
-                    var emitData = { deviceId : '45b0574d-d4c0-449f-8a4c-e2d3fa4786d1', action : message.toString(), data : 'restroom' };
+                    var emitData = { deviceId : '57d686a0-f53e-4ddf-8ebb-3a552ac17393', action : message.toString(), data : 'restroom' };
                     socketio.emitMessage(socketId, emitData);
                     break;
                 case 'lclinh/feeds/light.kitchen':

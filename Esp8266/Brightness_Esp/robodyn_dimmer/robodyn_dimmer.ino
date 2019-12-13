@@ -23,11 +23,11 @@ bool bedStatus = 0;
 bool lampStatus = 0;
 // WiFi
 // Make sure to update this for your own WiFi network!
-const char* ssid = "CHILINH";
+const char* ssid = "BKSMARTHOME";
 const char* wifi_password = "chilinh123";
 // MQTT
 // Make sure to update this for your own MQTT Broker!
-const char* mqtt_server = "192.168.43.200";
+const char* mqtt_server = "192.168.0.200";
 const char* mqtt_topic_bedroom_dht22 = "smarthome/dht22/bedroom";
 const char* mqtt_topic_lamp_light = "smarthome/light/lamp";
 const char* mqtt_topic_bedroom_light = "smarthome/light/bedroom";
