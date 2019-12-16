@@ -39,10 +39,10 @@ module.exports = {
                     function(error) {
                         var response = null;
                         if (error) {
-                            response =  { status: false, message: "Data could not be saved." + error };
+                            response =  { status: false, message: "New user data could not be saved." + error };
                         }
                         else {
-                            response =  { status: true, message: "Data saved successfully." };
+                            response =  { status: true, message: "New user data saved successfully." };
                         }
                         return response;
                     });
@@ -92,10 +92,10 @@ module.exports = {
                     function(error) {
                         var response = null;
                         if (error) {
-                            response =  { status: false, message: "Data could not be removed." + error };
+                            response =  { status: false, message: "User Data could not be removed." + error };
                         }
                         else {
-                            response =  { status: true, message: "Data removed successfully." };
+                            response =  { status: true, message: "User Data removed successfully." };
                         }
                         return response;
                     });

@@ -23,18 +23,18 @@ function loadBodyUser()
 // ************************************************
 // Hàm đọc data và tạo bảng
 // ************************************************
-function createUserTb() 
+function createUserTb()
 {
 let elemenTableBody = document.getElementsByTagName("tbody");
     mangListData.forEach(function(item,index) {
     let createRow = document.createElement('tr');
     createRow.innerHTML = "<td>"+ item.user_id + "</td>"+
-    "<td>"+ item.name + "</td>"+ 
+    "<td>"+ item.name + "</td>"+
     "<td>"+ item.email + "</td>" +
     "<td>"+ item.smarthome_id + "</td>" +
     "<td>"+ item.smarthome_name + "</td>" +
     "<td>"+ item.active + "</td>" +
-    "<td>" + 
+    "<td>" +
     '<i class="fas fa-cog" id="icon-setting" onclick="chagUser( '+ index +')"></i>'  +
     '<i class="far fa-edit" id="icon-edit" onclick="editUser( '+ index +')"></i>'  +
     '<i class="far fa-trash-alt" id="icon-trash" onclick="deleteUser( '+ index +')"></i>' +
@@ -45,27 +45,46 @@ let elemenTableBody = document.getElementsByTagName("tbody");
 // ************************************************
 // Xóa User
 // ************************************************
-function deleteUser(index) 
+function deleteUser(index)
 {
     let txt = "";
-    if (confirm("Bạn có chắc muốn xóa User : " +  mangListData[index].name)) 
+    if (confirm("Bạn có chắc muốn xóa User : " +  mangListData[index].name))
       {
+        try {
+          axios.delete('/user/delete/' + mangListData[index].user_id)
+            .then(function(response) {
+              // handle success
+              console.log(response.data);
+              if (!response.data.success){
+                return alert("Delete this user failed");
+              }
+              location.reload();
+            })
+            .catch(function(error) {
+                // handle error
+                // console.log(error);
+                alert("Delete this user failed");
+                console.log(error.response.data);
+              });
+        } catch(error){
+          console.log(error);
+        }
         txt = "OK bạn đã xóa User : " + mangListData[index].user_id;
 
-      } else 
+      } else
       {
         txt = "Thoát ra";
       }
       console.log(txt);
 }
 // ************************************************
-// Tìm kiếm 
+// Tìm kiếm
 // ************************************************
-function searchUser() 
+function searchUser()
 {
     let nameSearch = document.getElementById("id-search");
     let elemenTableBody = document.getElementsByTagName("tbody");
-    
+
     console.log(nameSearch.children[0].value);
     for (let key of elemenTableBody[0].children) {
         let noiString = "";
@@ -113,7 +132,7 @@ async function chagUser(index)
     {
     tagOption[(tagOption.length - 1)].remove();
     }
-    
+
     for(let key of mangsmartHomeListData)
     {
         let elementSelect = document.getElementById("luaChon");
@@ -244,7 +263,7 @@ function key_close_User(eve, accept_and_cls_User,accept_and_cls_newUser,accept_a
         accept_and_cls_newUser();
         if(document.getElementById("fix-block-edit-user").style.display == "block")
         accept_and_cls_editUser();
-    }  
+    }
 }
 // ************************************************
 // Hàm Create New User
@@ -270,20 +289,55 @@ function accept_and_cls_newUser()
     {
         valueGender = '';
     }
-    console.log("OK đã tạo User mới");
-    console.log("User Name:", document.getElementById("content-name-user").value);
-    console.log("User Email:", document.getElementById("content-email-user").value);
-    console.log("User Pass:", document.getElementById("content-password-user").value);
-    console.log("User Phone:", document.getElementById("content-phone-user").value);
-    console.log("User Birthday:", document.getElementById("content-birthday-user").value);
-    console.log("User Gender:", valueGender);
+    // console.log("OK đã tạo User mới");
+    // console.log("User Name:", document.getElementById("content-name-user").value);
+    // console.log("User Email:", document.getElementById("content-email-user").value);
+    // console.log("User Pass:", document.getElementById("content-password-user").value);
+    // console.log("User Phone:", document.getElementById("content-phone-user").value);
+    // console.log("User Birthday:", document.getElementById("content-birthday-user").value);
+    // console.log("User Gender:", valueGender);
+    let userName = document.getElementById("content-name-user").value;
+    let email = document.getElementById("content-email-user").value;
+    let password = document.getElementById("content-password-user").value;
+    let phone = document.getElementById("content-phone-user").value;
+    let birthday = document.getElementById("content-birthday-user").value;
+    let gender = valueGender;
+    let d = new Date();
+
+    let date = d.getDate();
+    let month = d.getMonth() + 1; // Since getMonth() returns month from 0-11 not 1-12
+    let year = d.getFullYear();
+
+    let created_at = year + "-" + month + "-" + date;
+    //document.write(dateStr);
+    let userData = { name : userName, password : password, email : email, phone : phone, gender : gender,
+        date_of_birth : birthday, created_at : created_at};
+    try {
+    axios( {method: 'post', url:'/user/add', data: userData }) //data: is BODY
+      .then(function(response) {
+        // handle success
+        console.log(response.data);
+        if (!response.data.success){
+          return alert('Failed to create new user');
+        }
+        location.reload();
+      })
+      .catch(function(error) {
+        // handle error
+        alert('Failed to create new user');
+        console.log(error);
+      });
+  } catch (error) {
+    alert('Failed to create new user');
+    console.log(error);
+  }
     document.getElementById("fix-block-create-user").style.display = "none";
     document.body.style.overflow = "";
 }
 // ************************************************
 // Hàm Edit User
 // ************************************************
-function editUser(index) 
+function editUser(index)
 {
     let checkDate = document.getElementById("edit-birthday-user");
     checkDate.value = mangListData[index].date_of_birth;

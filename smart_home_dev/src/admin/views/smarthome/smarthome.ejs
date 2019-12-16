@@ -8,8 +8,8 @@
 
 <!------ Include the above in your HEAD tag ---------->
 
-<body onload="loadBody_smarthome()" onresize="doiSize_smarthome()" 
-    onkeyup="key_close_smarthome(window.event,accept_and_cls_smarthome,accept_and_cls_newSmartHome,accept_and_cls_editSmartHome)" 
+<body onload="loadBody_smarthome()" onresize="doiSize_smarthome()"
+    onkeyup="key_close_smarthome(window.event,accept_and_cls_smarthome,accept_and_cls_newSmartHome,accept_and_cls_editSmartHome)"
     data-laysmarthomedata = "<%= JSON.stringify(smartHomeListData) %>">
     <div id="throbber" style="display:none; min-height:120px;"></div>
     <div id="noty-holder"></div>
@@ -23,7 +23,7 @@
         <!-- Cửa sổ hiển thị Data -->
         <!-- ************************* -->
         <div id="id-search-smarthome">
-            <input type="text" placeholder="Searching" oninput="search_smarthome()">
+            <input type="text" placeholder="Search smarthome" oninput="search_smarthome()">
         </div>
         <div id="table-user-smarthome">
             <table>
@@ -42,7 +42,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
+
                 </tbody>
             </table>
         </div>
@@ -64,7 +64,7 @@
                 <div id="info-user-smarthome">
                     <label for="luaChon-smarthome">User:    </label>
                     <select name="" id="luaChon-smarthome">
-                    </select> 
+                    </select>
                     <!-- <div id="check-active-smarthome">
                         <input type="checkbox" id="actived-smarthome">
                         <label for="actived">Active</label>

@@ -80,10 +80,10 @@ module.exports = {
                     function(error) {
                         var response = null;
                         if (error) {
-                            response =  { status: false, message: "Data could not be removed." + error };
+                            response =  { status: false, message: "SmartHome Data could not be removed." + error };
                         }
                         else {
-                            response =  { status: true, message: "Data removed successfully." };
+                            response =  { status: true, message: "SmartHome Data removed successfully." };
                         }
                         return response;
                     });

@@ -23,21 +23,21 @@ function loadBody_smarthome()
 // ************************************************
 // Hàm đọc data và tạo bảng
 // ************************************************
-function createTb_smarthome() 
+function createTb_smarthome()
 {
 let elemenTableBody = document.getElementsByTagName("tbody");
     mangSmartHomeData.forEach(function(item,index) {
     let createRow = document.createElement('tr');
-    createRow.innerHTML = 
+    createRow.innerHTML =
     "<td>"+ item.name + "</td>"+
-    "<td>"+ item.machine_type+ "</td>"+ 
+    "<td>"+ item.machine_type+ "</td>"+
     "<td>"+ item.smarthome_id + "</td>" +
     "<td>"+ item.series_number + "</td>" +
     "<td>"+ item.smarthome_user_id + "</td>" +
     "<td>"+ item.status + "</td>" +
     "<td>"+ item.updated_at + "</td>" +
     "<td>"+ item.created_at + "</td>" +
-    "<td>" + 
+    "<td>" +
     '<i class="fas fa-cog" id="icon-setting" onclick="chag_smarthome( '+ index +')"></i>'  +
     '<i class="far fa-edit" id="icon-edit" onclick="editSmartHome( '+ index +')"></i>'  +
     '<i class="far fa-trash-alt" id="icon-trash" onclick="deleteSmartHome( '+ index +')"></i>' +
@@ -48,23 +48,42 @@ let elemenTableBody = document.getElementsByTagName("tbody");
 // ************************************************
 // Xóa Smart HOme Id
 // ************************************************
-function deleteSmartHome(index) 
+function deleteSmartHome(index)
 {
     let txt = "";
-    if (confirm("Bạn có chắc muốn xóa SmartHome : " +  mangSmartHomeData[index].name)) 
+    if (confirm("Bạn có chắc muốn xóa SmartHome : " +  mangSmartHomeData[index].name))
       {
+        try {
+          axios.delete('/smarthome/delete/' + mangSmartHomeData[index].smarthome_id)
+            .then(function(response) {
+              // handle success
+              console.log(response.data);
+              if (!response.data.success){
+                return alert("Delete this smarthome failed");
+              }
+              location.reload();
+            })
+            .catch(function(error) {
+                // handle error
+                // console.log(error);
+                alert("Delete this smarthome failed");
+                console.log(error.response.data);
+              });
+        } catch(error){
+          console.log(error);
+        }
         txt = "OK bạn đã xóa SmartHome : " + mangSmartHomeData[index].smarthome_id;
 
-      } else 
+      } else
       {
         txt = "Thoát ra";
       }
       console.log(txt);
 }
 // ************************************************
-// Tìm kiếm 
+// Tìm kiếm
 // ************************************************
-function search_smarthome() 
+function search_smarthome()
 {
     let nameSearch = document.getElementById("id-search-smarthome");
     let elemenTableBody = document.getElementsByTagName("tbody");
@@ -114,7 +133,7 @@ async function chag_smarthome(index)
     {
     tagOption[(tagOption.length - 1)].remove();
     }
-    
+
     for(let key of mangsmartHomeListData)
     {
         let elementSelect = document.getElementById("luaChon-smarthome");
@@ -266,7 +285,7 @@ function accept_and_cls_newSmartHome()
 // ************************************************
 // Hàm Edit User
 // ************************************************
-function editSmartHome(index) 
+function editSmartHome(index)
 {
     document.getElementById("edit-name-smarthome").value = mangSmartHomeData[index].name;
     document.getElementById("edit-machine-type-smarthome").value = mangSmartHomeData[index].machine_type;

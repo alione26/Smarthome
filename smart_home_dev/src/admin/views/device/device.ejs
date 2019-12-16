@@ -8,7 +8,7 @@
 
 <!------ Include the above in your HEAD tag ---------->
 
-<body onload="loadBody_device()" onresize="doiSize_device()" 
+<body onload="loadBody_device()" onresize="doiSize_device()"
     onkeyup="key_close_device(window.event,accept_and_cls_device)" data-laydevicedata = "<%= JSON.stringify(deviceListData) %>">
     <div id="throbber" style="display:none; min-height:120px;"></div>
     <div id="noty-holder"></div>
@@ -22,7 +22,7 @@
         <!-- Cửa sổ hiển thị Data -->
         <!-- ************************* -->
         <div id="id-search-device">
-            <input type="text" placeholder="Searching" oninput="search_device()">
+            <input type="text" placeholder="Search device" oninput="search_device()">
         </div>
         <div id="table-user-device">
             <table>
@@ -41,7 +41,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
+
                 </tbody>
             </table>
         </div>
@@ -63,7 +63,7 @@
                 <div id="info-user-device">
                     <label for="luaChon-device">Choose Smart Home</label>
                     <select name="" id="luaChon-device">
-                    </select> 
+                    </select>
                     <!-- <div id="check-active-device">
                         <input type="checkbox" id="actived-device">
                         <label for="actived-device">Active</label>
