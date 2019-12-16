@@ -58,4 +58,25 @@ module.exports = {
         }
         return res.status(400).json({ success: false, message: delete_user.message});
     },
+    change_password: async function(req, res) {
+      let currentPassword = req.body.currentPassword;
+      let newPassWord = req.body.newPassWord;
+      let userId = req.session.userData.user_id;
+      console.log("currentPassword:", currentPassword);
+      console.log("newPassWord:", newPassWord);
+      console.log("userId:", userId);
+      let changePasswordData = await userService.change_password(currentPassword, newPassWord, userId);
+      //console.log("x1:", changePasswordData);
+      if (!changePasswordData.status) {
+        return res.status(400).json({ success: false, message: changePasswordData.message });
+      }
+      return res.status(200).json({ success: true, message: changePasswordData.message });
+      // let getUserData = await userService.user_by_id(userId);
+      // //console.log("userData:", getUserData);
+      // var passwordsMatch = comparePassword(currentPassword, getUserData.data.password);
+      // if(!passwordsMatch) {
+      //    return { status: false, message: 'Invalid email & password.' };
+      // }
+      // console.log("XXXXXXXXXX");
+    }
 }

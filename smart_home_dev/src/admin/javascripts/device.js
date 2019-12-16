@@ -18,18 +18,18 @@ function loadBody_device()
     loadData_device();
     createTb_device();
     doiSize_device();
-    
+
 }
 // Hàm đọc data và tạo bảng
 // ******************
-function createTb_device() 
+function createTb_device()
 {
 let elemenTableBody = document.getElementsByTagName("tbody");
     mangDeviceData.forEach(function(item,index) {
     let createRow = document.createElement('tr');
-    createRow.innerHTML = 
+    createRow.innerHTML =
     "<td>"+ item.name + "</td>"+
-    "<td>"+ item.machine_type + "</td>"+ 
+    "<td>"+ item.machine_type + "</td>"+
     "<td>"+ item.series_number + "</td>" +
     "<td>"+ item.smarthomeDevice_id + "</td>" +
     "<td>"+ item.smarthome_id + "</td>" +
@@ -37,7 +37,7 @@ let elemenTableBody = document.getElementsByTagName("tbody");
     "<td>"+ item.status + "</td>" +
     "<td>"+ item.updated_at + "</td>" +
     "<td>"+ item.created_at + "</td>" +
-    "<td>" + 
+    "<td>" +
     '<i class="fas fa-cog" id="icon-setting" onclick="chag_device( '+ index +')"></i>'  +
     '<i class="far fa-edit" id="icon-edit" onclick="editDevice( '+ index +')"></i>'  +
     '<i class="far fa-trash-alt" id="icon-trash" onclick="deleteDevice( '+ index +')"></i>' +
@@ -47,21 +47,40 @@ let elemenTableBody = document.getElementsByTagName("tbody");
 }
 // Xóa Device
 // ******************
-function deleteDevice(index) 
+function deleteDevice(index)
 {
     let txt = "";
-    if (confirm("Bạn có chắc muốn xóa Device : " +  mangDeviceData[index].name)) 
+    if (confirm("Bạn có chắc muốn xóa Device : " +  mangDeviceData[index].name))
       {
+        try {
+          axios.delete('/smarthome_device/delete/' + mangDeviceData[index].smarthomeDevice_id)
+            .then(function(response) {
+              // handle success
+              console.log(response.data);
+              if (!response.data.success){
+                return alert("Delete this device failed");
+              }
+              location.reload();
+            })
+            .catch(function(error) {
+                // handle error
+                // console.log(error);
+                alert("Delete this device failed");
+                console.log(error.response.data);
+              });
+        } catch(error){
+          console.log(error);
+        }
         txt = "OK bạn đã xóa Device : " + mangDeviceData[index].smarthomeDevice_id;
-      } else 
+      } else
       {
         txt = "Thoát ra";
       }
       console.log(txt);
 }
-// Tìm kiếm 
+// Tìm kiếm
 // ******************
-function search_device() 
+function search_device()
 {
     let nameSearch = document.getElementById("id-search-device");
     let elemenTableBody = document.getElementsByTagName("tbody");
@@ -139,7 +158,7 @@ async function chag_device(index)
         for(key in mangDeviceData[index])
         {
             let showName = ["machine_type","series_number","smarthomeDevice_id","smarthome_id","smarthome_name","status","updated_at","created_at",];
-            let showName_1 = ["Machine Type","Series Number","SmartHome Device Id","SmartHome Id","SmartHome Name","Status","Update at","Create at",]; 
+            let showName_1 = ["Machine Type","Series Number","SmartHome Device Id","SmartHome Id","SmartHome Name","Status","Update at","Create at",];
             for(let i = 0; i < showName.length; i ++)
             {
                 if(showName[i] == key )
@@ -254,12 +273,55 @@ function accept_and_cls_newDevice()
     console.log("Device Name:",document.getElementById("name-newdevice").value);
     console.log("Device Machine Type:",document.getElementById("machine-type-newdevice").value);
     console.log("Device Series Number:",document.getElementById("series-number-newdevice").value);
+    let name = document.getElementById("name-newdevice").value;
+    let machine_type = document.getElementById("machine-type-newdevice").value;
+    let series_number = document.getElementById("series-number-newdevice").value;
+    if ( name  == '' || machine_type == '' || series_number == '') {
+      return alert('Bạn đã nhập thiếu thông tin');
+    }
+    let d = new Date();
+
+    let date = d.getDate();
+    let month = d.getMonth() + 1; // Since getMonth() returns month from 0-11 not 1-12
+    let year = d.getFullYear();
+
+    let created_at = year + "-" + month + "-" + date;
+    let smarthomeDeviceData = {
+      smarthome_id : '',
+      name : name,
+      machine_type: machine_type,
+      series_number: series_number,
+      created_at: created_at,
+      status: 'inactive',
+      data: '',
+      updated_at: ''
+    };
+    try {
+    axios( {method: 'post', url:'/smarthome_device/add', data: smarthomeDeviceData }) //data: is BODY
+      .then(function(response) {
+        // handle success
+        console.log(response.data);
+        if (!response.data.success){
+          return alert('Failed to create new device');
+        }
+        location.reload();
+      })
+      .catch(function(error) {
+        // handle error
+        alert('Failed to create new device');
+        console.log(error);
+      });
+  } catch (error) {
+    alert('Failed to create new device');
+    console.log(error);
+  }
     document.getElementById("fix-block-create-newdevice").style.display = "none";
     document.body.style.overflow = "";
+
 }
 // Hàm Edit User
 // ******************
-function editDevice(index) 
+function editDevice(index)
 {
     document.getElementById("edit-name-device").value = mangDeviceData[index].name;
     document.getElementById("edit-machine-type-device").value = mangDeviceData[index].machine_type;

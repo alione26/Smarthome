@@ -302,6 +302,9 @@ function accept_and_cls_newUser()
     let phone = document.getElementById("content-phone-user").value;
     let birthday = document.getElementById("content-birthday-user").value;
     let gender = valueGender;
+    if ( userName == '' || email == '' || password == '' || phone == '' || birthday == "" || gender == '') {
+      return alert('Bạn đã nhập thiếu thông tin');
+    }
     let d = new Date();
 
     let date = d.getDate();

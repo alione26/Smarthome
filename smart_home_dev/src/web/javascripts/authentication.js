@@ -120,7 +120,7 @@ function showPass() {
   }
 }
 
-function open_pass() 
+function open_pass()
 {
   let passInput = document.getElementById("info-user").getElementsByTagName("input");
   for(let key = 0;key < 3; key++)
@@ -145,35 +145,60 @@ function ok_save()
   console.log(mangPassInput);
   if(mangPassInput[0] == '' && mangPassInput[1] == '' && mangPassInput[2] == '' )
   {
-    thongBao.innerHTML = "bạn đã nhập thiếu";
+    thongBao.innerHTML = "Bạn đã nhập thiếu";
   }
   else if(mangPassInput[0] != '' || mangPassInput[1] != '' || mangPassInput[2] != '')
   {
     if(mangPassInput[0] == '' || mangPassInput[1] == '' || mangPassInput[2] == '')
     {
-      thongBao.innerHTML = "bạn đã nhập thiếu";
+      thongBao.innerHTML = "Bạn đã nhập thiếu";
     }
-    else if(mangPassInput[0].length < 8)
+    else if(mangPassInput[0].length < 6)
     {
-      thongBao.innerHTML = "mật khẩu mới cần có ít nhất 8 ký tự";
+      thongBao.innerHTML = "Mật khẩu mới cần có ít nhất 8 ký tự";
     }
     else if(mangPassInput[0] == mangPassInput[1])
     {
-      thongBao.innerHTML = "mật khẩu bạn vừa nhập trùng với mật khẩu cũ";
+      thongBao.innerHTML = "Mật khẩu bạn vừa nhập trùng với mật khẩu cũ";
     }
     else if(mangPassInput[1] != mangPassInput[2])
     {
-      thongBao.innerHTML = "confirm của bạn khác với pass mới"
+      thongBao.innerHTML = "Confirm password khác với New Password"
     }
-    else if(mangPassInput[0] != '' && 
+    else if(mangPassInput[0] != '' &&
            mangPassInput[1] == mangPassInput[2] &&
-           mangPassInput[1] != '' && 
+           mangPassInput[1] != '' &&
            mangPassInput[2] != '')
     {
-      console.log("đã cập nhật mật khẩu mới");
-      document.getElementById("icon-ok").style.display = "block";
-      document.getElementById("fix-block-ok").style.display = "none";
-      document.getElementById("fix-block-cancel").style.display = "none";
+    console.log("đã cập nhật mật khẩu mới");
+    let currentPassword = mangPassInput[0];
+    let newPassWord = mangPassInput[1];
+    let changePassworData = { currentPassword : currentPassword, newPassWord : newPassWord};
+    try {
+    axios( {method: 'post', url:'/user/change-password', data: changePassworData }) //data: is BODY
+      .then(function(response) {
+        // handle success
+        console.log(response.data);
+        if (!response.data.success){
+          return alert(response.data.message);
+        }
+        logout();
+        return alert("Change Password Successfully");
+      })
+      .catch(function(error) {
+        console.log(error);
+        document.getElementById("icon-ok").style.display = "none";
+        document.getElementById("fix-block-ok").style.display = "block";
+        document.getElementById("fix-block-cancel").style.display = "block";
+        return alert(error.response.data.message);
+      });
+  } catch (error) {
+    console.log(error);
+    return alert('Failed to change passWord');
+  }
+document.getElementById("icon-ok").style.display = "block";
+document.getElementById("fix-block-ok").style.display = "none";
+document.getElementById("fix-block-cancel").style.display = "none";
       // document.getElementById("fix-block").style.display = "none";
       // document.body.style.overflow = "auto";
     }
@@ -185,13 +210,13 @@ function ok_save()
   // document.body.style.overflow = "auto";
   // *******************************
 }
-function cancel_pass() 
+function cancel_pass()
 {
   document.getElementById("fix-block").style.display = "none";
   document.body.style.overflow = "auto";
 }
 // **************************************************
-async function open_edit() 
+async function open_edit()
 {
   // Lấy Thông tin User đăng nhập
   // *******************************
@@ -236,7 +261,7 @@ function ok_edit_save()
   document.body.style.overflow = "auto";
   // *******************************
 }
-function cancel_edit() 
+function cancel_edit()
 {
   document.getElementById("fix-block-edit").style.display = "none";
   document.body.style.overflow = "auto";

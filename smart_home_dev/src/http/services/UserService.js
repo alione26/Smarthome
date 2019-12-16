@@ -35,6 +35,18 @@ module.exports = {
             throw Error(e.message);
         }
     },
+    change_password: async function(currentPassword, newPassWord, userId){
+      try {
+        var changePasswordData = await Users.change_password(currentPassword, newPassWord, userId);
+        if (!changePasswordData.status){
+          return { status: false, message: changePasswordData.message};
+        }
+        return { status: true, message: changePasswordData.message};
+      }catch(e) {
+          return { status: false, message: changePasswordData.message};
+          throw Error(e.message);
+      }
+    },
 
     login : async function(loginData) {
         try {

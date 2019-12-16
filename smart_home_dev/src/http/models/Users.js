@@ -74,10 +74,10 @@ module.exports = {
                     function(error) {
                         var response = null;
                         if (error) {
-                            response =  { status: false, message: "Data could not be updated." + error };
+                            response =  { status: false, message: "User Data could not be updated." + error };
                         }
                         else {
-                            response =  { status: true, message: "Data updated successfully." };
+                            response =  { status: true, message: "User Data updated successfully." };
                         }
                         return response;
                     });
@@ -178,5 +178,28 @@ module.exports = {
             return { status : false, message: 'Logout failed'};
         }
     },
+    change_password: async function(currentPassword, newPassWord, userId){
+      try{
+        var getUserData = await module.exports.user_by_id(userId);
+        //console.log("userData:", getUserData);
+        userData = getUserData.data;
+        var passwordsMatch = comparePassword(currentPassword, getUserData.data.password);
+        if(!passwordsMatch) {
+           return { status: false, message: 'Invalid Password!' };
+        }
+        //console.log("NEXT");
+        userData.password = hashPassword(newPassWord);
+        var updateUserData = await module.exports.update_user(userId, userData);
+        //console.log(updateUserData);
+        if(!updateUserData.status) {
+          return { status : false, message: 'Change Password failed!'};
+        }
+        return { status: true, message: 'Change Password Successfully!'};
+
+      }catch (e) {
+          throw Error(e.message);
+          return { status : false, message: 'Change Password failed!'};
+      }
+    }
 
 }

@@ -11,6 +11,7 @@ var appRouter = function (app) {
     app.post('/user/add', userController.new_user);
     app.post('/user/update/:id', userController.update_user);
     app.delete('/user/delete/:id', userController.delete_user);
+    app.post('/user/change-password', userController.change_password);
 
     const smarthomeController = require('../src/http/controllers/SmarthomeController');
     app.get('/smarthome/get_list', smarthomeController.smarthome_list);

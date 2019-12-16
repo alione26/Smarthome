@@ -273,26 +273,69 @@ function newSmartHome()
     document.body.style.overflow = "hidden";
     document.getElementById("fix-block-create-newsmarthome").style.display = "block";
 }
-function accept_and_cls_newSmartHome()
-{
-    console.log("OK đã tạo User mới");
-    console.log("SmartHome Name:",document.getElementById("name-newsmarthome").value);
-    console.log("SmartHome Machine Type:",document.getElementById("machine-type-newsmarthome").value);
-    console.log("SmartHome Series Number:",document.getElementById("series-number-newsmarthome").value);
-    document.getElementById("fix-block-create-newsmarthome").style.display = "none";
-    document.body.style.overflow = "";
+function accept_and_cls_newSmartHome() {
+  console.log("OK đã tạo User mới");
+  console.log("SmartHome Name:", document.getElementById("name-newsmarthome").value);
+  console.log("SmartHome Machine Type:", document.getElementById("machine-type-newsmarthome").value);
+  console.log("SmartHome Series Number:", document.getElementById("series-number-newsmarthome").value);
+  let name = document.getElementById("name-newsmarthome").value;
+  let machine_type = document.getElementById("machine-type-newsmarthome").value;
+  let series_number = document.getElementById("series-number-newsmarthome").value;
+  if ( name == '' || machine_type == '' || series_number == '') {
+    return alert('Bạn đã nhập thiếu thông tin');
+  }
+  let d = new Date();
+
+  let date = d.getDate();
+  let month = d.getMonth() + 1; // Since getMonth() returns month from 0-11 not 1-12
+  let year = d.getFullYear();
+
+  let created_at = year + "-" + month + "-" + date;
+  document.getElementById("fix-block-create-newsmarthome").style.display = "none";
+  document.body.style.overflow = "";
+  let smarthomeData = {
+    smarthome_user_id: '',
+    series_number: series_number,
+    machine_type: machine_type,
+    status: false,
+    updated_at: '',
+    created_at: created_at,
+    name: name
+  };
+  try {
+    axios({
+        method: 'post',
+        url: '/smarthome/add',
+        data: smarthomeData
+      }) //data: is BODY
+      .then(function(response) {
+        // handle success
+        console.log(response.data);
+        if (!response.data.success) {
+          return alert('Failed to create new smarthome');
+        }
+        location.reload();
+      })
+      .catch(function(error) {
+        // handle error
+        alert('Failed to create new smarthome');
+        console.log(error);
+      });
+  } catch (error) {
+    alert('Failed to create new smarthome');
+    console.log(error);
+  }
 }
 // ************************************************
 // Hàm Edit User
 // ************************************************
-function editSmartHome(index)
-{
-    document.getElementById("edit-name-smarthome").value = mangSmartHomeData[index].name;
-    document.getElementById("edit-machine-type-smarthome").value = mangSmartHomeData[index].machine_type;
-    document.getElementById("edit-series-number-smarthome").value = mangSmartHomeData[index].series_number;
-    // ****************************************
-    document.body.style.overflow = "hidden";
-    document.getElementById("fix-block-edit-smarthome").style.display = "block";
+function editSmartHome(index) {
+  document.getElementById("edit-name-smarthome").value = mangSmartHomeData[index].name;
+  document.getElementById("edit-machine-type-smarthome").value = mangSmartHomeData[index].machine_type;
+  document.getElementById("edit-series-number-smarthome").value = mangSmartHomeData[index].series_number;
+  // ****************************************
+  document.body.style.overflow = "hidden";
+  document.getElementById("fix-block-edit-smarthome").style.display = "block";
 }
 function accept_and_cls_editSmartHome()
 {

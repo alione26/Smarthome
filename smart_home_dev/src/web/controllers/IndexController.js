@@ -86,6 +86,8 @@ module.exports = {
                     res.status(400).json({ success: false, message: response.data.message });
                 }
                 req.session.uuid = response.headers.uuid;
+                req.session.userData = response.data.data;
+                console.log("xxxxxx:", req.session.userData);
                 req.session.signed = true;
                 //req.session.save();
                 console.log('signed :' + req.session.signed);
