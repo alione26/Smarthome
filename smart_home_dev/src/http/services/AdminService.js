@@ -35,4 +35,11 @@ module.exports = {
             throw Error(e.message);
         }
     },
+    change_setting_user: async function(userDataForSetting, userHadSmarthomeUser, smarthomeUserData){
+      try {
+        return await Admins.change_setting_user(userDataForSetting, userHadSmarthomeUser, smarthomeUserData);
+      }catch(e) {
+        throw Error(e.message);
+      }
+    }
 }

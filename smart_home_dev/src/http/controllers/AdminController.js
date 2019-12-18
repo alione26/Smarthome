@@ -1,4 +1,5 @@
 var adminService = require("../services/AdminService");
+var smarthomeUserService = require("../services/SmarthomeUserService");
 const uuidv4 = require('uuid/v4');
 module.exports = {
   new_admin : async function (req, res) {
@@ -21,6 +22,28 @@ module.exports = {
       if (get_by_id.status) {
            return res.status(200).json({ success : true, message : get_by_id.message, data : get_by_id.data});
        }
-      return res.success(400).json({ success : false, message : get_by_id.message});
+      return res.status(400).json({ success : false, message : get_by_id.message});
   },
+  change_setting_user: async function(req, res) {
+    var userDataForSetting = req.body;
+    userId = userDataForSetting.user_id;
+    var getSmarthomeUser = await smarthomeUserService.getSmartHomeUserByUserId(userId);
+    if (!getSmarthomeUser.status) {
+      //return res.status(400).json({ success : false, message : getSmarthomeUser.message});
+      userHadSmarthomeUser = getSmarthomeUser.status;
+      smarthomeUserData = '';
+    } else {
+      userHadSmarthomeUser = getSmarthomeUser.status;
+      smarthomeUserDataKey = getSmarthomeUser.data;
+      var smarthomeUserData = smarthomeUserDataKey[Object.keys(smarthomeUserDataKey)[0]];
+      //smarthomeUserData = getSmarthomeUser.data;
+    }
+    //console.log('userDataForSetting:', userDataForSetting);
+    var changeSettingUser = await adminService.change_setting_user(userDataForSetting, userHadSmarthomeUser, smarthomeUserData);
+    console.log(changeSettingUser);
+    if (!changeSettingUser.status) {
+      return res.status(400).json({ success : false, message : changeSettingUser.message});
+    }
+    return res.status(200).json({ success : true, message : changeSettingUser.message});
+  }
 }

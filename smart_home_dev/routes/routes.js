@@ -12,6 +12,7 @@ var appRouter = function (app) {
     app.post('/user/update/:id', userController.update_user);
     app.delete('/user/delete/:id', userController.delete_user);
     app.post('/user/change-password', userController.change_password);
+    //app.post('/user/change-setting', userController.change_setting);
 
     const smarthomeController = require('../src/http/controllers/SmarthomeController');
     app.get('/smarthome/get_list', smarthomeController.smarthome_list);
@@ -51,6 +52,7 @@ var appRouter = function (app) {
     const adminController = require('../src/http/controllers/AdminController');
     app.post('/admin/new-admin', adminController.new_admin);
     app.get('/admin/get_by_id/:id', authControllerUser.adminMiddleware, adminController.admin_by_id);
+    app.post('/admin/change-setting-user', adminController.change_setting_user);
 
     const adminDeviceController = require('../src/http/controllers/AdminDeviceController');
     app.get('/admin_device/get_by_token/:id', adminDeviceController.getAdminDeviceByToken);
@@ -61,6 +63,7 @@ var appRouter = function (app) {
     app.get('/auth/logout', authController.logout);
     app.post('/auth/admin/login', authController.adminLogin);
     app.get('/auth/admin/logout', authControllerUser.adminMiddleware, authController.adminLogout);
+
 
     const actionController = require('../src/http/controllers/ActionController');
     app.post('/action', actionController.action);

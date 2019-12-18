@@ -16,8 +16,12 @@ module.exports = {
         console.log("HTTP POST Request");
         var user_id = uuidv4();
         //console.log(body);
-        var userData = { user_id: user_id, name : req.body.name, password: req.body.password, email : req.body.email, phone : req.body.phone,
-            gender : req.body.gender, date_of_birth : req.body.date_of_birth, created_at : req.body.created_at, active : false };
+        var userData = { user_id: user_id,
+            name : req.body.name, password: req.body.password,
+            email : req.body.email, phone : req.body.phone,
+            gender : req.body.gender, date_of_birth : req.body.date_of_birth,
+            created_at : req.body.created_at, active : false,
+            updated_at : req.body.updated_at };
         console.log(userData);
         var create_user = await userService.add_user(userData, user_id);
         console.log(create_user);
@@ -78,5 +82,5 @@ module.exports = {
       //    return { status: false, message: 'Invalid email & password.' };
       // }
       // console.log("XXXXXXXXXX");
-    }
+    },
 }

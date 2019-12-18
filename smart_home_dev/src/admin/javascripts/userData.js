@@ -1,5 +1,6 @@
 let layListData = {};
 let mangListData = [];
+let indexVarForSetting = 0;
 function loadDataUser()
 {
     layListData = JSON.parse(document.body.dataset.layuserdata);
@@ -116,6 +117,7 @@ function searchUser()
 // ************************************************
 async function chagUser(index)
 {
+    indexVarForSetting = index;
     let smartHomeList = await axios.get('/smarthome/get_list');
     let smartHomeListData = smartHomeList.data.data;
     let mangsmartHomeListData = [];
@@ -188,6 +190,8 @@ async function chagUser(index)
 // ************************************************
 function accept_and_cls_User()
 {
+    console.log(mangListData[indexVarForSetting].active);
+    let currentUserData = mangListData[indexVarForSetting];
     let par = document.getElementById("info-user");
     // let traVeActive = document.getElementById("check-active");
     /*********************************** */
@@ -204,11 +208,41 @@ function accept_and_cls_User()
         traVeUserData[key] = par.children[key].lastChild.nodeValue;
     }
     let userIdData = traVeUserData[3];
-    console.log("OK xác nhận thông tin cho User");
-    console.log('smarthomeID vừa chọn:', smarthomeIdData);
-    console.log('userID cũ:', userIdData);
-    // let activeStatus = traVeActive.children[0].checked;
-    console.log('active Status:', document.getElementById("actived").checked);
+    let newActiveStatus = document.getElementById("actived").checked;
+    if ( currentUserData.active == newActiveStatus && currentUserData.smarthome_id == smarthomeIdData) {
+      return alert("Thông tin không thay đổi! Nhấn ESC để thoát...");
+    }
+    let settingData = { user_id : userIdData,
+        current_user_data: currentUserData,
+        current_smarthome_id : currentUserData.smarthome_id,
+        new_smarthome_id: smarthomeIdData,
+        current_active_status: currentUserData.active,
+        new_active_status: newActiveStatus,
+    };
+    try {
+    axios( {method: 'post', url:'/admin/change-setting-user', data: settingData }) //data: is BODY
+      .then(function(response) {
+        // handle success
+        console.log(response.data);
+        if (!response.data.success){
+          return alert('Failed to change user setting');
+        }
+        location.reload();
+      })
+      .catch(function(error) {
+        // handle error
+        alert(error.response.data.message);
+        console.log(error);
+      });
+  } catch (error) {
+    alert('Failed to change user setting');
+    console.log(error);
+  }
+    // console.log("OK xác nhận thông tin cho User");
+    // console.log('smarthomeID vừa chọn:', smarthomeIdData);
+    // console.log('userID cũ:', userIdData);
+    // // let activeStatus = traVeActive.children[0].checked;
+    // console.log('active Status:', document.getElementById("actived").checked);
     /************************************* */
     document.getElementById("fix-block").style.display = "none";
     document.body.style.overflow = "";
@@ -314,7 +348,7 @@ function accept_and_cls_newUser()
     let created_at = year + "-" + month + "-" + date;
     //document.write(dateStr);
     let userData = { name : userName, password : password, email : email, phone : phone, gender : gender,
-        date_of_birth : birthday, created_at : created_at};
+        date_of_birth : birthday, created_at : created_at, updated_at : created_at};
     try {
     axios( {method: 'post', url:'/user/add', data: userData }) //data: is BODY
       .then(function(response) {

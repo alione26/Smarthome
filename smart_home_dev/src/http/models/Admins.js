@@ -2,6 +2,8 @@ const uuidv4 = require('uuid/v4');
 const bcrypt = require('bcryptjs');
 var firebase = require('firebase');
 var adminDevice = require('./AdminDevices');
+var smarthomeUser = require('./smartHomeUsers');
+var users = require('./Users');
 
 function hashPassword(plaintextPassword) {
     var salt = bcrypt.genSaltSync(10);
@@ -10,6 +12,16 @@ function hashPassword(plaintextPassword) {
 
 function comparePassword(plaintextPassword, hashPassword) {
     return bcrypt.compareSync(plaintextPassword, hashPassword);
+}
+function updateDate() {
+  let d = new Date();
+
+  let date = d.getDate();
+  let month = d.getMonth() + 1; // Since getMonth() returns month from 0-11 not 1-12
+  let year = d.getFullYear();
+
+  let update_date = year + "-" + month + "-" + date;
+  return update_date;
 }
 
 module.exports = {
@@ -102,4 +114,114 @@ module.exports = {
           throw Error(e.message);
       }
   },
-}
+  change_setting_user: async function(userDataForSetting, userHadSmarthomeUser, smarthomeUserData) {
+    if (userDataForSetting.current_active_status == userDataForSetting.new_active_status) {
+      if (userDataForSetting.current_active_status) {
+        if (!(userDataForSetting.current_smarthome_id == userDataForSetting.new_smarthome_id)) {
+          smarthomeUserData.smarthome_id = userDataForSetting.new_smarthome_id;
+          smarthomeUserData.updated_at = updateDate();
+          console.log(smarthomeUserData);
+          var updateSmarthomeUser = await smarthomeUser.update_smarthomeUser(smarthomeUserData.smarthomeUser_id, smarthomeUserData);
+          if (!updateSmarthomeUser.status) {
+            return {
+              status: false,
+              message: updateSmarthomeUser.message
+            };
+          }
+          return {
+            status: true,
+            message: updateSmarthomeUser.message
+          };
+        }
+      }
+      return {
+        status: false,
+        message: "Bạn chưa kích hoạt User!"
+      };
+    } else if (!userDataForSetting.current_active_status && userDataForSetting.new_active_status) {
+      console.log('hhhhhhhhhhhh');
+      var userData = userDataForSetting.current_user_data;
+      userData.active = userDataForSetting.new_active_status;
+      userData.updated_at = updateDate();
+      delete userData.smarthome_id;
+      delete userData.smarthome_name;
+      var updateUserData = await users.update_user(userData.user_id, userData);
+      if (!updateUserData.status) {
+        return {
+          status: false,
+          message: updateUserData.message
+        };
+      }
+      if (userHadSmarthomeUser) {
+        if (!(userDataForSetting.current_smarthome_id == userDataForSetting.new_smarthome_id)) {
+          smarthomeUserData.smarthome_id = userDataForSetting.new_smarthome_id;
+          smarthomeUserData.updated_at = updateDate();
+          console.log(smarthomeUserData);
+          var updateSmarthomeUser = await smarthomeUser.update_smarthomeUser(smarthomeUserData.smarthomeUser_id, smarthomeUserData);
+          if (!updateSmarthomeUser.status) {
+            return {
+              status: false,
+              message: updateSmarthomeUser.message
+            };
+          }
+          return {
+            status: true,
+            message: updateSmarthomeUser.message
+          };
+        }
+        return {
+          status: true,
+          message: updateUserData.message
+        };
+      } else {
+        // let d = new Date();
+        //
+        // let date = d.getDate();
+        // let month = d.getMonth() + 1; // Since getMonth() returns month from 0-11 not 1-12
+        // let year = d.getFullYear();
+        //
+        // let created_at = year + "-" + month + "-" + date;
+        var updated_date = updateDate();
+        var smarthomeUser_id = uuidv4();
+        smarthomeUserData = {
+          smarthomeUser_id: smarthomeUser_id,
+          user_id: userDataForSetting.user_id,
+          smarthome_id: userDataForSetting.new_smarthome_id,
+          finger_id: '',
+          rfid_id: '',
+          updated_at: updated_date,
+          created_at: updated_date
+        };
+        console.log('create_smarthomeUser');
+        var createNewSmarthomeUser = await smarthomeUser.add_smarthomeUser(smarthomeUserData, smarthomeUser_id);
+        if (!createNewSmarthomeUser.status) {
+          return {
+            status: false,
+            message: createNewSmarthomeUser.message
+          };
+        }
+        return {
+          status: true,
+          message: createNewSmarthomeUser.message
+        };
+      }
+    } else {
+      var userData = userDataForSetting.current_user_data;
+      userData.active = userDataForSetting.new_active_status;
+      userData.updated_at =updateDate();
+      delete userData.smarthome_id;
+      delete userData.smarthome_name;
+      var updateUserData = await users.update_user(userData.user_id, userData);
+      if (!updateUserData.status) {
+        return {
+          status: false,
+          message: updateUserData.message
+        };
+      }
+      return {
+        status: true,
+        message: updateUserData.message
+      };
+    }
+  }
+  }
